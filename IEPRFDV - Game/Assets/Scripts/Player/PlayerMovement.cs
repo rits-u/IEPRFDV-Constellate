@@ -27,12 +27,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         direction = move.action.ReadValue<Vector2>();
+        //Debug.Log(direction);
     }
 
     void FixedUpdate()
     {
         if (direction == Vector2.zero) return;
 
+        //POSITION
         Vector2 movement = direction.normalized * moveSpeed * Time.fixedDeltaTime;
         RaycastHit2D[] hits = new RaycastHit2D[1];
         int hitCount = col.Cast(movement, contactFilter, hits, movement.magnitude);
@@ -40,6 +42,18 @@ public class PlayerMovement : MonoBehaviour
         if (hitCount == 0)
         {
             rb.MovePosition(rb.position + movement);
+        }
+
+        //ROTATION
+        if(direction.x < 0)
+        {
+            Quaternion rotation = Quaternion.Euler(0f, 180f, 0f);
+            transform.rotation = rotation;
+        }
+        else if(direction.x > 0)
+        {
+            Quaternion rotation = Quaternion.Euler(0f, 0f, 0f);
+            transform.rotation = rotation;
         }
 
     }
