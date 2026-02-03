@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class Item : MonoBehaviour
 {
     [SerializeField] private ItemType type;
-    public abstract void ActivateItem(Player p);
+    public abstract void ActivateItem(PlayerStats p);
 
     public ItemType Type
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour 
+public class PlayerStats : MonoBehaviour 
 {
     [SerializeField] private float HP;
     [SerializeField] private float ATK;

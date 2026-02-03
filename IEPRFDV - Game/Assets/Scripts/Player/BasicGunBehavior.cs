@@ -85,6 +85,8 @@ public class BasicGunBehavior : MonoBehaviour
                 nearest = enemy;
             }
         }
+
+        Debug.Log(nearest);
         return nearest;
     }
 
