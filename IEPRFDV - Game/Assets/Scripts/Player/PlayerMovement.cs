@@ -5,18 +5,23 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Input Reference")]
     [SerializeField] private InputActionReference move;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private LayerMask blockingLayer;
 
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed;
     [SerializeField] private float doubleTapTime = 0.25f;
     [SerializeField] private float dashSpeed = 15f;
     [SerializeField] private float dashDuration = 0.5f;
-
-    private float lastTapTime;
-    private int lastTapDir;   // -1 = left, 1 = right
     [SerializeField] private bool isDashing;
 
+    [SerializeField] private LayerMask blockingLayer;
+
+    //for dash
+    private Vector2 lastTapDir;
+    private float lastTapTime;
+
+    //rigidbody
     private Rigidbody2D rb;
     private Collider2D col;
     private Vector2 direction;
@@ -37,42 +42,31 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         direction = move.action.ReadValue<Vector2>();
-        //Debug.Log(direction);
 
-        //if (direction.x != 0)
-        //{
-        //    int tapDir = direction.x > 0 ? 1 : -1;
-
-        //    if (Time.time - lastTapTime <= doubleTapTime &&
-        //        tapDir == lastTapDir)
-        //    {
-        //        StartCoroutine(Dash(tapDir));
-        //        lastTapTime = 0;
-        //    }
-        //    else
-        //    {
-        //        lastTapTime = Time.time;
-        //        lastTapDir = tapDir;
-        //    }
-        //}
-
-
-        if (move.action.WasPressedThisFrame())
-        {
-            if (Mathf.Abs(direction.x) > 0.5f)
+        if(move.action.WasPressedThisFrame())
+        {     
+            //determine dominant axis
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
             {
-                int tapDir = direction.x > 0 ? 1 : -1;
+                direction = new Vector2(Mathf.Sign(direction.x), 0);
+            }
+            else
+            {
+                direction = new Vector2(0, Mathf.Sign(direction.y));
+            }
 
+            if (direction != Vector2.zero)
+            {
                 if (Time.time - lastTapTime <= doubleTapTime &&
-                    tapDir == lastTapDir)
+                    direction == lastTapDir)
                 {
-                    StartCoroutine(Dash(tapDir));
+                    StartCoroutine(Dash(direction));
                     lastTapTime = 0f;
                 }
                 else
                 {
                     lastTapTime = Time.time;
-                    lastTapDir = tapDir;
+                    lastTapDir = direction;
                 }
             }
         }
@@ -81,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (direction == Vector2.zero) return;
-
 
         //POSITION
         Vector2 movement = direction.normalized * moveSpeed * Time.fixedDeltaTime;
@@ -107,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    IEnumerator Dash(int dir)
+    IEnumerator Dash(Vector2 dir)
     {
         if (isDashing) yield break;
 
@@ -117,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
 
         while (timer < dashDuration)
         {
-            rb.linearVelocity = new Vector2(dir * dashSpeed, 0f);
+            rb.linearVelocity = dir * dashSpeed;
             timer += Time.deltaTime;
             yield return null;
         }
