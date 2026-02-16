@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class PlayerBullet : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifeTime = 2f;
@@ -22,6 +22,12 @@ public class Bullet : MonoBehaviour
 
     void DestroySelf()
     {
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+       // if()
         Destroy(gameObject);
     }
 }

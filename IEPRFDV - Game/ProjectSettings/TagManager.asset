@@ -14,13 +14,13 @@ TagManager:
   - Water
   - UI
   - Player
+  - Enemy
+  - PlayerBullet
+  - EnemyBullet
   - Wall
   - Item
-  - 
-  - 
-  - 
-  - 
-  - 
+  - DetectionCollider
+  - Confiner
   - 
   - 
   - 

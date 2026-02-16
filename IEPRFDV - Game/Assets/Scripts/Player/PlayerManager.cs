@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour
 
     public void HealPlayer(PlayerStats p, int heal) 
     {
-        p.Health += heal;
+        //p.Health += heal;
         Debug.Log(p.name + "gained " + heal + " HP!");
     }
 }

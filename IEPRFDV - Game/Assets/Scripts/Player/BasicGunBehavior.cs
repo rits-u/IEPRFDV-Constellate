@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BasicGunBehavior : MonoBehaviour
 {
-    [Header("Fields")]
-    [SerializeField] private int numBullets = 3;
-    [SerializeField] private float burstInterval = 0.15f;
-    [SerializeField] private float fireInterval = 2f;
+    //[Header("Fields")]
+    //[SerializeField] private int numBullets = 3;
+    //[SerializeField] private float burstInterval = 0.15f;
+    //[SerializeField] private float fireInterval = 2f;
 
-    [SerializeField] GameObject bulletPrefab;
+    //[SerializeField] GameObject bulletPrefab;
+    [SerializeField] GunTemplate gun;
 
     private float fireUpdate = 0;
     private bool isBursting = false;
@@ -36,7 +37,7 @@ public class BasicGunBehavior : MonoBehaviour
         //    fireUpdate = 0f;
         //}
 
-        if (fireUpdate >= fireInterval)
+        if (fireUpdate >= gun.FireInterval)
         {
             if (!isBursting)
             {
@@ -114,18 +115,17 @@ public class BasicGunBehavior : MonoBehaviour
         GameObject target = FindNearestEnemy();
         if (target == null) yield break;
 
-        for (int i = 0; i < numBullets; i++)
+        for (int i = 0; i < gun.NumBullets; i++)
         {
             if (target == null) yield break;
 
-            GameObject obj = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            GameObject obj = Instantiate(gun.BulletPrefab, transform.position, Quaternion.identity);
 
-            Vector3 direction =
-                (target.transform.position - transform.position).normalized;
+            Vector3 direction = (target.transform.position - transform.position).normalized;
 
-            obj.GetComponent<Bullet>().SetDirection(direction);
+            obj.GetComponent<PlayerBullet>().SetDirection(direction);
 
-            yield return new WaitForSeconds(burstInterval); //small burst gap
+            yield return new WaitForSeconds(gun.BurstInterval); //small burst gap
         }
     }
 }
