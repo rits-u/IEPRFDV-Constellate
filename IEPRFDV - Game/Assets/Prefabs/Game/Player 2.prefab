@@ -213,7 +213,7 @@ MonoBehaviour:
   isDashing: 0
   blockingLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1024
 --- !u!114 &5415006515924877447
 MonoBehaviour:
   m_ObjectHideFlags: 0

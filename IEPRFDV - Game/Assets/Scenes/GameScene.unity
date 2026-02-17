@@ -5975,6 +5975,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 727578252}
     - target: {fileID: 4171016545449378957, guid: 16f9340e0b2164148b1f22c8335d4287, type: 3}
+      propertyPath: dashCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4171016545449378957, guid: 16f9340e0b2164148b1f22c8335d4287, type: 3}
       propertyPath: blockingLayer.m_Bits
       value: 1152
       objectReference: {fileID: 0}
@@ -31890,6 +31894,14 @@ PrefabInstance:
       propertyPath: move
       value: 
       objectReference: {fileID: 685722940}
+    - target: {fileID: 2593729362048487104, guid: 22a9be90c746a0d49b070ded33fff8a5, type: 3}
+      propertyPath: dashSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2593729362048487104, guid: 22a9be90c746a0d49b070ded33fff8a5, type: 3}
+      propertyPath: dashCooldown
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2593729362048487104, guid: 22a9be90c746a0d49b070ded33fff8a5, type: 3}
       propertyPath: blockingLayer.m_Bits
       value: 128
