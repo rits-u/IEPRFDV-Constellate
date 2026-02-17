@@ -23,13 +23,20 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        healthBar.SetMaxHealth(HP);
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(HP);
+        }
     }
 
     public void TakeDamage(float damage)
     {
         HP -= damage;
-        healthBar.SetHealth(HP);
-        OnDamaged?.Invoke();
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(HP);
+            OnDamaged?.Invoke();
+        }
+        
     }
 }
