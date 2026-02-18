@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TempBullet : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 4f;
+    [SerializeField] private float bulletSpeed = 4f;
     [SerializeField] private Vector3 rotationOffset;
     void Start()
     {
@@ -13,6 +13,17 @@ public class TempBullet : MonoBehaviour
     void Update()
     {
         Vector3 direction = transform.rotation * Vector3.up;
-        transform.position += direction * moveSpeed * Time.deltaTime;
+        transform.position += direction * bulletSpeed * Time.deltaTime;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
