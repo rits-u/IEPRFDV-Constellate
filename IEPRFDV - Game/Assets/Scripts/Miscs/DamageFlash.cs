@@ -17,7 +17,7 @@ public class DamageFlash : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<PlayerStats>().OnDamaged += Flash;
+        GetComponent<Stats>().OnDamaged += Flash;
     }
 
     public void Flash()

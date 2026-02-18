@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour 
+public class Stats : MonoBehaviour 
 {
     [SerializeField] private float health = 10;
     [SerializeField] private float attack = 3;

@@ -31,6 +31,7 @@ public class BulletSpawner : MonoBehaviour
         GameObject obj = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         Vector3 direction = transform.right;
         obj.GetComponent<PlayerBullet>().SetDirection(direction);
+        Debug.Log("spawn bullet by bullet spawner");
 
 
     }

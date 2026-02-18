@@ -4,7 +4,7 @@ public class HealOrb : Item
 {
     [SerializeField] private int heal = 10;
 
-    public override void ActivateItem(PlayerStats p)
+    public override void ActivateItem(Stats p)
     {
         PlayerManager.Instance.HealPlayer(p, heal);
         Destroy(gameObject);
@@ -19,7 +19,7 @@ public class HealOrb : Item
         {
             if (this.Type == ItemType.Orb)
             {
-                ActivateItem(other.GetComponent<PlayerStats>());
+                ActivateItem(other.GetComponent<Stats>());
             }
         }
     }

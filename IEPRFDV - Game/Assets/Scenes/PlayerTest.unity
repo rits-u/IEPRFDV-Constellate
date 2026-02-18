@@ -475,7 +475,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &841176419
 SpriteRenderer:
   serializedVersion: 2
@@ -2069,6 +2069,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 920355906}
     - target: {fileID: 4171016545449378957, guid: 16f9340e0b2164148b1f22c8335d4287, type: 3}
+      propertyPath: dashCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4171016545449378957, guid: 16f9340e0b2164148b1f22c8335d4287, type: 3}
       propertyPath: blockingLayer.m_Bits
       value: 1152
       objectReference: {fileID: 0}
@@ -2219,6 +2223,10 @@ PrefabInstance:
       propertyPath: move
       value: 
       objectReference: {fileID: 1336638772}
+    - target: {fileID: 2593729362048487104, guid: 22a9be90c746a0d49b070ded33fff8a5, type: 3}
+      propertyPath: dashCooldown
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3710789423585871245, guid: 22a9be90c746a0d49b070ded33fff8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.8
@@ -2262,6 +2270,10 @@ PrefabInstance:
     - target: {fileID: 6112974131803768534, guid: 22a9be90c746a0d49b070ded33fff8a5, type: 3}
       propertyPath: m_Name
       value: Player 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282705844006723254, guid: 22a9be90c746a0d49b070ded33fff8a5, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-    private PlayerStats playerStats;
+    private Stats playerStats;
 
     private void Start()
     {
-        playerStats = GetComponent<PlayerStats>();
+        playerStats = GetComponent<Stats>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
