@@ -6,6 +6,7 @@ using UnityEngine;
 public class QuickTimeEvent : MonoBehaviour
 {
     [Header("References")]
+    [HideInInspector] private string name;
     [SerializeField] private RectTransform ball;
     [SerializeField] private RectTransform safeZone;
     [SerializeField] private GameObject pointA;
@@ -14,9 +15,11 @@ public class QuickTimeEvent : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private bool onEnable;
     [SerializeField] private bool deactivateAfter;
+    [SerializeField] private KeyCode inputKey1;
+    [SerializeField] private KeyCode inputKey2;
 
     [SerializeField] private float maxTime;
-    [SerializeField] private float AtoBTime;
+    [SerializeField] private float AToBTime;
     [HideInInspector] private Vector3 startPos;
     
 
@@ -68,7 +71,7 @@ public class QuickTimeEvent : MonoBehaviour
 
             if (deactivateAfter)
             {
-                Debug.Log("deactivating");
+                Debug.Log(name + ": deactivating");
                 Deactivate();
             }
         }
@@ -81,16 +84,16 @@ public class QuickTimeEvent : MonoBehaviour
         {
             if (hasClicked)
             {
-                Debug.Log("Action completed in Time");
+                Debug.Log(name + ": Action completed in Time");
                 yield break;
             }
             timer += Time.deltaTime;
             yield return null;
         }
-        Debug.Log("time ran out");
+        Debug.Log(name + ": time ran out");
         if (deactivateAfter)
         {
-            Debug.Log("deactivating");
+            Debug.Log(name + ": deactivating");
             Deactivate();
         }
     }
@@ -99,26 +102,26 @@ public class QuickTimeEvent : MonoBehaviour
     {
         Vector3 offset = pointB.transform.position - pointA.transform.position;
         time += Time.deltaTime;
-        float t = Mathf.PingPong(time / speed, 1f);
+        float t = Mathf.PingPong(time / AToBTime, 1f);
         //ball.position = startPos + Vector3.Lerp(Vector3.zero, pointB.transform.position, t);
         ball.position = Vector3.Lerp(pointA.transform.position, pointB.transform.position, t);
     }
 
     bool CheckKeyPress()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(inputKey1)|| Input.GetKeyDown(inputKey2))
         {
             hasClicked = true;
             if (IsOverlap(ball, safeZone))
             {
-                Debug.Log("ball inside area");
+                Debug.Log(name + ": ball inside area");
                 clickSuccess = true;
                 activatedValidObjects = SetObjects(toActivateOnValid, true);
                 deactivatedValidObjects = SetObjects(toDeactivateOnValid, false);
             }
             else
             {
-                Debug.Log("ball outside area");
+                Debug.Log(name + ": ball outside area");
                 activatedInvalidObjects = SetObjects(toActivateOnInvalid, true);
                 deactivatedInvalidObjects = SetObjects(toDeactivateOnInvalid, false);
             }
@@ -166,7 +169,10 @@ public class QuickTimeEvent : MonoBehaviour
     }
     void InitializeReferences()
     {
-
+        if (name == null || name.Length == 0)
+        {
+            name = gameObject.name;
+        }
         if (!ball)
         {
             Debug.LogError("ball is null");
@@ -182,6 +188,10 @@ public class QuickTimeEvent : MonoBehaviour
         if (!safeZone)
         {
             Debug.LogError("safeZone is null");
+        }
+        if (AToBTime == 0)
+        {
+            AToBTime = 1;
         }
     }
     void InitializeValues()
