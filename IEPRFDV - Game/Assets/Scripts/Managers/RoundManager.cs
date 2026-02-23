@@ -104,7 +104,7 @@ public class RoundManager : MonoBehaviour
 
         //list all enemies in an EnemyManager or smth
 
-        //players defeat anemies
+        //players defeat enemies
 
         //when timer runs out
         //clear all enemies
