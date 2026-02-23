@@ -43,7 +43,7 @@ public class BasicGunBehavior : MonoBehaviour
             {
                 StartCoroutine(FireBurstWrapper());
                 fireUpdate = 0f;
-                Debug.Log("Fire");
+             //   Debug.Log("Fire");
             }
         }
 

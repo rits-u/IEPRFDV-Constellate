@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    public static SpawnManager Instance;
+
     [SerializeField] private float minTime = 0.0f;
     [SerializeField] private float maxTime = 1.0f;
     [SerializeField] private int MaxSpawns = 15;
@@ -11,9 +13,29 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] public Vector2 spawnPerimeter;
 
     private int currentSpawns = 0;
+    private Coroutine spawnRoutine;
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
     void Start()
     {
-        StartCoroutine(WaitTimer());
+       // StartCoroutine(WaitTimer());
+    }
+
+    public void StartSpawning()
+    {
+        currentSpawns = 0;
+        spawnRoutine = StartCoroutine(SpawnLoop());
+    }
+
+    public void StopSpawning()
+    {
+        if (spawnRoutine != null)
+            StopCoroutine(spawnRoutine);
     }
 
     IEnumerator WaitTimer()
@@ -27,6 +49,21 @@ public class SpawnManager : MonoBehaviour
             currentSpawns++;
         }
         yield return null;
+    }
+
+    private IEnumerator SpawnLoop()
+    {
+        while (true)
+        {
+            if (currentSpawns < MaxSpawns)  //threshold
+            {
+                SpawnEnemy();
+                currentSpawns++;
+            }
+
+            float waitTime = Random.Range(minTime, maxTime);
+            yield return new WaitForSeconds(waitTime);
+        }
     }
 
     Vector2 GetSpawnPoint()
@@ -55,11 +92,18 @@ public class SpawnManager : MonoBehaviour
         Vector3 spawnPos = new Vector3(randomSpawn.x, 0, randomSpawn.y);
         int enemyIndex = Random.Range(0, enemyPrefabs.Length);
 
-        Instantiate(enemyPrefabs[enemyIndex], spawnPos, enemyPrefabs[enemyIndex].transform.rotation);
+        GameObject enemy = Instantiate(enemyPrefabs[enemyIndex], spawnPos, enemyPrefabs[enemyIndex].transform.rotation);
+
         if (EnemyManager.Instance != null)
         {
-            //EnemyManager.Instance.
+            EnemyManager.Instance.RegisterEnemy(enemy);
         }
+    }
+
+    public void UpdateCurrentSpawns(int numEnemies)
+    {
+        currentSpawns = numEnemies;
+        //Debug.Log($"Current Spawned: {currentSpawns}");
     }
 
 }

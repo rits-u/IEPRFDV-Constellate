@@ -26,21 +26,35 @@ public class EnemyManager : MonoBehaviour
         aliveEnemies += 1;
         Stats enemyStats = enemy.GetComponent<Stats>();
         enemyStats.OnDeath += UnRegisterEnemy;
-        //enemy.GetComponent<Stats>(enemy.GetComponent<Stats>()).OnDeath += HandleEnemyDeath;
     }
 
     private void UnRegisterEnemy(Stats enemy)
     {
+        enemy.OnDeath -= UnRegisterEnemy;
         aliveEnemies -= 1;
+
+        int index = 0;
         foreach (var e in listEnemy)
         {
             if(e == enemy.gameObject)
             {
-                listEnemy.Remove(e);
+                break;
             }
+            index++;
         }
 
-        enemy.OnDeath -= UnRegisterEnemy;
+        listEnemy.RemoveAt(index);
+        SpawnManager.Instance.UpdateCurrentSpawns(aliveEnemies);
+        //CheckEnemyList();
+        //Debug.Log("deleted " + index);
+    }
+
+    private void CheckEnemyList()
+    {
+        //if(listEnemy.Count <= 0)
+        //{
+        //    EnemyManager.Instance.EndCurrentRound();
+        //}
     }
 
 

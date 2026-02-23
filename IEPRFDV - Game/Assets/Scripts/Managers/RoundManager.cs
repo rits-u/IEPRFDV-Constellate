@@ -73,6 +73,8 @@ public class RoundManager : MonoBehaviour
         string minutes = "";
         string seconds = "";
 
+        SpawnManager.Instance.StartSpawning();
+
         while(timer > 0)
         {
             secondsCount = timer - minutesCount * 60;
@@ -92,29 +94,23 @@ public class RoundManager : MonoBehaviour
             
         }
 
+        SpawnManager.Instance.StopSpawning();
+
         roundDurationText.text = "";
         roundEnded = true;
     }
 
     public void ExecuteRound()
     {
-        StartCoroutine(RoundTime());
-
-        //spawn enemies
-
-        //list all enemies in an EnemyManager or smth
-
-        //players defeat enemies
+        StartCoroutine(RoundTime()); //spawn loop
 
         //when timer runs out
-        //clear all enemies
-
         //Chest QTE
 
         //When both players are ready
 
         //adjust enemies stats / modif diff
-    
+
         //repeat loop
 
 

@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
   round: 0
-  roundDuration: 90
+  roundDuration: 30
   countdownDuration: 3
   countdownText: {fileID: 762639569}
   roundDurationText: {fileID: 725409058}
