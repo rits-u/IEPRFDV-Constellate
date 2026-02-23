@@ -49,6 +49,44 @@ public class EnemyManager : MonoBehaviour
         //Debug.Log("deleted " + index);
     }
 
+    public void UnregisterAllEnemies()
+    {
+        foreach (var enemyObj in listEnemy)
+        {
+            Stats stats = enemyObj.GetComponent<Stats>();
+
+            if (stats != null)
+                stats.OnDeath -= UnRegisterEnemy;
+        }
+
+        listEnemy.Clear();
+        aliveEnemies = 0;
+
+        SpawnManager.Instance.UpdateCurrentSpawns(aliveEnemies);
+    }
+
+    public void DestroyAllEnemies()
+    {
+        for (int i = listEnemy.Count - 1; i >= 0; i--)
+        {
+            GameObject enemy = listEnemy[i];
+
+            if (enemy == null) continue;
+
+            Stats stats = enemy.GetComponent<Stats>();
+            if (stats != null)
+                stats.OnDeath -= UnRegisterEnemy;
+
+           // Destroy(enemy);
+            enemy.SetActive(false);
+        }
+
+        listEnemy.Clear();
+        aliveEnemies = 0;
+
+        SpawnManager.Instance.UpdateCurrentSpawns(aliveEnemies);
+    }
+
     private void CheckEnemyList()
     {
         //if(listEnemy.Count <= 0)

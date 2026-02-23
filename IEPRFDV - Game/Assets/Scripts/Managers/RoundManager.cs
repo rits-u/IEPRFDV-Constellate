@@ -16,6 +16,7 @@ public class RoundManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private TextMeshProUGUI roundDurationText;
+    [SerializeField] private QuickTimeEvent chestQTE;
 
     //private float countdown;
 
@@ -41,9 +42,10 @@ public class RoundManager : MonoBehaviour
 
     public void CountdownToStart()
     {
-       // countdownPanel.SetActive(true);
-        StartCoroutine(Countdown());
-        
+        // countdownPanel.SetActive(true);
+        //StartCoroutine(Countdown());
+        StartCoroutine(RoundFlow());
+
     }
 
     IEnumerator Countdown()
@@ -58,9 +60,23 @@ public class RoundManager : MonoBehaviour
         }
 
       //  countdownText.text = "START!";
-        ExecuteRound();
+       
         countdownText.text = "";
         //ExecuteRound();
+    }
+
+    IEnumerator Countdown(float duration, TextMeshProUGUI textUI)
+    {
+        float countdown = duration;
+
+        while (countdown > 0)
+        {
+            textUI.text = Mathf.CeilToInt(countdown).ToString();
+            yield return new WaitForSeconds(1f);
+            countdown -= 1f;
+        }
+
+        textUI.text = "";
     }
 
     IEnumerator RoundTime()
@@ -95,6 +111,7 @@ public class RoundManager : MonoBehaviour
         }
 
         SpawnManager.Instance.StopSpawning();
+        //EnemyManager.Instance.UnregisterAllEnemies();
 
         roundDurationText.text = "";
         roundEnded = true;
@@ -102,18 +119,70 @@ public class RoundManager : MonoBehaviour
 
     public void ExecuteRound()
     {
-        StartCoroutine(RoundTime()); //spawn loop
-
-        //when timer runs out
-        //Chest QTE
-
-        //When both players are ready
-
-        //adjust enemies stats / modif diff
-
-        //repeat loop
-
+        StartCoroutine(RoundTime());
 
     }
 
+    //private IEnumerator RoundFlow()
+    //{
+    //    yield return StartCoroutine(Countdown());
+    //    yield return StartCoroutine(Countdown(3f, countdownText));
+    //    ExecuteRound();
+
+    //    yield return StartCoroutine(RoundTime());
+
+    //    EnemyManager.Instance.DestroyAllEnemies();
+
+    //    yield return new WaitForSeconds(1);
+    //    round timer
+    //    yield return StartCoroutine(Countdown(5f, countdownText));
+
+    //    chestQTE.StartQTE();
+
+    //    adjust enemy
+
+
+    //    StartCoroutine(RoundFlow());
+
+
+    //    losing condition, exit loop when a player's HP reaches 0
+    //}
+
+    private IEnumerator RoundFlow()
+    {
+        //have !gameOver condition
+        while (true)
+        {
+            //yield return StartCoroutine(Countdown());
+            yield return StartCoroutine(Countdown(3f, countdownText));
+
+            yield return StartCoroutine(RoundTime());
+
+            EnemyManager.Instance.DestroyAllEnemies();
+
+            yield return new WaitForSeconds(1);
+
+            yield return StartCoroutine(Countdown(5f, countdownText));
+
+            yield return StartCoroutine(chestQTE.PlayQTE());
+
+            //adjust enemy stats
+
+            //let players decide when to start the next round
+        }
+
+        //losing condition, exit loop when a player's HP reaches 0
+    }
+
+
+    //list
+   /* disable player movement on countdowns
+    * dash cooldown ui
+    * input ui on QTEs
+    * fix player input on QTEs
+    * item choices / randomize gear
+    * finalize player gear system
+    * adjust difficulty (increase enemy stats)
+    * winning/losing conditions
+    */
 }

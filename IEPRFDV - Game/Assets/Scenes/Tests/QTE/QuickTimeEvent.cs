@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
 using UnityEngine;
+using System;
 
 public class QuickTimeEvent : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class QuickTimeEvent : MonoBehaviour
 
     [HideInInspector] private float time = 0f;
 
+    public event Action OnFinished;
 
     private void Awake()
     {
@@ -77,7 +79,48 @@ public class QuickTimeEvent : MonoBehaviour
         }
     }
 
-    IEnumerator RunTimer(float duration)
+    public void StartQTE()
+    {
+        gameObject.SetActive(true);
+        InitializeValues();          
+        StartCoroutine(RunTimer(maxTime));
+    }
+
+    public IEnumerator PlayQTE()
+    {
+        bool finished = false;
+
+        System.Action handler = () => finished = true; //event thatll mark qte finished
+        OnFinished += handler;
+
+        //reset
+        hasClicked = false;
+        clickSuccess = false;
+        InitializeValues();
+        gameObject.SetActive(true);
+
+      
+        StartCoroutine(RunTimerEvent(maxTime));
+
+        //wait until player clicks or timer runs out
+        yield return new WaitUntil(() => finished);
+
+        //unsubscribe
+        OnFinished -= handler;
+        Deactivate();
+    }
+
+    private void FinishQTE()
+    {
+
+        if (!gameObject.activeSelf) return;
+
+       // Debug.Log("qte done");
+        OnFinished?.Invoke();
+       // Deactivate();
+    }
+
+    IEnumerator RunTimerEvent(float duration)
     {
         float timer = 0f;
         while (timer < duration)
@@ -96,6 +139,31 @@ public class QuickTimeEvent : MonoBehaviour
             Debug.Log(name + ": deactivating");
             Deactivate();
         }
+    }
+
+    IEnumerator RunTimer(float duration)
+    {
+        float timer = 0f;
+        while (timer < duration)
+        {
+            if (hasClicked)
+            {
+                Debug.Log(name + ": Action completed in Time");
+                FinishQTE();
+                yield break;
+            }
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        Debug.Log(name + ": time ran out");
+        if (deactivateAfter)
+        {
+            Debug.Log(name + ": deactivating");
+          //  Deactivate();
+            FinishQTE();
+        }
+       // FinishQTE();
+
     }
 
     void MoveBall()
