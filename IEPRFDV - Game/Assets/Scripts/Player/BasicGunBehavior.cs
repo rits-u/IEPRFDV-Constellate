@@ -89,7 +89,7 @@ public class BasicGunBehavior : MonoBehaviour
             }
         }
 
-        Debug.Log(nearest);
+     //   Debug.Log(nearest);
         return nearest;
     }
 

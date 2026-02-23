@@ -1,22 +1,31 @@
 using UnityEngine;
 
-public class PlayerCollision : MonoBehaviour
+public class EntityCollision : MonoBehaviour
 {
-    private Stats playerStats;
+    private Stats stats;
 
     private void Start()
     {
-        playerStats = GetComponent<Stats>();
+        stats = GetComponent<Stats>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        
+
         DamageDealer damageDealer = other.GetComponent<DamageDealer>();
 
         if(damageDealer != null )
         {
             // playerStats.HP -= damageDealer.damage;
-            playerStats.TakeDamage(damageDealer.damage);
+            // Debug.Log(other.name);
+            if (this.CompareTag("Enemy"))
+            {
+                Debug.Log($"collided with [{other.name}]");
+            }
+
+
+            stats.TakeDamage(damageDealer.damage);
            // Debug.Log($"Player HP: {playerStats.HP}");
         }
     }

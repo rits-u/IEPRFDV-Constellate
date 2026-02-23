@@ -86,7 +86,7 @@ public class RoundManager : MonoBehaviour
 
             if (secondsCount % 60 == 0) minutesCount -= 1;
 
-            Debug.Log(timer);
+//            Debug.Log(timer);
             yield return new WaitForSeconds(1f);
             timer -= 1;
             

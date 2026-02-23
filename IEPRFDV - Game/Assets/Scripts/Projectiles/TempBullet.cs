@@ -15,6 +15,7 @@ public class TempBullet : MonoBehaviour
         Vector3 direction = transform.rotation * Vector3.up;
         transform.position += direction * bulletSpeed * Time.deltaTime;
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
@@ -22,6 +23,14 @@ public class TempBullet : MonoBehaviour
             gameObject.SetActive(false);
         }
         else if (collision.gameObject.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Player"))
         {
             gameObject.SetActive(false);
         }

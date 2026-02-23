@@ -56,6 +56,10 @@ public class SpawnManager : MonoBehaviour
         int enemyIndex = Random.Range(0, enemyPrefabs.Length);
 
         Instantiate(enemyPrefabs[enemyIndex], spawnPos, enemyPrefabs[enemyIndex].transform.rotation);
+        if (EnemyManager.Instance != null)
+        {
+            //EnemyManager.Instance.
+        }
     }
 
 }

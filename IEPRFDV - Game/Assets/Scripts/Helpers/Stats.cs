@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Stats : MonoBehaviour 
@@ -8,7 +9,9 @@ public class Stats : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private HealthBar healthBar;
 
-    public System.Action OnDamaged;
+  //  public System.Action OnDamaged;
+    public event Action OnDamaged;
+    public event Action<Stats> OnDeath;
 
     public float HP
     {
@@ -32,10 +35,18 @@ public class Stats : MonoBehaviour
     public void TakeDamage(float damage)
     {
         HP -= damage;
+        OnDamaged?.Invoke();
         if (healthBar != null)
         {
             healthBar.SetHealth(HP);
-            OnDamaged?.Invoke();
+            
+        }
+
+        if(HP <= 0)
+        {
+            //Debug.Log("enemy dead");
+            OnDeath?.Invoke(this);
+            Destroy(this.gameObject);
         }
         
     }

@@ -52,6 +52,8 @@ public class AI_FollowPlayer : MonoBehaviour
         //    detectionRadius = attackDistance + 3.0f;
         //}
 
+        target.GetComponent<Stats>().OnDeath += OnTargetDeath;
+
         SetRotation();
         StartCoroutine(WaitTimer());
     }
@@ -61,12 +63,14 @@ public class AI_FollowPlayer : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(pathRefreshTime);
-            target = GetTarget();
+            //target = GetTarget();
+            SetTarget(GetTarget());
         }
     }
     // Update is called once per frame
     void LateUpdate()
     {
+        if (target == null) return;
 
         //targetDistance = Vector3.Distance(navAgent.transform.position, target.transform.position);
         SetRotation();
@@ -118,6 +122,11 @@ public class AI_FollowPlayer : MonoBehaviour
         GameObject toFollow = null;
         foreach (GameObject player in players)
         {
+            if (!player) continue;
+
+            Stats stats = player.GetComponent<Stats>();
+            if (stats == null || stats.HP <= 0) continue;
+
             Vector2 pos = player.transform.position - transform.position;
             float distSqr = pos.sqrMagnitude;
             if (distSqr < shortest)
@@ -128,6 +137,23 @@ public class AI_FollowPlayer : MonoBehaviour
         }
         return toFollow;
     }
+
+    private Stats currentTargetStats;
+
+    void SetTarget(GameObject newTarget)
+    {
+        if (currentTargetStats != null)
+            currentTargetStats.OnDeath -= OnTargetDeath;
+
+        target = newTarget;
+
+        if (target != null)
+        {
+            currentTargetStats = target.GetComponent<Stats>();
+            currentTargetStats.OnDeath += OnTargetDeath;
+        }
+    }
+
     private void SetRotation()
     {
         Vector3 direction = target.transform.position - navAgent.transform.position;
@@ -135,6 +161,12 @@ public class AI_FollowPlayer : MonoBehaviour
         angle -= 90f;
         navAgent.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
+
+    private void OnTargetDeath(Stats s)
+    {
+        target = null;
+    }
+
     //private void OnAnimatorMove()
     //{
     //    if (animator.GetBool("Attack") == false)

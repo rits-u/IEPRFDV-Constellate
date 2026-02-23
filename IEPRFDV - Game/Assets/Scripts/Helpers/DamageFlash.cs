@@ -7,7 +7,7 @@ public class DamageFlash : MonoBehaviour
     private Color originalColor;
 
     [SerializeField] private Color flashColor = Color.red;
-    [SerializeField] private float flashDuration = 0.1f;
+    [SerializeField] private float flashDuration = 0.3f;
 
     private void Awake()
     {
@@ -17,7 +17,17 @@ public class DamageFlash : MonoBehaviour
 
     private void Start()
     {
+        
+    }
+
+    private void OnEnable()
+    {
         GetComponent<Stats>().OnDamaged += Flash;
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<Stats>().OnDamaged -= Flash;
     }
 
     public void Flash()
