@@ -110,9 +110,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
   spawnArea: {fileID: 0}
   enemyPrefabs:
-  - {fileID: 7727712613359759040, guid: c4c3a2b3df853a5499f8b495612804cf, type: 3}
-  outerSpawnPerimiterTopRight: {fileID: 0}
-  innerSpawnPerimiterTopRight: {fileID: 0}
+  - {fileID: 7727712613359759040, guid: 5a50e1c17e1844944b439deb70e8bd24, type: 3}
+  outerSpawnPerimiterTopRight: {fileID: 5413295578075952221}
+  innerSpawnPerimiterTopRight: {fileID: 4703169662529297802}
   minTime: 1
   maxTime: 2
   MaxSpawns: 2

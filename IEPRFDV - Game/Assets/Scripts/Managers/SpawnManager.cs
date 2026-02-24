@@ -139,6 +139,11 @@ public class SpawnManager : MonoBehaviour
             EnemyManager.Instance.RegisterEnemy(enemy);
         }
     }
+    
+    void UngeristerEnemy(GameObject enemy)
+    {
+        //enemyPrefabs.Remove(enemy);
+    }
 
     public void UpdateCurrentSpawns(int numEnemies)
     {

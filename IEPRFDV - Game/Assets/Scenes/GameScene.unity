@@ -1212,11 +1212,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640934016}
   m_CullTransparentMesh: 1
---- !u!1 &644551186 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5413295578075952221, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
-  m_PrefabInstance: {fileID: 1405608466}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &685722940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7586,11 +7581,6 @@ Transform:
   - {fileID: 1584105849}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1179558855 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4703169662529297802, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
-  m_PrefabInstance: {fileID: 1405608466}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1203369008
 GameObject:
   m_ObjectHideFlags: 0
@@ -7904,26 +7894,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
-      propertyPath: spawnPerimeter.x
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
-      propertyPath: spawnPerimeter.y
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
-      propertyPath: 'enemyPrefabs.Array.data[0]'
-      value: 
-      objectReference: {fileID: 7727712613359759040, guid: 5a50e1c17e1844944b439deb70e8bd24, type: 3}
-    - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
-      propertyPath: innerSpawnPerimiterTopRight
-      value: 
-      objectReference: {fileID: 1179558855}
-    - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
-      propertyPath: outerSpawnPerimiterTopRight
-      value: 
-      objectReference: {fileID: 644551186}
     - target: {fileID: 6590979738894004422, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.32338
