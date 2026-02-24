@@ -26,6 +26,7 @@ public class RoundManager : MonoBehaviour
     {
         if(Instance == null)
         {
+            Debug.Log("Round Manager: awake, Instancing self");
             Instance = this;
         }
         else

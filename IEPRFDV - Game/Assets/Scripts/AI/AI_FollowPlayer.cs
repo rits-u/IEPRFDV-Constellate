@@ -29,19 +29,35 @@ public class AI_FollowPlayer : MonoBehaviour
     //private float detectionBuffer = 1.0f;
     private float targetDistance;
 
+    private void Awake()
+    {
+        Debug.Log("AI_FP: AWAKE start pos: " + transform.position);
+    }
     void Start()
     {
-        if (players == null || players.Length == 0)
-        {
-            Debug.Log("no players");
-            players = GameObject.FindGameObjectsWithTag("Player");
-        }
-        target = players[0];
-
-        this.enabled = true;
+        Debug.Log("AI_FP: START start pos: " + transform.position);
         navAgent = GetComponent<NavMeshAgent>();
+        navAgent.enabled = false;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 5f, NavMesh.AllAreas))
+        {
+            transform.position = hit.position;
+            navAgent.enabled = true;
+            Debug.Log("AI_FP: found hit at " + hit.position);
+        }
+        else
+        {
+            Debug.LogError("AI_Followplayer: agent spawnpos too far frrom navmesh: " + hit.position);
+        }
+            this.enabled = true;
         navAgent.enabled = true;
         //animator = GetComponent<Animator>();
+        if (!navAgent.isOnNavMesh)
+        {
+            Debug.LogError("Agent is NOT on NavMesh!");
+        }
+
 
         navAgent.updateRotation = false;
         navAgent.updateUpAxis = false;
@@ -51,6 +67,12 @@ public class AI_FollowPlayer : MonoBehaviour
         //{
         //    detectionRadius = attackDistance + 3.0f;
         //}
+
+        if (players == null || players.Length == 0)
+        {
+            players = GameObject.FindGameObjectsWithTag("Player");
+        }
+        target = players[0];
 
         target.GetComponent<Stats>().OnDeath += OnTargetDeath;
 
@@ -71,7 +93,7 @@ public class AI_FollowPlayer : MonoBehaviour
     void LateUpdate()
     {
         if (target == null) return;
-
+        
         //targetDistance = Vector3.Distance(navAgent.transform.position, target.transform.position);
         SetRotation();
 
