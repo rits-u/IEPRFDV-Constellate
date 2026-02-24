@@ -33,10 +33,30 @@ public class AI_FollowPlayer : MonoBehaviour
     {
         if (players == null || players.Length == 0)
         {
-            Debug.Log("no players");
+            Debug.Log("AI_FollowPlayer: no players");
             players = GameObject.FindGameObjectsWithTag("Player");
         }
         target = players[0];
+        foreach(GameObject player in players)
+        {
+            Debug.Log("player name: " + player.name);
+        }
+        if (navAgent != null)
+        {
+            Debug.Log("nav found on" + gameObject.name);
+        }
+        else
+        {
+            Debug.Log("mp nav found on" + gameObject.name);
+        }
+        if (navAgent != null && navAgent.isOnNavMesh)
+        {
+            Debug.Log("Agent is valid and on NavMesh");
+        }
+        else
+        {
+            Debug.Log("Agent missing or NOT on NavMesh");
+        }
 
         this.enabled = true;
         navAgent = GetComponent<NavMeshAgent>();
