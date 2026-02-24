@@ -29,13 +29,8 @@ public class AI_FollowPlayer : MonoBehaviour
     //private float detectionBuffer = 1.0f;
     private float targetDistance;
 
-    private void Awake()
-    {
-        Debug.Log("AI_FP: AWAKE start pos: " + transform.position);
-    }
     void Start()
     {
-        Debug.Log("AI_FP: START start pos: " + transform.position);
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.enabled = false;
 
@@ -44,18 +39,17 @@ public class AI_FollowPlayer : MonoBehaviour
         {
             transform.position = hit.position;
             navAgent.enabled = true;
-            Debug.Log("AI_FP: found hit at " + hit.position);
         }
         else
         {
-            Debug.LogError("AI_Followplayer: agent spawnpos too far frrom navmesh: " + hit.position);
+            Debug.LogError("AI_Followplayer: Agent spawnPos too far from navmesh: " + hit.position);
         }
-            this.enabled = true;
+        this.enabled = true;
         navAgent.enabled = true;
         //animator = GetComponent<Animator>();
         if (!navAgent.isOnNavMesh)
         {
-            Debug.LogError("Agent is NOT on NavMesh!");
+            Debug.LogError("AI_Followplayer: Agent not on Navmesh");
         }
 
 

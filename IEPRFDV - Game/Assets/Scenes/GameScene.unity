@@ -831,7 +831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
   round: 0
   roundDuration: 5
-  countdownDuration: 1
+  countdownDuration: 2
   countdownText: {fileID: 762639569}
   roundDurationText: {fileID: 725409058}
   chestQTE: {fileID: 300442799}
@@ -7884,11 +7884,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 46658526594657067, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.5
+      value: 27.5
       objectReference: {fileID: 0}
     - target: {fileID: 46658526594657067, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_Enabled
@@ -7896,11 +7896,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3085039453810706123, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.5
+      value: 20.5
       objectReference: {fileID: 0}
     - target: {fileID: 3085039453810706123, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.5
+      value: 13.5
       objectReference: {fileID: 0}
     - target: {fileID: 6590979738894004422, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.x

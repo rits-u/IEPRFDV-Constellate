@@ -25,7 +25,7 @@ public class SpawnManager : MonoBehaviour
     [Header("Spawn Intervals")]
     [SerializeField] private float minTime = 0.0f;
     [SerializeField] private float maxTime = 1.0f;
-    [SerializeField] private int MaxSpawns = 15;
+    [SerializeField] private int maxSpawns = 15;
 
     [Header("Flags")]
     private int currentSpawns = 0;
@@ -35,7 +35,6 @@ public class SpawnManager : MonoBehaviour
     {
         if (Instance == null)
         {
-            Debug.Log("Spawn Manager: awake, Instancing self");
             Instance = this;
         }
         else Destroy(gameObject);
@@ -58,7 +57,7 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-       // StartCoroutine(WaitTimer());
+        // StartCoroutine(WaitTimer());
     }
 
     public void StartSpawning()
@@ -75,7 +74,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator WaitTimer()
     {
-        while (currentSpawns < MaxSpawns)
+        while (currentSpawns < maxSpawns)
         {
             float waitTime = UnityEngine.Random.Range(minTime, maxTime);
             yield return new WaitForSeconds(waitTime);
@@ -90,7 +89,7 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
-            if (currentSpawns < MaxSpawns)  //threshold
+            if (currentSpawns < maxSpawns)  //threshold
             {
                 SpawnEnemy();
                 currentSpawns++;
@@ -104,27 +103,17 @@ public class SpawnManager : MonoBehaviour
     Vector2 GetSpawnPoint()
     {
         int side = UnityEngine.Random.Range(0, 4);
-        Vector2 pos = (Vector2)transform.position;
 
-        Vector2 newPos;
         switch (side)
         {
             case 0: //Up
-                newPos = GetRandomSpawnPoint(outerX, -outerX, outerY, innerY);
-                Debug.Log("SM: 0: " + newPos);
-                return newPos;
+                return GetRandomSpawnPoint(outerX, -outerX, outerY, innerY);
             case 1: //Down
-                newPos = GetRandomSpawnPoint(outerX, -outerX, -outerY, -innerY);
-                Debug.Log("SM: 1: " + newPos);
-                return newPos;
+                return GetRandomSpawnPoint(outerX, -outerX, -outerY, -innerY);
             case 2: //Left
-                newPos = GetRandomSpawnPoint(-outerX, -innerX, outerY, -outerY);
-                Debug.Log("SM: 2: " + newPos);
-                return newPos;
+                return GetRandomSpawnPoint(-outerX, -innerX, outerY, -outerY);
             case 3: //Right
-                newPos = GetRandomSpawnPoint(outerX, innerX, outerY, -outerY);
-                Debug.Log("SM: 3: " + newPos);
-                return newPos;
+                return GetRandomSpawnPoint(outerX, innerX, outerY, -outerY);
         }
         return Vector2.zero;
     }
@@ -137,24 +126,20 @@ public class SpawnManager : MonoBehaviour
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randomPoint, out hit, 0.1f, NavMesh.AllAreas))
             {
-                Debug.Log("Spawn Manager: returning hit pos: " + hit.position);
                 return hit.position;
             }
         }
         Vector2 debugVec = new Vector2(pointA1, pointB1);
-        Debug.Log("Spawn Manager: fallback spawn pos = " +  debugVec);
         return debugVec;
     }
 
 
     void SpawnEnemy()
     {
-        Debug.Log("SM: in spawnenemy");
-        Vector2 randomSpawn = GetSpawnPoint();
-        Vector3 spawnPos = new Vector3(randomSpawn.x, 0, randomSpawn.y);
+        Vector2 spawnPos = GetSpawnPoint();
         int enemyIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
 
-        GameObject enemy = Instantiate(enemyPrefabs[enemyIndex], randomSpawn, enemyPrefabs[enemyIndex].transform.rotation);
+        GameObject enemy = Instantiate(enemyPrefabs[enemyIndex], spawnPos, enemyPrefabs[enemyIndex].transform.rotation);
         NavMeshAgent navAgent = enemy.GetComponent<NavMeshAgent>();
         if (!navAgent)
         {
@@ -169,10 +154,6 @@ public class SpawnManager : MonoBehaviour
                 Debug.LogWarning("SM: Enemy spawn pos not on navmesh");
             }
         }
-        else
-        {
-            Debug.Log("SM: navagent exists");
-        }
         if (EnemyManager.Instance != null)
         {
             EnemyManager.Instance.RegisterEnemy(enemy);
@@ -183,6 +164,13 @@ public class SpawnManager : MonoBehaviour
     {
         currentSpawns = numEnemies;
         //Debug.Log($"Current Spawned: {currentSpawns}");
+    }
+
+    public void UpdateSpawnInterval(int minTime, int maxTime, int maxSpawns)
+    {
+        if (minTime != 0) this.minTime = minTime;
+        if (maxTime != 0) this.maxTime = maxTime;
+        if (maxSpawns != 0) this.maxSpawns = maxSpawns;
     }
 
 }
