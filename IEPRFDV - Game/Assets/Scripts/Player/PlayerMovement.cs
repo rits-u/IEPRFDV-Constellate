@@ -43,12 +43,22 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-        move.action.Enable();
+        EnableMovement();
 
         contactFilter = new ContactFilter2D();
         contactFilter.SetLayerMask(blockingLayer);
         contactFilter.useLayerMask = true;
         contactFilter.useTriggers = false;
+    }
+
+    public void EnableMovement()
+    {
+        move.action.Enable();
+    }
+
+    public void DisableMovement()
+    {
+        move.action.Disable();
     }
 
     void Update()

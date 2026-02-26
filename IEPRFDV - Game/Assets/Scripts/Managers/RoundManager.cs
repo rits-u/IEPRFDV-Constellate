@@ -90,6 +90,7 @@ public class RoundManager : MonoBehaviour
 
     IEnumerator RoundTime()
     {
+        roundEnded = false;
         int timer = roundDuration;
         int secondsCount = timer;
         int minutesCount = timer / 60;
@@ -165,6 +166,7 @@ public class RoundManager : MonoBehaviour
             roundNumberText.text = "Round: " + round;
 
             //yield return StartCoroutine(Countdown());
+            PlayerManager.Instance.EnableAllPlayerMovement();
             yield return StartCoroutine(Countdown(countdownDuration, countdownText));
 
             yield return StartCoroutine(RoundTime());
@@ -173,11 +175,14 @@ public class RoundManager : MonoBehaviour
 
             yield return new WaitForSeconds(1);
 
+            PlayerManager.Instance.DisableAllPlayerMovement();
             yield return StartCoroutine(Countdown(5f, countdownText));
 
             yield return StartCoroutine(chestQTE.PlayQTE());
 
+
             //adjust enemy stats
+            // ^^^ handled by Enemy Manager already
 
             //let players decide when to start the next round
 

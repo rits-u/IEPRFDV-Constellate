@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManagerOld : MonoBehaviour
 {
 
-    public static PlayerManager Instance { get; private set; }
+    public static PlayerManagerOld Instance { get; private set; }
     void Awake()
     {
         if (Instance != null && Instance != this)

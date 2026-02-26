@@ -1,26 +1,26 @@
-using UnityEngine;
+//using UnityEngine;
 
-public class HealOrb : Item
-{
-    [SerializeField] private int heal = 10;
+//public class HealOrb : Item
+//{
+//    [SerializeField] private int heal = 10;
 
-    public override void ActivateItem(Stats p)
-    {
-        PlayerManager.Instance.HealPlayer(p, heal);
-        Destroy(gameObject);
-    }
+//    public override void ActivateItem(Stats p)
+//    {
+//        PlayerManager.Instance.HealPlayer(p, heal);
+//        Destroy(gameObject);
+//    }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
+//    private void OnTriggerEnter2D(Collider2D other)
+//    {
 
-        // Debug.Log("helloooooo");
+//        // Debug.Log("helloooooo");
 
-        if (other.CompareTag("Player"))
-        {
-            if (this.Type == ItemType.Orb)
-            {
-                ActivateItem(other.GetComponent<Stats>());
-            }
-        }
-    }
-}
+//        if (other.CompareTag("Player"))
+//        {
+//            if (this.Type == ItemType.Orb)
+//            {
+//                ActivateItem(other.GetComponent<Stats>());
+//            }
+//        }
+//    }
+//}
