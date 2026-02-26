@@ -31,17 +31,27 @@ public class AI_FollowPlayer : MonoBehaviour
 
     void Start()
     {
-        if (players == null || players.Length == 0)
-        {
-            Debug.Log("no players");
-            players = GameObject.FindGameObjectsWithTag("Player");
-        }
-        target = players[0];
-
-        this.enabled = true;
         navAgent = GetComponent<NavMeshAgent>();
+        navAgent.enabled = false;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(transform.position, out hit, 5f, NavMesh.AllAreas))
+        {
+            transform.position = hit.position;
+            navAgent.enabled = true;
+        }
+        else
+        {
+            Debug.LogError("AI_Followplayer: Agent spawnPos too far from navmesh: " + hit.position);
+        }
+        this.enabled = true;
         navAgent.enabled = true;
         //animator = GetComponent<Animator>();
+        if (!navAgent.isOnNavMesh)
+        {
+            Debug.LogError("AI_Followplayer: Agent not on Navmesh");
+        }
+
 
         navAgent.updateRotation = false;
         navAgent.updateUpAxis = false;
@@ -51,6 +61,12 @@ public class AI_FollowPlayer : MonoBehaviour
         //{
         //    detectionRadius = attackDistance + 3.0f;
         //}
+
+        if (players == null || players.Length == 0)
+        {
+            players = GameObject.FindGameObjectsWithTag("Player");
+        }
+        target = players[0];
 
         target.GetComponent<Stats>().OnDeath += OnTargetDeath;
 
@@ -71,7 +87,7 @@ public class AI_FollowPlayer : MonoBehaviour
     void LateUpdate()
     {
         if (target == null) return;
-
+        
         //targetDistance = Vector3.Distance(navAgent.transform.position, target.transform.position);
         SetRotation();
 

@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class RoundManager : MonoBehaviour
 {
@@ -159,12 +160,12 @@ public class RoundManager : MonoBehaviour
     private IEnumerator RoundFlow()
     {
         //have !gameOver condition
-        while (true)
+        while (IsGameRunning())
         {
             roundNumberText.text = "Round: " + round;
 
             //yield return StartCoroutine(Countdown());
-            yield return StartCoroutine(Countdown(3f, countdownText));
+            yield return StartCoroutine(Countdown(countdownDuration, countdownText));
 
             yield return StartCoroutine(RoundTime());
 
@@ -186,6 +187,11 @@ public class RoundManager : MonoBehaviour
         //losing condition, exit loop when a player's HP reaches 0
     }
 
+    private bool IsGameRunning()
+    {
+        
+        return true;
+    }
 
     //list
    /* disable player movement on countdowns
