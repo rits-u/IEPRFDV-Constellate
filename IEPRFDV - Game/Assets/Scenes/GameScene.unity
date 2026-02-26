@@ -441,7 +441,7 @@ PrefabInstance:
     - target: {fileID: 4242033369160608353, guid: 514ff8682cf149547bb477f52d408475, type: 3}
       propertyPath: P2Input
       value: 
-      objectReference: {fileID: 56750698}
+      objectReference: {fileID: 0}
     - target: {fileID: 4242033369160608353, guid: 514ff8682cf149547bb477f52d408475, type: 3}
       propertyPath: inputKey1
       value: 32
@@ -8130,16 +8130,6 @@ PrefabInstance:
     - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: spawnPerimeter.x
       value: 25
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3085039453810706123, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3085039453810706123, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 13.5
       objectReference: {fileID: 0}
     - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: updateCountEvery
@@ -8153,6 +8143,14 @@ PrefabInstance:
       propertyPath: 'enemyPrefabs.Array.data[0]'
       value: 
       objectReference: {fileID: 7727712613359759040, guid: 5a50e1c17e1844944b439deb70e8bd24, type: 3}
+    - target: {fileID: 3085039453810706123, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3085039453810706123, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6590979738894004422, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.32338
@@ -8629,7 +8627,7 @@ MonoBehaviour:
   aliveEnemies: 0
   enemyStartingHP: 5
   updateHealthEvery: 3
-  healthIncrement: 3
+  healthIncrement: 5
 --- !u!1 &1592373286
 GameObject:
   m_ObjectHideFlags: 0

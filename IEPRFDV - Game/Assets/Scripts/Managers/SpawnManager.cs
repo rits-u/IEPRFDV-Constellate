@@ -72,7 +72,7 @@ public class SpawnManager : MonoBehaviour
     {
         currentSpawns = 0;
         InitializeSpawn();
-        MaxSpawns = enemyCount;
+        maxSpawns = enemyCount;
         spawnRoutine = StartCoroutine(SpawnLoop());
     }
 

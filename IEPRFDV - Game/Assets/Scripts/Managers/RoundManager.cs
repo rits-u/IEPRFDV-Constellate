@@ -200,7 +200,7 @@ public class RoundManager : MonoBehaviour
     * fix player input on QTEs
     * item choices / randomize gear
     * finalize player gear system
-    * adjust difficulty (increase enemy stats)
+    * adjust difficulty (increase enemy stats) 
     * winning/losing conditions
     */
 }
