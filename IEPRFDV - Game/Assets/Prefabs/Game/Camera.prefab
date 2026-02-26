@@ -70,7 +70,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -694,7 +694,7 @@ MonoBehaviour:
   LateralAdjustment: 0
   FovRange: {x: 1, y: 100}
   DollyRange: {x: -100, y: 100}
-  OrthoSizeRange: {x: 8, y: 1000}
+  OrthoSizeRange: {x: 10, y: 1000}
 --- !u!114 &6837598431515379137
 MonoBehaviour:
   m_ObjectHideFlags: 0

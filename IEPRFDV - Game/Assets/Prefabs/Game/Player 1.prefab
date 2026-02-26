@@ -141,8 +141,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.4394445, y: 0}
-  m_Radius: 8.676292
+  m_Offset: {x: -0.43944454, y: -0.08651614}
+  m_Radius: 10.185526
 --- !u!1 &7065830426474312635
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,10 +350,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   move: {fileID: 0}
   moveSpeed: 7
-  doubleTapTime: 0.25
   dashSpeed: 15
   dashDuration: 0.4
-  isDashing: 0
+  holdDashTime: 0.15
+  tapWindow: 0.3
+  dashCooldown: 2
   blockingLayer:
     serializedVersion: 2
     m_Bits: 1024
