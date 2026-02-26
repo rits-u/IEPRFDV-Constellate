@@ -3,6 +3,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
 using UnityEngine;
 using System;
+using UnityEngine.InputSystem;
 
 public class QuickTimeEvent : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class QuickTimeEvent : MonoBehaviour
     [SerializeField] private RectTransform safeZone;
     [SerializeField] private GameObject pointA;
     [SerializeField] private GameObject pointB;
+
+    [Header("Player Input")]
+    [SerializeField] private InputActionReference P1Input;
+    [SerializeField] private InputActionReference P2Input;
 
     [Header("Properties")]
     [SerializeField] private bool onEnable;
@@ -77,6 +82,16 @@ public class QuickTimeEvent : MonoBehaviour
                 Deactivate();
             }
         }
+        //if (CheckKeyBindPress())
+        //{
+        //    HandleClickSuccess();
+
+        //    if (deactivateAfter)
+        //    {
+        //        Debug.Log(name + ": deactivating");
+        //        Deactivate();
+        //    }
+        //}
     }
 
     public void StartQTE()
@@ -197,6 +212,36 @@ public class QuickTimeEvent : MonoBehaviour
         }
         return false;
     }
+
+    bool CheckKeyBindPress()
+    {
+        float P1_qte = P1Input.action.ReadValue<float>();
+        float P2_qte = P2Input.action.ReadValue<float>();
+       // Debug.Log($"player qte: {P1_qte}");
+
+        if (P1_qte == 1.0f || P2_qte == 1.0f) 
+        {
+            hasClicked = true;
+            if (IsOverlap(ball, safeZone))
+            {
+                Debug.Log(name + ": ball inside area");
+                clickSuccess = true;
+                activatedValidObjects = SetObjects(toActivateOnValid, true);
+                deactivatedValidObjects = SetObjects(toDeactivateOnValid, false);
+            }
+            else
+            {
+                Debug.Log(name + ": ball outside area");
+                activatedInvalidObjects = SetObjects(toActivateOnInvalid, true);
+                deactivatedInvalidObjects = SetObjects(toDeactivateOnInvalid, false);
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+
     void HandleClickSuccess()
     {
         if (!clickSuccess)

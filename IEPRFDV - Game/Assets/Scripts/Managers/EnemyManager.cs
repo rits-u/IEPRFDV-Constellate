@@ -8,6 +8,13 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private List<GameObject> listEnemy = new();
     [SerializeField] private int aliveEnemies;
 
+    [Header("Enemy Stats Initialization")]
+    [Header("HP")]
+    [SerializeField] private int enemyStartingHP;
+    [SerializeField] private int updateHealthEvery;
+    [SerializeField] private int healthIncrement;
+
+
     private void Awake()
     {
         if(Instance == null)
@@ -22,10 +29,13 @@ public class EnemyManager : MonoBehaviour
 
     public void RegisterEnemy(GameObject enemy)
     {
+        //initialize stats
+        InitializeEnemy(enemy);
+
         listEnemy.Add(enemy);
         aliveEnemies += 1;
-        Stats enemyStats = enemy.GetComponent<Stats>();
-        enemyStats.OnDeath += UnRegisterEnemy;
+    //    Stats enemyStats = enemy.GetComponent<Stats>();
+        //enemyStats.OnDeath += UnRegisterEnemy;
     }
 
     private void UnRegisterEnemy(Stats enemy)
@@ -86,6 +96,28 @@ public class EnemyManager : MonoBehaviour
 
         SpawnManager.Instance.UpdateCurrentSpawns(aliveEnemies);
     }
+
+    private void InitializeEnemy(GameObject enemy)
+    {
+        Stats enemyStats = enemy.GetComponent<Stats>();
+        enemyStats.OnDeath += UnRegisterEnemy;
+
+        int round = RoundManager.Instance.RoundNumber;
+
+        if (round % updateHealthEvery == 0)
+        {
+            enemyStartingHP += healthIncrement;
+        }
+
+        enemyStats.HP = enemyStartingHP;
+
+        //  int round = 
+    }
+
+    //public int GetMaxEnemySpawns()
+    //{
+    //    return enemyCount;
+    //}
 
     private void CheckEnemyList()
     {

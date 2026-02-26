@@ -12,8 +12,16 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] public Vector2 spawnPerimeter;
 
+    [Header("Enemy Spawn Initialization")]
+    [Header("Quantity")]
+    [SerializeField] private int enemyCount;
+    [SerializeField] private int updateCountEvery;
+    [SerializeField] private int enemyIncrement;
+
     private int currentSpawns = 0;
     private Coroutine spawnRoutine;
+
+    private bool isFirstRound = true;
 
     private void Awake()
     {
@@ -29,6 +37,8 @@ public class SpawnManager : MonoBehaviour
     public void StartSpawning()
     {
         currentSpawns = 0;
+        InitializeSpawn();
+        MaxSpawns = enemyCount;
         spawnRoutine = StartCoroutine(SpawnLoop());
     }
 
@@ -104,6 +114,22 @@ public class SpawnManager : MonoBehaviour
     {
         currentSpawns = numEnemies;
         //Debug.Log($"Current Spawned: {currentSpawns}");
+    }
+
+    private void InitializeSpawn()
+    {
+        if (isFirstRound)
+        {
+            isFirstRound = false;
+            return;
+        }
+
+        int round = RoundManager.Instance.RoundNumber;
+        if (round % updateCountEvery == 0)
+        {
+            enemyCount += enemyIncrement;
+        }
+
     }
 
 }

@@ -25,9 +25,13 @@ public class PlayerBullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Wall"))
+            Destroy(gameObject);
+
        // if()
-        Destroy(gameObject);
+       // Destroy(gameObject);
+
     }
 }

@@ -14,6 +14,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "QTE",
+                    "type": "Button",
+                    "id": "44d7c9be-ee26-40fd-9874-2b427449cf66",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -71,6 +80,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3ca547cc-97ed-4a60-8d9a-92b47bcef7f6",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QTE",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -83,6 +103,15 @@
                     "type": "PassThrough",
                     "id": "7fd9d6d2-ad48-4b53-ad77-f78a45338e04",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QTE",
+                    "type": "Button",
+                    "id": "f9e5c42a-7358-4a82-a5a6-14a6902e5c0c",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -143,6 +172,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "bfa901b4-faa0-4aa9-8d56-7dab8b236a34",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QTE",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -15,12 +15,20 @@ public class RoundManager : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private TextMeshProUGUI roundNumberText;
     [SerializeField] private TextMeshProUGUI roundDurationText;
+
+    [Header("QTE")]
     [SerializeField] private QuickTimeEvent chestQTE;
 
     //private float countdown;
 
     private bool roundEnded = false;
+
+    public int RoundNumber
+    {
+        get => round;
+    }
 
     private void Awake()
     {
@@ -153,6 +161,8 @@ public class RoundManager : MonoBehaviour
         //have !gameOver condition
         while (true)
         {
+            roundNumberText.text = "Round: " + round;
+
             //yield return StartCoroutine(Countdown());
             yield return StartCoroutine(Countdown(3f, countdownText));
 
@@ -169,6 +179,8 @@ public class RoundManager : MonoBehaviour
             //adjust enemy stats
 
             //let players decide when to start the next round
+
+            round++;
         }
 
         //losing condition, exit loop when a player's HP reaches 0
