@@ -38,15 +38,15 @@ public class EnemyManager : MonoBehaviour
         //enemyStats.OnDeath += UnRegisterEnemy;
     }
 
-    private void UnRegisterEnemy(Stats enemy)
+    private void UnRegisterEnemy(Stats enemyStats)
     {
-        enemy.OnDeath -= UnRegisterEnemy;
+        enemyStats.OnDeath -= UnRegisterEnemy;
         aliveEnemies -= 1;
 
         int index = 0;
         foreach (var e in listEnemy)
         {
-            if(e == enemy.gameObject)
+            if(e == enemyStats.gameObject)
             {
                 break;
             }
@@ -63,10 +63,10 @@ public class EnemyManager : MonoBehaviour
     {
         foreach (var enemyObj in listEnemy)
         {
-            Stats stats = enemyObj.GetComponent<Stats>();
+            Stats enemyStats = enemyObj.GetComponent<Stats>();
 
-            if (stats != null)
-                stats.OnDeath -= UnRegisterEnemy;
+            if (enemyStats != null)
+                enemyStats.OnDeath -= UnRegisterEnemy;
         }
 
         listEnemy.Clear();
@@ -83,9 +83,9 @@ public class EnemyManager : MonoBehaviour
 
             if (enemy == null) continue;
 
-            Stats stats = enemy.GetComponent<Stats>();
-            if (stats != null)
-                stats.OnDeath -= UnRegisterEnemy;
+            Stats enemyStats = enemy.GetComponent<Stats>();
+            if (enemyStats != null)
+                enemyStats.OnDeath -= UnRegisterEnemy;
 
            // Destroy(enemy);
             enemy.SetActive(false);

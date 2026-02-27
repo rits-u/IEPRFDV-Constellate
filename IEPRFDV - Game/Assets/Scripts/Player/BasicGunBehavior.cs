@@ -11,9 +11,11 @@ public class BasicGunBehavior : MonoBehaviour
 
     //[SerializeField] GameObject bulletPrefab;
     [SerializeField] GunTemplate gun;
+    [SerializeField] float rangeRadius;
 
     private float fireUpdate = 0;
     private bool isBursting = false;
+    private CircleCollider2D col;
 
     //enemies
     private int numEnemies = 0;
@@ -21,6 +23,8 @@ public class BasicGunBehavior : MonoBehaviour
 
     private void Start()
     {
+        col = GetComponent<CircleCollider2D>();
+        col.radius = rangeRadius;
     }
 
     private void Update()
@@ -126,8 +130,9 @@ public class BasicGunBehavior : MonoBehaviour
             Vector3 direction = (target.transform.position - transform.position).normalized;
 
             PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
+            Stats playerStats = GetComponentInParent<Stats>();
             bullet.SetDirection(direction);
-            bullet.SetDamage(GetComponentInParent<Stats>().ATK);
+            bullet.SetDamageInfo(playerStats.ATK, playerStats.gameObject);
 
             yield return new WaitForSeconds(gun.BurstInterval); //small burst gap
         }

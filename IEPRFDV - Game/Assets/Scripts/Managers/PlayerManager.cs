@@ -50,4 +50,25 @@ public class PlayerManager : MonoBehaviour
             player.GetComponent<PlayerMovement>().EnableMovement();
         }
     }
+
+    public void AddPointToPlayer(GameObject player, int points)
+    {
+        foreach(var p in playerList)
+        {
+            if(player == p)
+            {
+                PlayerScore ps = p.GetComponent<PlayerScore>();
+                if (ps != null)
+                {
+                    ps.Score += points;
+                    ps.UpdateScoreUI();
+                    // Debug.Log($"player score: {ps.Score}");
+                    break;
+                }
+                else
+                    Debug.Log("PlayerScore is Missing in " + p.name);
+            }
+
+        }
+    }
 }

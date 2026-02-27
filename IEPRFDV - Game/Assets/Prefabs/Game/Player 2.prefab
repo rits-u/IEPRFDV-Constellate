@@ -207,10 +207,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   move: {fileID: 0}
   moveSpeed: 7
-  doubleTapTime: 0.25
   dashSpeed: 15
   dashDuration: 0.4
-  isDashing: 0
+  holdDashTime: 0.15
+  tapWindow: 0.3
+  dashCooldown: 2
   blockingLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -284,7 +285,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.34, y: -0.06996226, z: 0}
-  m_LocalScale: {x: 1.1556, y: 0.36979, z: 1.1556}
+  m_LocalScale: {x: 1, y: 0.32, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3710789423585871245}
@@ -361,6 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicGun
   gun: {fileID: 11400000, guid: b5c12c65e95cf2f45929c6a422cd5328, type: 2}
+  rangeRadius: 0
   enemiesInRange: []
 --- !u!58 &4491070298139180576
 CircleCollider2D:

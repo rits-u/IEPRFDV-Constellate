@@ -32,7 +32,7 @@ public class Stats : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
         HP -= damage;
         OnDamaged?.Invoke();
@@ -47,7 +47,9 @@ public class Stats : MonoBehaviour
             //Debug.Log("enemy dead");
             OnDeath?.Invoke(this);
             Destroy(this.gameObject);
+            return true;
         }
-        
+
+        return false;
     }
 }
