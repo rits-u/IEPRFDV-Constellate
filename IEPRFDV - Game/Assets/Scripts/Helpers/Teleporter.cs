@@ -10,8 +10,6 @@ public class Teleporter : MonoBehaviour
     [SerializeField] int playersDetected;
     [SerializeField] private bool isCountingDown;
 
-    private Coroutine countRoutine;
-
     private void Start()
     {
         playersDetected = 0;
@@ -65,7 +63,7 @@ public class Teleporter : MonoBehaviour
 
     IEnumerator TransitionToGameScene()
     {
-        yield return StartCoroutine(countdown.OnCountdownEnd("Teleporting...", 1f));
+        yield return StartCoroutine(countdown.OnCountdownEnd("Teleporting...", 2f));
         countdown.StopCountdown();
         SceneManager.LoadScene("GameScene");
     }
