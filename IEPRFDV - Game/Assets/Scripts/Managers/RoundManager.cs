@@ -12,14 +12,15 @@ public class RoundManager : MonoBehaviour
 
     [SerializeField] private int round;
     [SerializeField] int roundDuration;
-    [SerializeField] private float countdownDuration = 3;
+    [SerializeField] private float countdownDuration = 3f;
 
     [Header("UI Elements")]
-    [SerializeField] private TextMeshProUGUI countdownText;
+    [SerializeField] private Countdown countdown;
     [SerializeField] private TextMeshProUGUI roundNumberText;
     [SerializeField] private TextMeshProUGUI roundDurationText;
 
     [Header("QTE")]
+    [SerializeField] private float qteCountdown = 5f;
     [SerializeField] private QuickTimeEvent chestQTE;
 
     //private float countdown;
@@ -57,36 +58,36 @@ public class RoundManager : MonoBehaviour
 
     }
 
-    IEnumerator Countdown()
-    {
-        float countdown = countdownDuration;
+    //IEnumerator Countdown()
+    //{
+    //    float countdown = countdownDuration;
        
-        while (countdown > 0)
-        {
-            countdownText.text = countdown.ToString();
-            yield return new WaitForSeconds(1f);
-            countdown -= 1;
-        }
+    //    while (countdown > 0)
+    //    {
+    //        countdownText.text = countdown.ToString();
+    //        yield return new WaitForSeconds(1f);
+    //        countdown -= 1;
+    //    }
 
-      //  countdownText.text = "START!";
+    //  //  countdownText.text = "START!";
        
-        countdownText.text = "";
-        //ExecuteRound();
-    }
+    //    countdownText.text = "";
+    //    //ExecuteRound();
+    //}
 
-    IEnumerator Countdown(float duration, TextMeshProUGUI textUI)
-    {
-        float countdown = duration;
+    //IEnumerator Countdown(float duration, TextMeshProUGUI textUI)
+    //{
+    //    float countdown = duration;
 
-        while (countdown > 0)
-        {
-            textUI.text = Mathf.CeilToInt(countdown).ToString();
-            yield return new WaitForSeconds(1f);
-            countdown -= 1f;
-        }
+    //    while (countdown > 0)
+    //    {
+    //        textUI.text = Mathf.CeilToInt(countdown).ToString();
+    //        yield return new WaitForSeconds(1f);
+    //        countdown -= 1f;
+    //    }
 
-        textUI.text = "";
-    }
+    //    textUI.text = "";
+    //}
 
     IEnumerator RoundTime()
     {
@@ -167,7 +168,7 @@ public class RoundManager : MonoBehaviour
 
             //yield return StartCoroutine(Countdown());
             PlayerManager.Instance.EnableAllPlayerMovement();
-            yield return StartCoroutine(Countdown(countdownDuration, countdownText));
+            yield return countdown.CountdownTo(countdownDuration);
 
             yield return StartCoroutine(RoundTime());
 
@@ -176,7 +177,8 @@ public class RoundManager : MonoBehaviour
             yield return new WaitForSeconds(1);
 
             PlayerManager.Instance.DisableAllPlayerMovement();
-            yield return StartCoroutine(Countdown(5f, countdownText));
+            yield return countdown.CountdownTo(qteCountdown);
+            // yield return StartCoroutine(Countdown(5f, countdownText));
 
             yield return StartCoroutine(chestQTE.PlayQTE());
 
