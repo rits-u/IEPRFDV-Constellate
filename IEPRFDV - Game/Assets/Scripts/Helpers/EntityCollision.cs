@@ -15,7 +15,7 @@ public class EntityCollision : MonoBehaviour
 
         if(damageDealer != null )
         {
-            stats.TakeDamage(damageDealer.damage);;
+            stats.TakeDamage(damageDealer.Damage);
         }
     }
 }

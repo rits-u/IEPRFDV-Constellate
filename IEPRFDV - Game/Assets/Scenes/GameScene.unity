@@ -7960,6 +7960,10 @@ PrefabInstance:
       value: 1152
       objectReference: {fileID: 0}
     - target: {fileID: 4821410720583016360, guid: 16f9340e0b2164148b1f22c8335d4287, type: 3}
+      propertyPath: attack
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821410720583016360, guid: 16f9340e0b2164148b1f22c8335d4287, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 2005439824}

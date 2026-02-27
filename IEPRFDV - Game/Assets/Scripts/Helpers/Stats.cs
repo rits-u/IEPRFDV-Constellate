@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour 
 {
-    [SerializeField] private float health = 10;
-    [SerializeField] private float attack = 3;
+    [SerializeField] private int health = 10;
+    [SerializeField] private int attack = 3;
 
     [Header("UI Elements")]
     [SerializeField] private HealthBar healthBar;
@@ -13,12 +13,12 @@ public class Stats : MonoBehaviour
     public event Action OnDamaged;
     public event Action<Stats> OnDeath;
 
-    public float HP
+    public int HP
     {
         get => health;
         set => health = value;
     }
-    public float ATK
+    public int ATK
     {
         get => attack;
         set => attack = value;
@@ -32,7 +32,7 @@ public class Stats : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         HP -= damage;
         OnDamaged?.Invoke();

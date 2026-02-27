@@ -4,6 +4,7 @@ public class PlayerBullet : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifeTime = 2f;
+    [SerializeField] private int damage;
     private Vector3 direction;
 
     void OnEnable()
@@ -15,6 +16,13 @@ public class PlayerBullet : MonoBehaviour
     {
         transform.position += direction * speed * Time.deltaTime;
     }
+
+    public void SetDamage(int dmg)
+    {
+        damage = dmg;
+        GetComponent<DamageDealer>().Damage = damage;
+    }
+
     public void SetDirection(Vector3 dir)
     {
         direction = dir.normalized;

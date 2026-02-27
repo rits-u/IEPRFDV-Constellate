@@ -125,7 +125,9 @@ public class BasicGunBehavior : MonoBehaviour
 
             Vector3 direction = (target.transform.position - transform.position).normalized;
 
-            obj.GetComponent<PlayerBullet>().SetDirection(direction);
+            PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
+            bullet.SetDirection(direction);
+            bullet.SetDamage(GetComponentInParent<Stats>().ATK);
 
             yield return new WaitForSeconds(gun.BurstInterval); //small burst gap
         }
