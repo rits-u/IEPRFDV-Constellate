@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Gun", menuName = "Constellate/Gun")]
-public class GunTemplate : ScriptableObject
+public class Gun : ScriptableObject
 {
     [SerializeField] private int damage;
     [SerializeField] private int numBullets;

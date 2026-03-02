@@ -10,7 +10,7 @@ public class BasicGunBehavior : MonoBehaviour
     //[SerializeField] private float fireInterval = 2f;
 
     //[SerializeField] GameObject bulletPrefab;
-    [SerializeField] GunTemplate gun;
+    [SerializeField] Gun gun;
     [SerializeField] float rangeRadius;
 
     private float fireUpdate = 0;

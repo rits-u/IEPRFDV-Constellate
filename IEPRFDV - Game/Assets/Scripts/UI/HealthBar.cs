@@ -3,23 +3,40 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Slider slider;
-    [SerializeField] private Gradient gradient;
-    [SerializeField] private Image fill;
+    [Header("Health")]
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private Gradient healthGradient;
+    [SerializeField] private Image healthFill;
+
+    [Header("Shield")]
+    [SerializeField] private Slider shieldSlider;
+    [SerializeField] private Gradient shieldGradient;
+    [SerializeField] private Image shieldFill;
 
     public void SetMaxHealth(float health)
     {
-        slider.maxValue = health;
-        slider.value = health;
-        fill.color = gradient.Evaluate(1f);
+        healthSlider.maxValue = health;
+        healthSlider.value = health;
+        healthFill.color = healthGradient.Evaluate(1f);
     }
 
-
-    //public
+    public void SetMaxShield(float shield)
+    {
+        shieldSlider.maxValue = shield;
+        shieldSlider.value = shield;
+        shieldFill.color = shieldGradient.Evaluate(1f);
+    }
 
     public void SetHealth(float health)
     {
-        slider.value = health;
-        fill.color = gradient.Evaluate(slider.normalizedValue);
+        healthSlider.value = health;
+        healthFill.color = healthGradient.Evaluate(healthSlider.normalizedValue);
     }
+
+    public void SetShield(float shield)
+    {
+        shieldSlider.value = shield;
+        shieldFill.color = shieldGradient.Evaluate(shieldSlider.normalizedValue);
+    }
+
 }

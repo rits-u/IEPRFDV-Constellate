@@ -5,6 +5,7 @@ public class Stats : MonoBehaviour
 {
     [SerializeField] private int health = 10;
     [SerializeField] private int attack = 3;
+    [SerializeField] private int shield;
 
     [Header("UI Elements")]
     [SerializeField] private HealthBar healthBar;
@@ -24,23 +25,48 @@ public class Stats : MonoBehaviour
         set => attack = value;
     }
 
+    public int SP
+    {
+        get => shield;
+        set => shield = value;
+    }
+
     private void Start()
     {
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(HP);
+            healthBar.SetMaxShield(SP);
         }
     }
 
     public bool TakeDamage(int damage)
     {
-        HP -= damage;
-        OnDamaged?.Invoke();
-        if (healthBar != null)
+        if (SP > 0)
         {
-            healthBar.SetHealth(HP);
-            
+            SP -= damage;
+            if(healthBar != null)
+            {
+                healthBar.SetShield(SP);
+            }
         }
+        else
+        {
+            HP -= damage;
+            if (healthBar != null)
+            {
+                healthBar.SetHealth(HP);
+
+            }
+        }
+
+        OnDamaged?.Invoke();
+
+        //if (healthBar != null)
+        //{
+        //    healthBar.SetHealth(HP);
+            
+        //}
 
         if(HP <= 0)
         {
