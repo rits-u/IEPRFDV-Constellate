@@ -1,33 +1,28 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
 
-public class QuickTimeEvent : MonoBehaviour
+public class OldQuickTimeEvent : MonoBehaviour
 {
     [Header("References")]
     [HideInInspector] private string name;
-    [SerializeField] private RectTransform targetCircle;
-    [SerializeField] private RectTransform movingCircle;
-
+    [SerializeField] private RectTransform ball;
+    [SerializeField] private RectTransform safeZone;
+    [SerializeField] private GameObject pointA;
+    [SerializeField] private GameObject pointB;
 
     [Header("Properties")]
     [SerializeField] private bool onEnable;
     [SerializeField] private bool deactivateAfter;
-    [SerializeField] private KeyCode inputKeySteal;
-    [SerializeField] private KeyCode inputKeyShare;
+    [SerializeField] private KeyCode inputKey1;
+    [SerializeField] private KeyCode inputKey2;
 
-    [SerializeField] private float duration = 5f;
-    [SerializeField] private float growDuration = 1.5f;
-    [SerializeField] private float startScale = 4f;
-    [SerializeField] private float endScale = .5f;
-    [SerializeField] private float tolerance = 0.35f;
-
-    [HideInInspector] private float timer;
-    [HideInInspector] private bool active;
-
+    [SerializeField] private float maxTime;
+    [SerializeField] private float AToBTime;
+    [HideInInspector] private Vector3 startPos;
+    
 
     [Header("Interactions")]
     [SerializeField] private GameObject[] toActivateOnValid;
@@ -57,7 +52,7 @@ public class QuickTimeEvent : MonoBehaviour
     {
         if (onEnable) return;
 
-        StartCoroutine(RunTimer());
+        StartCoroutine(RunTimer(maxTime));
     }
 
     private void OnEnable()
@@ -65,7 +60,7 @@ public class QuickTimeEvent : MonoBehaviour
         if (onEnable)
         {
             InitializeValues();
-            StartCoroutine(RunTimer());
+            StartCoroutine(RunTimer(maxTime));
         }
     }
 
@@ -87,8 +82,8 @@ public class QuickTimeEvent : MonoBehaviour
     public void StartQTE()
     {
         gameObject.SetActive(true);
-        InitializeValues();
-        StartCoroutine(RunTimer());
+        InitializeValues();          
+        StartCoroutine(RunTimer(maxTime));
     }
 
     public IEnumerator PlayQTE()
@@ -104,8 +99,8 @@ public class QuickTimeEvent : MonoBehaviour
         InitializeValues();
         gameObject.SetActive(true);
 
-
-        StartCoroutine(RunTimerEvent());
+      
+        StartCoroutine(RunTimerEvent(maxTime));
 
         //wait until player clicks or timer runs out
         yield return new WaitUntil(() => finished);
@@ -120,12 +115,12 @@ public class QuickTimeEvent : MonoBehaviour
 
         if (!gameObject.activeSelf) return;
 
-        // Debug.Log("qte done");
+       // Debug.Log("qte done");
         OnFinished?.Invoke();
-        // Deactivate();
+       // Deactivate();
     }
 
-    IEnumerator RunTimerEvent()
+    IEnumerator RunTimerEvent(float duration)
     {
         float timer = 0f;
         while (timer < duration)
@@ -138,14 +133,15 @@ public class QuickTimeEvent : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
+        Debug.Log(name + ": time ran out");
         if (deactivateAfter)
         {
-            Debug.Log(name + ": time ran out，deactivating");
+            Debug.Log(name + ": deactivating");
             Deactivate();
         }
     }
 
-    IEnumerator RunTimer()
+    IEnumerator RunTimer(float duration)
     {
         float timer = 0f;
         while (timer < duration)
@@ -163,38 +159,37 @@ public class QuickTimeEvent : MonoBehaviour
         if (deactivateAfter)
         {
             Debug.Log(name + ": deactivating");
-            //  Deactivate();
+          //  Deactivate();
             FinishQTE();
         }
-        // FinishQTE();
+       // FinishQTE();
 
     }
 
     void MoveBall()
     {
+        Vector3 offset = pointB.transform.position - pointA.transform.position;
         time += Time.deltaTime;
-        float t = Mathf.PingPong(time / growDuration, 1f);
-
-        float scale = Mathf.Lerp(startScale, endScale, t);
-        movingCircle.localScale = Vector3.one * scale;
-
+        float t = Mathf.PingPong(time / AToBTime, 1f);
+        //ball.position = startPos + Vector3.Lerp(Vector3.zero, pointB.transform.position, t);
+        ball.position = Vector3.Lerp(pointA.transform.position, pointB.transform.position, t);
     }
 
     bool CheckKeyPress()
     {
-        if (Input.GetKeyDown(inputKeySteal) || Input.GetKeyDown(inputKeyShare))
+        if (Input.GetKeyDown(inputKey1)|| Input.GetKeyDown(inputKey2))
         {
             hasClicked = true;
-            if (IsAOverlapB(movingCircle, targetCircle))
+            if (IsOverlap(ball, safeZone))
             {
-                Debug.Log(name + ": is inside area");
+                Debug.Log(name + ": ball inside area");
                 clickSuccess = true;
                 activatedValidObjects = SetObjects(toActivateOnValid, true);
                 deactivatedValidObjects = SetObjects(toDeactivateOnValid, false);
             }
             else
             {
-                Debug.Log(name + ": is outside area");
+                Debug.Log(name + ": ball outside area");
                 activatedInvalidObjects = SetObjects(toActivateOnInvalid, true);
                 deactivatedInvalidObjects = SetObjects(toDeactivateOnInvalid, false);
             }
@@ -213,18 +208,11 @@ public class QuickTimeEvent : MonoBehaviour
         }
     }
 
-    bool IsAOverlapB(RectTransform a, RectTransform b)
+    bool IsOverlap(RectTransform a, RectTransform b)
     {
-        float currentScale = a.localScale.x;
-        float targetScale = b.localScale.x;
-
-        //float debug = MathF.Abs(currentScale - targetScale);
-        //Debug.Log($"{name} {debug} || {currentScale} - {targetScale} <= tolerance? {MathF.Abs(currentScale - targetScale) <= tolerance}");
-        if (MathF.Abs(currentScale - targetScale) <= tolerance)
-        {
-            return true;
-        }
-        return false;
+        Rect rectA = GetWorldRect(a);
+        Rect rectB = GetWorldRect(b);
+        return rectA.Overlaps(rectB);
     }
 
     bool SetObjects(GameObject[] objects, bool value)
@@ -253,28 +241,30 @@ public class QuickTimeEvent : MonoBehaviour
         {
             name = gameObject.name;
         }
-        if (!targetCircle)
+        if (!ball)
         {
-            Debug.LogError($"{gameObject.name}'s targetCircle is null");
+            Debug.LogError("ball is null");
         }
-        if (!movingCircle)
+        if (!pointA)
         {
-            Debug.LogError($"{gameObject.name}'s movingCircle is null");
+            Debug.LogError("pointA is null");
         }
-
-        if (inputKeySteal == KeyCode.None)
+        if (!pointB)
         {
-            Debug.LogError($"{gameObject.name}'s inputKeySteal is null");
+            Debug.LogError("pointB is null");
         }
-        if (inputKeyShare == KeyCode.None)
+        if (!safeZone)
         {
-            Debug.LogError($"{gameObject.name}'s inputKeyShare is null");
+            Debug.LogError("safeZone is null");
         }
-
+        if (AToBTime == 0)
+        {
+            AToBTime = 1;
+        }
     }
     void InitializeValues()
     {
-
+        startPos = ball.transform.position;
     }
     void Deactivate()
     {
