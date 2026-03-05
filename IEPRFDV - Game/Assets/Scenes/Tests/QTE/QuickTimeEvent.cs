@@ -15,7 +15,7 @@ public class QuickTimeEvent : MonoBehaviour
 
     [Header("Player Input")]
     [SerializeField] private InputActionReference P1Input;
-    [SerializeField] private InputActionReference P2Input;
+    //[SerializeField] private InputActionReference P2Input;
 
     [Header("Properties")]
     [SerializeField] private bool onEnable;
@@ -28,6 +28,10 @@ public class QuickTimeEvent : MonoBehaviour
     [SerializeField] private float startScale = 4f;
     [SerializeField] private float endScale = .5f;
     [SerializeField] private float tolerance = 0.35f;
+    [SerializeField] private float restartCooldown = 1.5f;
+
+    private float cooldownTimer = 0f;
+    private bool isCooldown = true;
 
     [HideInInspector] private float timer;
     [HideInInspector] private bool active;
@@ -61,32 +65,25 @@ public class QuickTimeEvent : MonoBehaviour
     {
         if (onEnable) return;
 
-        StartCoroutine(RunTimer());
+        P1Input.action.Enable();
+        //StartCoroutine(RunTimer());
     }
 
     private void OnEnable()
     {
         if (onEnable)
         {
+            P1Input.action.Enable();
             InitializeValues();
-            StartCoroutine(RunTimer());
+         //   StartCoroutine(RunTimer());
+            StartCooldown();
         }
     }
 
     void Update()
     {
-        MoveBall();
-        if (CheckKeyPress())
-        {
-            HandleClickSuccess();
-
-            if (deactivateAfter)
-            {
-                Debug.Log(name + ": deactivating");
-                Deactivate();
-            }
-        }
-        //if (CheckKeyBindPress())
+        MoveCircle();
+        //if (CheckKeyPress())
         //{
         //    HandleClickSuccess();
 
@@ -96,13 +93,24 @@ public class QuickTimeEvent : MonoBehaviour
         //        Deactivate();
         //    }
         //}
+        if (CheckKeyBindPress())
+        {
+            HandleClickSuccess();
+
+            if (deactivateAfter)
+            {
+                Debug.Log(name + ": deactivating");
+                Deactivate();
+            }
+        }
     }
 
     public void StartQTE()
     {
         gameObject.SetActive(true);
         InitializeValues();
-        StartCoroutine(RunTimer());
+        StartCooldown();
+        // StartCoroutine(RunTimer());
     }
 
     public IEnumerator PlayQTE()
@@ -184,14 +192,56 @@ public class QuickTimeEvent : MonoBehaviour
 
     }
 
-    void MoveBall()
-    {
-        time += Time.deltaTime;
-        float t = Mathf.PingPong(time / growDuration, 1f);
+    //void MoveBall()
+    //{
+    //    time += Time.deltaTime;
+    //    float t = Mathf.PingPong(time / growDuration, 1f);
 
+    //    float scale = Mathf.Lerp(startScale, endScale, t);
+    //    movingCircle.localScale = Vector3.one * scale;
+
+    //}
+
+    void StartCooldown()
+    {
+        ResetCircle();
+        isCooldown = true;
+        cooldownTimer = 0f;
+    }
+
+    void ResetCircle()
+    {
+        movingCircle.localScale = Vector3.one * startScale;
+    }
+
+    void MoveCircle()
+    {
+        if (isCooldown)
+        {
+            cooldownTimer += Time.deltaTime;
+
+            if (cooldownTimer >= restartCooldown)
+            {
+                isCooldown = false;
+                cooldownTimer = 0f;
+                time = 0f;
+                hasClicked = false;
+            }
+
+            return;
+        }
+
+        time += Time.deltaTime;
+
+        float t = time / growDuration;
         float scale = Mathf.Lerp(startScale, endScale, t);
         movingCircle.localScale = Vector3.one * scale;
 
+       
+        if (t >= 1f)
+        {
+            StartCooldown();
+        }
     }
 
     bool CheckKeyPress()
@@ -217,32 +267,59 @@ public class QuickTimeEvent : MonoBehaviour
         return false;
     }
 
+
     bool CheckKeyBindPress()
     {
         float P1_qte = P1Input.action.ReadValue<float>();
-        float P2_qte = P2Input.action.ReadValue<float>();
-       // Debug.Log($"player qte: {P1_qte}");
 
-        if (P1_qte == 1.0f || P2_qte == 1.0f) 
+        if (P1Input.action.WasPressedThisFrame() && !hasClicked)
         {
             hasClicked = true;
-            if (IsOverlap(ball, safeZone))
+
+            if (IsAOverlapB(movingCircle, targetCircle))
             {
-                Debug.Log(name + ": ball inside area");
+                Debug.Log(name + ": inside area");
+
+                if (P1_qte == 1.0) Debug.Log("Share <3");
                 clickSuccess = true;
-                activatedValidObjects = SetObjects(toActivateOnValid, true);
-                deactivatedValidObjects = SetObjects(toDeactivateOnValid, false);
             }
             else
             {
-                Debug.Log(name + ": ball outside area");
-                activatedInvalidObjects = SetObjects(toActivateOnInvalid, true);
-                deactivatedInvalidObjects = SetObjects(toDeactivateOnInvalid, false);
+                Debug.Log(name + ": outside area");
             }
+
             return true;
         }
+
         return false;
     }
+
+    //bool CheckKeyBindPress()
+    //{
+    //    float P1_qte = P1Input.action.ReadValue<float>();
+    //    float P2_qte = P2Input.action.ReadValue<float>();
+    //   // Debug.Log($"player qte: {P1_qte}");
+
+    //    if (P1_qte == 1.0f || P2_qte == 1.0f) 
+    //    {
+    //        hasClicked = true;
+    //        if (IsOverlap(ball, safeZone))
+    //        {
+    //            Debug.Log(name + ": ball inside area");
+    //            clickSuccess = true;
+    //            activatedValidObjects = SetObjects(toActivateOnValid, true);
+    //            deactivatedValidObjects = SetObjects(toDeactivateOnValid, false);
+    //        }
+    //        else
+    //        {
+    //            Debug.Log(name + ": ball outside area");
+    //            activatedInvalidObjects = SetObjects(toActivateOnInvalid, true);
+    //            deactivatedInvalidObjects = SetObjects(toDeactivateOnInvalid, false);
+    //        }
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
 
 
@@ -306,14 +383,14 @@ public class QuickTimeEvent : MonoBehaviour
             Debug.LogError($"{gameObject.name}'s movingCircle is null");
         }
 
-        if (inputKeySteal == KeyCode.None)
-        {
-            Debug.LogError($"{gameObject.name}'s inputKeySteal is null");
-        }
-        if (inputKeyShare == KeyCode.None)
-        {
-            Debug.LogError($"{gameObject.name}'s inputKeyShare is null");
-        }
+        //if (inputKeySteal == KeyCode.None)
+        //{
+        //    Debug.LogError($"{gameObject.name}'s inputKeySteal is null");
+        //}
+        //if (inputKeyShare == KeyCode.None)
+        //{
+        //    Debug.LogError($"{gameObject.name}'s inputKeyShare is null");
+        //}
 
     }
     void InitializeValues()
