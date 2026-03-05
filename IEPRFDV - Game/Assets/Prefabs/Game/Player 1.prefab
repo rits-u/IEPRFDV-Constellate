@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicGun
   gun: {fileID: 11400000, guid: b5c12c65e95cf2f45929c6a422cd5328, type: 2}
+  rangeRadius: 0
   enemiesInRange: []
 --- !u!58 &8235816407158885447
 CircleCollider2D:
@@ -228,8 +229,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1455867387
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
@@ -372,6 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   health: 10
   attack: 3
+  shield: 0
   healthBar: {fileID: 0}
 --- !u!114 &5638268916656058130
 MonoBehaviour:

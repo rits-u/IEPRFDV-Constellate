@@ -51,12 +51,12 @@ public class TriggerRewardArea : MonoBehaviour
 
         if (timeSinceLast >= timeCheck && !rewardDisplayed)
         {
-            Debug.Log("hello");
             chestLoot.RandomizeLoot();
             ShowRewards();
             PlayerManager.Instance.DisableAllPlayerMovement();
             timeSinceLast = 0;
             rewardDisplayed = true;
+            startCount = false;
         }
     }
 
