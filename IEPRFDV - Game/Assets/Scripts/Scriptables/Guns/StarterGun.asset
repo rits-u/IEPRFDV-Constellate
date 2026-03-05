@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970cdc445ac20364c896ad7c211e76d8, type: 3}
   m_Name: StarterGun
   m_EditorClassIdentifier: Assembly-CSharp::GunTemplate
+  itemName: Starter Gun
+  type: 0
   damage: 1
   numBullets: 3
   burstInterval: 0.2

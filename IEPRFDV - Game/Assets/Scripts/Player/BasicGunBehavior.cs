@@ -132,7 +132,7 @@ public class BasicGunBehavior : MonoBehaviour
             PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
             Stats playerStats = GetComponentInParent<Stats>();
             bullet.SetDirection(direction);
-            bullet.SetDamageInfo(playerStats.ATK, playerStats.gameObject);
+            bullet.SetDamageInfo(playerStats.ATK + gun.Damage, playerStats.gameObject);
 
             yield return new WaitForSeconds(gun.BurstInterval); //small burst gap
         }

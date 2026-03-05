@@ -102,6 +102,8 @@ public class EnemyManager : MonoBehaviour
         Stats enemyStats = enemy.GetComponent<Stats>();
         enemyStats.OnDeath += UnRegisterEnemy;
 
+        enemyStartingHP = enemyStats.HP;
+
         int round = RoundManager.Instance.RoundNumber;
 
         if (round % updateHealthEvery == 0)

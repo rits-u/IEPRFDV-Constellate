@@ -1,7 +1,7 @@
-public enum ItemType
-{
-    Weapon,
-    Equipment,
-    Consumables,
-    Orb
-}
+//public enum ItemType
+//{
+//    Weapon,
+//    Equipment,
+//    Consumables,
+//    Orb
+//}

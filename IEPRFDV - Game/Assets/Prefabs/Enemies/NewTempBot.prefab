@@ -242,5 +242,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   health: 10
   attack: 1
+  shield: 0
   healthBar: {fileID: 0}
   pointValue: 3
