@@ -10,6 +10,7 @@ public class RoundManager : MonoBehaviour
 {
     public static RoundManager Instance;
 
+    [Header("Properties")]
     [SerializeField] private int round;
     [SerializeField] int roundDuration;
     [SerializeField] private float countdownDuration = 3;
@@ -17,8 +18,15 @@ public class RoundManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private TextMeshProUGUI roundDurationText;
-    [SerializeField] private QuickTimeEvent chestQTE;
 
+    [Header("References")]
+    [SerializeField] private GameObject UICanvas;
+    [SerializeField] private GameObject player1;
+    [SerializeField] private GameObject player2;
+    [SerializeField] private GameObject QTEPrefab;
+
+
+    
     //private float countdown;
 
     private bool roundEnded = false;
@@ -82,6 +90,7 @@ public class RoundManager : MonoBehaviour
 
     IEnumerator RoundTime()
     {
+        Debug.Log($"RM: Start round time");
         int timer = roundDuration;
         int secondsCount = timer;
         int minutesCount = timer / 60;
@@ -90,6 +99,7 @@ public class RoundManager : MonoBehaviour
         string minutes = "";
         string seconds = "";
 
+        Debug.Log($"RM: RT: Start Spawning");
         SpawnManager.Instance.StartSpawning();
 
         while(timer > 0)
@@ -111,6 +121,7 @@ public class RoundManager : MonoBehaviour
             
         }
 
+        Debug.Log($"RM: RT: Stop Spawning");
         SpawnManager.Instance.StopSpawning();
         //EnemyManager.Instance.UnregisterAllEnemies();
 
@@ -120,6 +131,7 @@ public class RoundManager : MonoBehaviour
 
     public void ExecuteRound()
     {
+        Debug.Log($"RM: Start ExecuteRound");
         StartCoroutine(RoundTime());
 
     }
@@ -151,9 +163,11 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator RoundFlow()
     {
+        Debug.Log($"RM: Start RoundFlow");
         //have !gameOver condition
         while (IsGameRunning())
         {
+            Debug.Log($"RM: Start RoundFlow While loop");
             //yield return StartCoroutine(Countdown());
             yield return StartCoroutine(Countdown(countdownDuration, countdownText));
 
@@ -165,12 +179,15 @@ public class RoundManager : MonoBehaviour
 
             yield return StartCoroutine(Countdown(5f, countdownText));
 
-            yield return StartCoroutine(chestQTE.PlayQTE());
+            Debug.Log($"RM: WL: instance qte1 ");
+            RunQTE(player1);
+            RunQTE(player2);
 
             //adjust enemy stats
 
             //let players decide when to start the next round
         }
+        Debug.Log($"RM: End RoundFlow While loop ");
 
         //losing condition, exit loop when a player's HP reaches 0
     }
@@ -181,6 +198,12 @@ public class RoundManager : MonoBehaviour
         return true;
     }
 
+    //(fix) make sure qte destroy itself after
+    private IEnumerator RunQTE(GameObject player)
+    {
+        GameObject qte = Instantiate(QTEPrefab, UICanvas.transform, false);
+        yield return StartCoroutine(qte.GetComponent<QuickTimeEvent>().PlayQTE(player));
+    }
     //list
    /* disable player movement on countdowns
     * dash cooldown ui

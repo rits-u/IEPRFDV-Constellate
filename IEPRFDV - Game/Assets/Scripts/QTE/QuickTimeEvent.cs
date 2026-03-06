@@ -8,10 +8,12 @@ using Unity.VisualScripting;
 public class QuickTimeEvent : MonoBehaviour
 {
     [Header("References")]
-    [HideInInspector] private string name;
     [SerializeField] private RectTransform targetCircle;
     [SerializeField] private RectTransform movingCircle;
+    [HideInInspector] private RectTransform parent;
 
+    [HideInInspector] private string name;
+    [HideInInspector] private float xPos;
 
     [Header("Properties")]
     [SerializeField] private bool onEnable;
@@ -42,6 +44,8 @@ public class QuickTimeEvent : MonoBehaviour
     [HideInInspector] private bool deactivatedValidObjects = false;
     [HideInInspector] private bool activatedInvalidObjects = false;
     [HideInInspector] private bool deactivatedInvalidObjects = false;
+
+    
 
 
     [HideInInspector] private float time = 0f;
@@ -91,8 +95,26 @@ public class QuickTimeEvent : MonoBehaviour
         StartCoroutine(RunTimer());
     }
 
-    public IEnumerator PlayQTE()
+    public IEnumerator  PlayQTE(GameObject player)
     {
+        switch (player.name)
+        {
+            case "Player 1":
+                inputKeySteal = KeyCode.W;
+                inputKeyShare = KeyCode.S;
+                transform.position = new Vector2(xPos, transform.position.y);
+                break;
+            case "Player 2":
+                inputKeySteal = KeyCode.UpArrow;
+                inputKeyShare = KeyCode.DownArrow;
+                transform.position = new Vector2(xPos * 2, transform.position.y);
+                break;
+            default:
+                inputKeySteal = KeyCode.W;
+                inputKeyShare = KeyCode.S;
+                transform.position = new Vector2(xPos, transform.position.y);
+                break;
+        }
         bool finished = false;
 
         System.Action handler = () => finished = true; //event thatll mark qte finished
@@ -237,6 +259,17 @@ public class QuickTimeEvent : MonoBehaviour
         return true;
     }
 
+   //void CreateChildRect(string name, RectTransform rect, Vector3 pos)
+   // {
+   //     GameObject child = new GameObject(name);
+   //     child.name = name;
+   //     child.transform.SetParent(transform);
+
+   //     rect = child.AddComponent<RectTransform>();
+   //     rect.localScale = Vector3.one;
+   //     rect.position = pos;
+   // }
+
     Rect GetWorldRect(RectTransform rect)
     {
         Vector3[] corners = new Vector3[4];
@@ -264,17 +297,19 @@ public class QuickTimeEvent : MonoBehaviour
 
         if (inputKeySteal == KeyCode.None)
         {
-            Debug.LogError($"{gameObject.name}'s inputKeySteal is null");
+            inputKeySteal = KeyCode.W;
+            //Debug.LogError($"{gameObject.name}'s inputKeySteal is null");
         }
         if (inputKeyShare == KeyCode.None)
         {
-            Debug.LogError($"{gameObject.name}'s inputKeyShare is null");
+            inputKeyShare = KeyCode.S;
+            //Debug.LogError($"{gameObject.name}'s inputKeyShare is null");
         }
-
+        parent = transform.parent.GetComponent<RectTransform>();
     }
     void InitializeValues()
     {
-
+        xPos = parent.rect.width * 0.3333f;
     }
     void Deactivate()
     {
