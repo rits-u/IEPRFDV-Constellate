@@ -131,12 +131,12 @@
                 },
                 {
                     "name": "QTE",
-                    "type": "Button",
-                    "id": "f9e5c42a-7358-4a82-a5a6-14a6902e5c0c",
-                    "expectedControlType": "",
+                    "type": "Value",
+                    "id": "101734e1-daf0-45dc-96cb-a6e260c73470",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -196,15 +196,37 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "bfa901b4-faa0-4aa9-8d56-7dab8b236a34",
-                    "path": "<Keyboard>/enter",
+                    "name": "1D Axis",
+                    "id": "c1920b52-2730-43b4-b17d-30a6f2783d4b",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QTE",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "400f2395-00c1-4cc6-b416-e4a00811d4cc",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "QTE",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "3610ddc4-b810-443a-9d81-9ef3d7f73d72",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QTE",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
