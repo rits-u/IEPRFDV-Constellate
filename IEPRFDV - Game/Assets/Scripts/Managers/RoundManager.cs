@@ -192,7 +192,7 @@ public class RoundManager : MonoBehaviour
             yield return new WaitForSeconds(1);
 
             PlayerManager.Instance.DisableAllPlayerMovement();
-            yield return countdown.CountdownTo(qteCountdown);
+         //   yield return countdown.CountdownTo(qteCountdown);
             // yield return StartCoroutine(Countdown(5f, countdownText));
 
             Debug.Log($"RM: WL: instance qte1 ");
