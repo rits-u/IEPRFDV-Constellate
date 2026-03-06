@@ -15,7 +15,7 @@ MonoBehaviour:
   itemName: stronk gun
   type: 0
   damage: 111
-  numBullets: 12
+  numBullets: 3
   burstInterval: 3
   fireInterval: 2
   bulletPrefab: {fileID: 0}

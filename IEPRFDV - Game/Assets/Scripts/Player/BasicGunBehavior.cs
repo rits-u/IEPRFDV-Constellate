@@ -10,8 +10,11 @@ public class BasicGunBehavior : MonoBehaviour
     //[SerializeField] private float fireInterval = 2f;
 
     //[SerializeField] GameObject bulletPrefab;
-    [SerializeField] Gun gun;
-    [SerializeField] float rangeRadius;
+    //[SerializeField] Gun gun;
+
+
+    [SerializeField] float rangeRadius; //should be in gun template instead(?)
+    private Gun gun;
 
     private float fireUpdate = 0;
     private bool isBursting = false;
@@ -25,10 +28,14 @@ public class BasicGunBehavior : MonoBehaviour
     {
         col = GetComponent<CircleCollider2D>();
         col.radius = rangeRadius;
+        gun = transform.parent.GetComponent<PlayerInventory>().GetPlayerGun();
+        //gun = 
     }
 
     private void Update()
     {
+        gun = transform.parent.GetComponent<PlayerInventory>().GetPlayerGun(); //(??)
+
         if (numEnemies <= 0)
             return;
 

@@ -21,6 +21,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public GameObject GetPlayerByIndex(int index)
+    {
+        return playerList[index];
+    }
+
     public void DisablePlayerMovement(GameObject player)
     {
         if (player == null) return;
@@ -70,5 +75,17 @@ public class PlayerManager : MonoBehaviour
             }
 
         }
+    }
+
+    public void ApplyGearToPlayer(Gear gear, int playerID, int tier)
+    {
+        PlayerInventory inventory = playerList[playerID - 1].GetComponent<PlayerInventory>();
+        inventory.EquipGear(gear, tier);
+    }
+
+    public void SwitchWeaponOfPlayer(Gun gun, int playerID, int tier)
+    {
+        PlayerInventory inventory = playerList[playerID - 1].GetComponent<PlayerInventory>();
+        inventory.EquipGun(gun, tier);
     }
 }

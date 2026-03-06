@@ -105,7 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aed00f7f9bb6f4408e5f14c7bf393a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicGun
-  gun: {fileID: 11400000, guid: b5c12c65e95cf2f45929c6a422cd5328, type: 2}
   rangeRadius: 0
   enemiesInRange: []
 --- !u!58 &8235816407158885447
@@ -158,6 +157,7 @@ GameObject:
   - component: {fileID: 8918444520421149640}
   - component: {fileID: 2743379287960202087}
   - component: {fileID: 4171016545449378957}
+  - component: {fileID: 3741476412755077232}
   - component: {fileID: 4821410720583016360}
   - component: {fileID: 5638268916656058130}
   - component: {fileID: 9166649475267107440}
@@ -359,6 +359,21 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &3741476412755077232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7065830426474312635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f635e05569c7e548bdb6c72f97fc70e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  gun: {fileID: 11400000, guid: b5c12c65e95cf2f45929c6a422cd5328, type: 2}
+  maxSlots: 6
+  gearList: []
 --- !u!114 &4821410720583016360
 MonoBehaviour:
   m_ObjectHideFlags: 0

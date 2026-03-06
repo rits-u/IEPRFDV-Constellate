@@ -1,0 +1,70 @@
+using NUnit.Framework;
+using UnityEngine;
+using System.Collections.Generic;
+
+public class LootManager : MonoBehaviour
+{
+    public static LootManager Instance;
+
+    [SerializeField] private List<Item> lootDrops = new();
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else Destroy(this.gameObject);
+    }
+
+    public void AddItemToLoot(Item item)
+    {
+        lootDrops.Add(item);
+       // Debug.Log($"LM: loot count: {lootDrops.Count}");
+    }
+
+    public void RemoveItemFromLoot(Item item)
+    {
+        lootDrops.Remove(item);
+    }
+
+    public void ResolveLoot(QTEResult result)
+    {
+        switch (result)
+        {
+            case QTEResult.Share:
+                DistributeItem(1, 1);
+                DistributeItem(2, 1);
+                Debug.Log($"Each player gets Tier 1");
+                break;
+            case QTEResult.P1Steals:
+                DistributeItem(1, 2);
+                Debug.Log($"P1 gets Tier 2, P2 gets none");
+                break;
+            case QTEResult.P2Steals:
+                DistributeItem(2, 2);
+                Debug.Log($"P1 gets none, P2 gets Tier 2");
+                break;
+            case QTEResult.None:
+                Debug.Log($"get good");
+                break;
+        }
+    }
+
+    private void DistributeItem(int playerID, int multiplier)
+    {
+        foreach (Item item in lootDrops)
+        {
+            if (item.type == LootType.GEAR)
+            {
+                Gear gear = (Gear)item;
+                PlayerManager.Instance.ApplyGearToPlayer(gear, playerID, multiplier);
+            }
+            else if (item.type == LootType.WEAPON)
+            {
+                Gun gun = (Gun)item;
+                PlayerManager.Instance.SwitchWeaponOfPlayer(gun, playerID, multiplier);
+            }
+            // else if( health case  )
+
+        }
+    }
+}

@@ -55,6 +55,8 @@ public class ChestLoot : MonoBehaviour
 
 
                     lootTable.Remove(item); //remove from the drops
+                    LootManager.Instance.AddItemToLoot(item.item);
+
                     break;
                 }
                 case LootType.GEAR:
@@ -77,7 +79,7 @@ public class ChestLoot : MonoBehaviour
                         index++;
                     }
 
-
+                    LootManager.Instance.AddItemToLoot(item.item);
                     break;
                 }
             }            

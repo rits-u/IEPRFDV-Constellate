@@ -17,6 +17,19 @@ public class Gear : Item
     public int ATK => attack;
     public int SP => shield;
 
+    //public override void UpgradeToNextTier()
+    //{
+    //    health *= 2;
+    //    attack *= 2;
+    //    shield *= 2;
+    //    //needs adjustment
+    //}
+
+    //public void Upgrade(Gear gear, int tier)
+    //{
+
+    //}
+
 
 
 }

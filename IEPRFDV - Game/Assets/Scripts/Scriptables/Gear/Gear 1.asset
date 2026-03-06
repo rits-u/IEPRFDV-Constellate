@@ -15,6 +15,6 @@ MonoBehaviour:
   itemName: Haha Gear
   type: 1
   health: 11
-  attack: 2
-  shield: 3
+  attack: 3
+  shield: 0
   effect: 

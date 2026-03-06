@@ -7,6 +7,14 @@ using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+public enum QTEResult
+{
+    Share,
+    P1Steals,
+    P2Steals,
+    None
+}
+
 public class TestQTE : MonoBehaviour
 {
     [Header("References")]
@@ -18,8 +26,8 @@ public class TestQTE : MonoBehaviour
     [SerializeField] private InputActionReference P1Input;
     [SerializeField] private InputActionReference P2Input;
     // [SerializeField] float inputWindow = 0.2f;
-    private float p1PressTime = -1f;
-    private float p2PressTime = -1f;
+    //private float p1PressTime = -1f;
+    //private float p2PressTime = -1f;
 
     [Header("Properties")]
     [SerializeField] private bool onEnable;
@@ -37,8 +45,8 @@ public class TestQTE : MonoBehaviour
     private float cooldownTimer = 0f;
     private bool isCooldown = true;
 
-    [HideInInspector] private float timer;
-    [HideInInspector] private bool active;
+    //[HideInInspector] private float timer;
+    //[HideInInspector] private bool active;
 
 
     [Header("Interactions")]
@@ -68,17 +76,16 @@ public class TestQTE : MonoBehaviour
 
     public event Action OnFinished;
 
-    float p1Value;
-    float p2Value;
+    private float p1Value, p2Value;
+    private bool p1Valid, p2Valid;
 
-    float p1Time = -1;
-    float p2Time = -1;
+    private float p1Time = -1;
+    private float p2Time = -1;
 
-    bool p1Valid, p2Valid;
 
-    float bufferWindow = 0.2f;
+    private float bufferWindow = 0.2f;
 
-    bool resolved = false;
+    private bool resolved = false;
 
 
 
@@ -380,26 +387,27 @@ public class TestQTE : MonoBehaviour
         if (IsAOverlapB(movingCircle, targetCircle))
         {
             Debug.Log($"P1: {p1Value}  P2: {p2Value}");
-            int result = 0;
+            //    int result = 0;
+            QTEResult result = QTEResult.None;
 
             if (p1Value > 0.5f && p2Value < -0.5f)
             {
                 Debug.Log("share");
-                result = 1;
+                result = QTEResult.Share;
             }
             else if (p1Value < -0.5f && p2Value < -0.5f)
             {
                 Debug.Log("p1 steals");
-                result = 2;
+                result = QTEResult.P1Steals;
             }
             else if (p1Value > 0.5f && p2Value > 0.5f)
             {
                 Debug.Log("p2 steals");
-                result = 3;
+                result = QTEResult.P2Steals;
             }
             else if (p1Value < -0.5f && p2Value > 0.5f)
             {
-                result = 4;
+                result = QTEResult.None;
                 Debug.Log("no one gets rewards");
             }
 
@@ -432,7 +440,7 @@ public class TestQTE : MonoBehaviour
         resolved = false;
     }
 
-    IEnumerator ProcessResults(int result)
+    IEnumerator ProcessResults(QTEResult result)
     {
         yield return new WaitForSeconds(1.0f);
         if (deactivateAfter)
@@ -440,28 +448,30 @@ public class TestQTE : MonoBehaviour
 
         switch (result)
         {
-            case 1:
+            case QTEResult.Share:
                 ShowInputSprite(p1ResultImage, spriteShare);
                 ShowInputSprite(p2ResultImage, spriteShare);
                 Debug.Log("result 1");
                 break;
-            case 2:
+            case QTEResult.P1Steals:
                 ShowInputSprite(p1ResultImage, spriteSteal);
                 ShowInputSprite(p2ResultImage, spriteShare);
                 Debug.Log("result 2");
 
                 break;
-            case 3:
+            case QTEResult.P2Steals:
                 ShowInputSprite(p1ResultImage, spriteShare);
                 ShowInputSprite(p2ResultImage, spriteSteal);
                 Debug.Log("result 3");
                 break;
-            case 4:
+            case QTEResult.None:
                 ShowInputSprite(p1ResultImage, spriteSteal);
                 ShowInputSprite(p2ResultImage, spriteSteal);
                 Debug.Log("result 4");
                 break;
         }
+
+        LootManager.Instance.ResolveLoot(result);
 
         yield return new WaitForSeconds(2.0f);
     }
