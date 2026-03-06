@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 8115970269100823405}
   - component: {fileID: 4242033369160608353}
   m_Layer: 5
-  m_Name: QTE1
+  m_Name: OldQTE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

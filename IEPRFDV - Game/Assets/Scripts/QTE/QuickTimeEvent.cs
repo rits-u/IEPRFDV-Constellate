@@ -4,18 +4,16 @@ using UnityEditor;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
-using UnityEngine.InputSystem;
 
 public class QuickTimeEvent : MonoBehaviour
 {
     [Header("References")]
-    [HideInInspector] private string name;
     [SerializeField] private RectTransform targetCircle;
     [SerializeField] private RectTransform movingCircle;
+    [HideInInspector] private RectTransform parent;
 
-    [Header("Player Input")]
-    [SerializeField] private InputActionReference P1Input;
-    //[SerializeField] private InputActionReference P2Input;
+    [HideInInspector] private string name;
+    [HideInInspector] private float xPos;
 
     [Header("Properties")]
     [SerializeField] private bool onEnable;
@@ -28,10 +26,6 @@ public class QuickTimeEvent : MonoBehaviour
     [SerializeField] private float startScale = 4f;
     [SerializeField] private float endScale = .5f;
     [SerializeField] private float tolerance = 0.35f;
-    [SerializeField] private float restartCooldown = 1.5f;
-
-    private float cooldownTimer = 0f;
-    private bool isCooldown = true;
 
     [HideInInspector] private float timer;
     [HideInInspector] private bool active;
@@ -51,6 +45,8 @@ public class QuickTimeEvent : MonoBehaviour
     [HideInInspector] private bool activatedInvalidObjects = false;
     [HideInInspector] private bool deactivatedInvalidObjects = false;
 
+    
+
 
     [HideInInspector] private float time = 0f;
 
@@ -65,35 +61,22 @@ public class QuickTimeEvent : MonoBehaviour
     {
         if (onEnable) return;
 
-        P1Input.action.Enable();
-        //StartCoroutine(RunTimer());
+        StartCoroutine(RunTimer());
     }
 
     private void OnEnable()
     {
         if (onEnable)
         {
-            P1Input.action.Enable();
             InitializeValues();
-         //   StartCoroutine(RunTimer());
-            StartCooldown();
+            StartCoroutine(RunTimer());
         }
     }
 
     void Update()
     {
-        MoveCircle();
-        //if (CheckKeyPress())
-        //{
-        //    HandleClickSuccess();
-
-        //    if (deactivateAfter)
-        //    {
-        //        Debug.Log(name + ": deactivating");
-        //        Deactivate();
-        //    }
-        //}
-        if (CheckKeyBindPress())
+        MoveBall();
+        if (CheckKeyPress())
         {
             HandleClickSuccess();
 
@@ -109,12 +92,29 @@ public class QuickTimeEvent : MonoBehaviour
     {
         gameObject.SetActive(true);
         InitializeValues();
-        StartCooldown();
-        // StartCoroutine(RunTimer());
+        StartCoroutine(RunTimer());
     }
 
-    public IEnumerator PlayQTE()
+    public IEnumerator  PlayQTE(GameObject player)
     {
+        switch (player.name)
+        {
+            case "Player 1":
+                inputKeySteal = KeyCode.W;
+                inputKeyShare = KeyCode.S;
+                transform.position = new Vector2(xPos, transform.position.y);
+                break;
+            case "Player 2":
+                inputKeySteal = KeyCode.UpArrow;
+                inputKeyShare = KeyCode.DownArrow;
+                transform.position = new Vector2(xPos * 2, transform.position.y);
+                break;
+            default:
+                inputKeySteal = KeyCode.W;
+                inputKeyShare = KeyCode.S;
+                transform.position = new Vector2(xPos, transform.position.y);
+                break;
+        }
         bool finished = false;
 
         System.Action handler = () => finished = true; //event thatll mark qte finished
@@ -192,56 +192,14 @@ public class QuickTimeEvent : MonoBehaviour
 
     }
 
-    //void MoveBall()
-    //{
-    //    time += Time.deltaTime;
-    //    float t = Mathf.PingPong(time / growDuration, 1f);
-
-    //    float scale = Mathf.Lerp(startScale, endScale, t);
-    //    movingCircle.localScale = Vector3.one * scale;
-
-    //}
-
-    void StartCooldown()
+    void MoveBall()
     {
-        ResetCircle();
-        isCooldown = true;
-        cooldownTimer = 0f;
-    }
-
-    void ResetCircle()
-    {
-        movingCircle.localScale = Vector3.one * startScale;
-    }
-
-    void MoveCircle()
-    {
-        if (isCooldown)
-        {
-            cooldownTimer += Time.deltaTime;
-
-            if (cooldownTimer >= restartCooldown)
-            {
-                isCooldown = false;
-                cooldownTimer = 0f;
-                time = 0f;
-                hasClicked = false;
-            }
-
-            return;
-        }
-
         time += Time.deltaTime;
+        float t = Mathf.PingPong(time / growDuration, 1f);
 
-        float t = time / growDuration;
         float scale = Mathf.Lerp(startScale, endScale, t);
         movingCircle.localScale = Vector3.one * scale;
 
-       
-        if (t >= 1f)
-        {
-            StartCooldown();
-        }
     }
 
     bool CheckKeyPress()
@@ -266,63 +224,6 @@ public class QuickTimeEvent : MonoBehaviour
         }
         return false;
     }
-
-
-    bool CheckKeyBindPress()
-    {
-        float P1_qte = P1Input.action.ReadValue<float>();
-
-        if (P1Input.action.WasPressedThisFrame() && !hasClicked)
-        {
-            hasClicked = true;
-
-            if (IsAOverlapB(movingCircle, targetCircle))
-            {
-                Debug.Log(name + ": inside area");
-
-                if (P1_qte == 1.0) Debug.Log("Share <3");
-                clickSuccess = true;
-            }
-            else
-            {
-                Debug.Log(name + ": outside area");
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    //bool CheckKeyBindPress()
-    //{
-    //    float P1_qte = P1Input.action.ReadValue<float>();
-    //    float P2_qte = P2Input.action.ReadValue<float>();
-    //   // Debug.Log($"player qte: {P1_qte}");
-
-    //    if (P1_qte == 1.0f || P2_qte == 1.0f) 
-    //    {
-    //        hasClicked = true;
-    //        if (IsOverlap(ball, safeZone))
-    //        {
-    //            Debug.Log(name + ": ball inside area");
-    //            clickSuccess = true;
-    //            activatedValidObjects = SetObjects(toActivateOnValid, true);
-    //            deactivatedValidObjects = SetObjects(toDeactivateOnValid, false);
-    //        }
-    //        else
-    //        {
-    //            Debug.Log(name + ": ball outside area");
-    //            activatedInvalidObjects = SetObjects(toActivateOnInvalid, true);
-    //            deactivatedInvalidObjects = SetObjects(toDeactivateOnInvalid, false);
-    //        }
-    //        return true;
-    //    }
-    //    return false;
-    //}
-
-
-
     void HandleClickSuccess()
     {
         if (!clickSuccess)
@@ -358,6 +259,17 @@ public class QuickTimeEvent : MonoBehaviour
         return true;
     }
 
+   //void CreateChildRect(string name, RectTransform rect, Vector3 pos)
+   // {
+   //     GameObject child = new GameObject(name);
+   //     child.name = name;
+   //     child.transform.SetParent(transform);
+
+   //     rect = child.AddComponent<RectTransform>();
+   //     rect.localScale = Vector3.one;
+   //     rect.position = pos;
+   // }
+
     Rect GetWorldRect(RectTransform rect)
     {
         Vector3[] corners = new Vector3[4];
@@ -383,19 +295,21 @@ public class QuickTimeEvent : MonoBehaviour
             Debug.LogError($"{gameObject.name}'s movingCircle is null");
         }
 
-        //if (inputKeySteal == KeyCode.None)
-        //{
-        //    Debug.LogError($"{gameObject.name}'s inputKeySteal is null");
-        //}
-        //if (inputKeyShare == KeyCode.None)
-        //{
-        //    Debug.LogError($"{gameObject.name}'s inputKeyShare is null");
-        //}
-
+        if (inputKeySteal == KeyCode.None)
+        {
+            inputKeySteal = KeyCode.W;
+            //Debug.LogError($"{gameObject.name}'s inputKeySteal is null");
+        }
+        if (inputKeyShare == KeyCode.None)
+        {
+            inputKeyShare = KeyCode.S;
+            //Debug.LogError($"{gameObject.name}'s inputKeyShare is null");
+        }
+        parent = transform.parent.GetComponent<RectTransform>();
     }
     void InitializeValues()
     {
-
+        xPos = parent.rect.width * 0.3333f;
     }
     void Deactivate()
     {
