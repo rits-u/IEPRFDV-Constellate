@@ -63,8 +63,14 @@ public class LootManager : MonoBehaviour
                 Gun gun = (Gun)item;
                 PlayerManager.Instance.SwitchWeaponOfPlayer(gun, playerID, multiplier);
             }
-            // else if( health case  )
+            else if(item.type == LootType.HEAL)
+            {
+                Heal heal = (Heal)item;
+                PlayerManager.Instance.ApplyHealToPlayer(heal, playerID, multiplier);
+            }
 
         }
+
+        lootDrops.Clear();
     }
 }

@@ -3,9 +3,14 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour 
 {
+    [Header("Stats")]
+    [SerializeField] private int maxHealth = 10;
     [SerializeField] private int health = 10;
     [SerializeField] private int attack = 3;
     [SerializeField] private int shield;
+
+   // [Header("Bound")]
+   // [SerializeField] private int maxHealth = 10;
 
     [Header("UI Elements")]
     [SerializeField] private HealthBar healthBar;
@@ -13,6 +18,12 @@ public class Stats : MonoBehaviour
   //  public System.Action OnDamaged;
     public event Action OnDamaged;
     public event Action<Stats> OnDeath;
+
+    public int MaxHP
+    {
+        get => maxHealth;
+        set => maxHealth = value;
+    }
 
     public int HP
     {
@@ -33,6 +44,8 @@ public class Stats : MonoBehaviour
 
     private void Start()
     {
+        health = maxHealth;
+
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(HP);
@@ -77,5 +90,14 @@ public class Stats : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Heal(int healAmount)
+    {
+        HP += healAmount;
+        if(HP > maxHealth)
+        {
+            HP = maxHealth;
+        }
     }
 }

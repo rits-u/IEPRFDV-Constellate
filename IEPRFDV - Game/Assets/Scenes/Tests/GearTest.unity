@@ -134,7 +134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &53492912
 Transform:
   m_ObjectHideFlags: 0
@@ -457,8 +457,11 @@ MonoBehaviour:
       weight: 2
       type: 1
     - item: {fileID: 11400000, guid: 0f812f77450b0214ab2ac74e811f2a1a, type: 2}
-      weight: 10
+      weight: 2
       type: 0
+    - item: {fileID: 11400000, guid: 9b96df994070c7242b2855aaefda8d02, type: 2}
+      weight: 4
+      type: 2
   numLoot: 0
   displayPrefab: {fileID: 2113237408210829636, guid: 8e89bed9d4b8a2e4e9759be8333bf9bd, type: 3}
   upperPanel: {fileID: 194643271}
@@ -4037,6 +4040,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8903429201757719383, guid: 8e89bed9d4b8a2e4e9759be8333bf9bd, type: 3}
+      propertyPath: iconMappings.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903429201757719383, guid: 8e89bed9d4b8a2e4e9759be8333bf9bd, type: 3}
+      propertyPath: iconMappings.Array.data[5].type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903429201757719383, guid: 8e89bed9d4b8a2e4e9759be8333bf9bd, type: 3}
+      propertyPath: iconMappings.Array.data[5].sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ad366fee7ec893246831384c0cefdd8f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

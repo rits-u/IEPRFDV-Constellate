@@ -4,7 +4,7 @@ public enum LootType
 {
     WEAPON,
     GEAR,
-    HEALTH
+    HEAL
 }
 
 public abstract class Item : ScriptableObject

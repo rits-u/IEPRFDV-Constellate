@@ -451,23 +451,18 @@ public class TestQTE : MonoBehaviour
             case QTEResult.Share:
                 ShowInputSprite(p1ResultImage, spriteShare);
                 ShowInputSprite(p2ResultImage, spriteShare);
-                Debug.Log("result 1");
                 break;
             case QTEResult.P1Steals:
                 ShowInputSprite(p1ResultImage, spriteSteal);
                 ShowInputSprite(p2ResultImage, spriteShare);
-                Debug.Log("result 2");
-
                 break;
             case QTEResult.P2Steals:
                 ShowInputSprite(p1ResultImage, spriteShare);
                 ShowInputSprite(p2ResultImage, spriteSteal);
-                Debug.Log("result 3");
                 break;
             case QTEResult.None:
                 ShowInputSprite(p1ResultImage, spriteSteal);
                 ShowInputSprite(p2ResultImage, spriteSteal);
-                Debug.Log("result 4");
                 break;
         }
 

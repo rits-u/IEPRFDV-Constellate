@@ -82,6 +82,18 @@ public class ChestLoot : MonoBehaviour
                     LootManager.Instance.AddItemToLoot(item.item);
                     break;
                 }
+                case LootType.HEAL:
+                {
+                    Heal heal = (Heal)item.item;
+                    ItemDisplay itemDisplay = InstantiateDisplay().GetComponent<ItemDisplay>();
+                    itemDisplay.EditNameTextBox(heal.itemName);
+
+                    itemDisplay.EditTextBoxByIndex(heal.HealAmount.ToString(), 0);
+                    itemDisplay.SetIconByIndex(InfoType.HEAL, 0);
+
+                    LootManager.Instance.AddItemToLoot(item.item);
+                    break;
+                }
             }            
         }
     }

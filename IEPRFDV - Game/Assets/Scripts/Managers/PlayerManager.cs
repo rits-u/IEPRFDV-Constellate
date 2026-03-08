@@ -80,12 +80,27 @@ public class PlayerManager : MonoBehaviour
     public void ApplyGearToPlayer(Gear gear, int playerID, int tier)
     {
         PlayerInventory inventory = playerList[playerID - 1].GetComponent<PlayerInventory>();
-        inventory.EquipGear(gear, tier);
+        if (inventory.GetEquippedGearCount() < inventory.GetMaxSlots())
+        {
+            inventory.EquipGear(gear, tier);
+        }
+        else
+        {
+            //let it discard// 
+            Debug.Log($"LM: {gameObject.name}'s inventory is already FULL");
+        }
     }
 
     public void SwitchWeaponOfPlayer(Gun gun, int playerID, int tier)
     {
         PlayerInventory inventory = playerList[playerID - 1].GetComponent<PlayerInventory>();
         inventory.EquipGun(gun, tier);
+    }
+
+    public void ApplyHealToPlayer(Heal heal, int playerID, int tier)
+    {
+        Stats stats = playerList[playerID - 1].GetComponent<Stats>();
+        Debug.Log("nangyayari ba ang heal");
+        stats.Heal(heal.HealAmount * tier);
     }
 }

@@ -39,7 +39,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void EquipGear(Gear gear, int tier)
     {
-        playerStats.HP += gear.HP * tier;
+        playerStats.MaxHP += gear.HP * tier;
         playerStats.ATK += gear.ATK * tier;
         playerStats.SP += gear.SP * tier;
         
@@ -49,7 +49,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void UnEquipGear(Gear gear)
     {
-        playerStats.HP -= gear.HP;
+        playerStats.MaxHP -= gear.HP;
         playerStats.ATK -= gear.ATK;
         playerStats.SP -= gear.SP;
 
@@ -75,5 +75,15 @@ public class PlayerInventory : MonoBehaviour
             temp.Upgrade(tier);
 
         gun = temp;       
+    }
+
+    public int GetEquippedGearCount()
+    {
+        return gearList.Count;
+    }
+
+    public int GetMaxSlots()
+    {
+        return maxSlots;
     }
 }

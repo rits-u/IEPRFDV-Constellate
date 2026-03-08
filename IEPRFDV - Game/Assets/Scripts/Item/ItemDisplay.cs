@@ -13,7 +13,8 @@ public enum InfoType
     ATK,
     SP,
     DAMAGE,
-    BULLETS
+    BULLETS,
+    HEAL
 }
 
 public class ItemDisplay : MonoBehaviour
