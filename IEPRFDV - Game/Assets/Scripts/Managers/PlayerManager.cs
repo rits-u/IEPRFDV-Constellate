@@ -100,7 +100,6 @@ public class PlayerManager : MonoBehaviour
     public void ApplyHealToPlayer(Heal heal, int playerID, int tier)
     {
         Stats stats = playerList[playerID - 1].GetComponent<Stats>();
-        Debug.Log("nangyayari ba ang heal");
         stats.Heal(heal.HealAmount * tier);
     }
 }
