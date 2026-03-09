@@ -42,7 +42,7 @@ public class QTEManager : MonoBehaviour
     //    p2QTE.OnPressed += OnPlayerPressed;
     //}
 
-    public void OnPlayerPressed(int playerID, float value, bool valid)
+    public void PlayerPressed(int playerID, float value, bool valid)
     {
         if (resolving) return;
 
@@ -132,28 +132,28 @@ public class QTEManager : MonoBehaviour
 
     void SetResultSprites(QTEResult result)
     {
-        switch (result)
-        {
-            case QTEResult.Share:
-                p1QTE.ShowSprite(spriteShare);
-                p2QTE.ShowSprite(spriteShare);
-                break;
+        //switch (result)
+        //{
+        //    case QTEResult.Share:
+        //        p1QTE.ShowSprite(spriteShare);
+        //        p2QTE.ShowSprite(spriteShare);
+        //        break;
 
-            case QTEResult.P1Steals:
-                p1QTE.ShowSprite(spriteSteal);
-                p2QTE.ShowSprite(spriteShare);
-                break;
+        //    case QTEResult.P1Steals:
+        //        p1QTE.ShowSprite(spriteSteal);
+        //        p2QTE.ShowSprite(spriteShare);
+        //        break;
 
-            case QTEResult.P2Steals:
-                p1QTE.ShowSprite(spriteShare);
-                p2QTE.ShowSprite(spriteSteal);
-                break;
+        //    case QTEResult.P2Steals:
+        //        p1QTE.ShowSprite(spriteShare);
+        //        p2QTE.ShowSprite(spriteSteal);
+        //        break;
 
-            case QTEResult.None:
-                p1QTE.ShowSprite(spriteSteal);
-                p2QTE.ShowSprite(spriteSteal);
-                break;
-        }
+        //    case QTEResult.None:
+        //        p1QTE.ShowSprite(spriteSteal);
+        //        p2QTE.ShowSprite(spriteSteal);
+        //        break;
+        //}
     }
 
     private void DeactivateAll()

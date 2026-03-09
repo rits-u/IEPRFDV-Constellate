@@ -178,7 +178,7 @@ public class PlayerQTE : MonoBehaviour
         if (valid) ShowSprite(spriteHit);
         else ShowSprite(spriteMiss);
 
-        QTEManager.Instance.OnPlayerPressed(playerID, value, valid);
+        QTEManager.Instance.PlayerPressed(playerID, value, valid);
     }
 
     bool IsAOverlapB(RectTransform a, RectTransform b)

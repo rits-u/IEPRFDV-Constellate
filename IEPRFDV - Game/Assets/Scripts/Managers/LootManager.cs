@@ -47,6 +47,8 @@ public class LootManager : MonoBehaviour
                 Debug.Log($"get good");
                 break;
         }
+
+        lootDrops.Clear();
     }
 
     private void DistributeItem(int playerID, int multiplier)
@@ -71,6 +73,6 @@ public class LootManager : MonoBehaviour
 
         }
 
-        lootDrops.Clear();
+        
     }
 }

@@ -26,6 +26,22 @@ public class ItemDisplay : MonoBehaviour
     private static Dictionary<InfoType, Sprite> iconDictionary;
     [SerializeField] private List<Image> icons;
 
+    [SerializeField] private List<StatIconPair> iconMappings;
+
+    [System.Serializable]
+    public struct StatIconPair
+    {
+        public InfoType type;
+        public Sprite sprite;
+
+        //public StatIconPair(InfoType type, int value)
+        //{
+        //    this.type = type;
+        //    this.value = value;
+        //}
+
+    }
+
     private void Awake()
     {
         iconDictionary = new Dictionary<InfoType, Sprite>();
@@ -62,20 +78,6 @@ public class ItemDisplay : MonoBehaviour
         }
     }
 
-    [SerializeField] private List<StatIconPair> iconMappings;
-
-    [System.Serializable]
-    public struct StatIconPair
-    {
-        public InfoType type;
-        public Sprite sprite;
-
-        //public StatIconPair(InfoType type, int value)
-        //{
-        //    this.type = type;
-        //    this.value = value;
-        //}
-
-    }
+    
 
 }
