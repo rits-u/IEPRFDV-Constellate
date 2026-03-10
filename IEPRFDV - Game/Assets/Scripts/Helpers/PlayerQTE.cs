@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -27,35 +28,29 @@ public class PlayerQTE : MonoBehaviour
     [SerializeField] private float tolerance = 0.35f;
     [SerializeField] private float restartCooldown = 1.5f;
 
-    private float cooldownTimer = 0f;
-    private bool isCooldown = true;
-
-    [Header("UI Elements")]
-    [SerializeField] Sprite spriteHit;
-    [SerializeField] Sprite spriteMiss;
-    [SerializeField] Image resultImage;
-
     [Header("Interactions")]
     [SerializeField] private GameObject[] toActivateOnValid;
     [SerializeField] private GameObject[] toDeactivateOnValid;
     [SerializeField] private GameObject[] toActivateOnInvalid;
     [SerializeField] private GameObject[] toDeactivateOnInvalid;
 
-    [Header("Flags")]
-    [HideInInspector] private bool hasClicked = false;
-    [HideInInspector] private bool clickSuccess = false;
-    [HideInInspector] private bool activatedValidObjects = false;
-    [HideInInspector] private bool deactivatedValidObjects = false;
-    [HideInInspector] private bool activatedInvalidObjects = false;
-    [HideInInspector] private bool deactivatedInvalidObjects = false;
+    //[Header("Flags")]
+    //[HideInInspector] private bool hasClicked = false;
+    //[HideInInspector] private bool clickSuccess = false;
+    //[HideInInspector] private bool activatedValidObjects = false;
+    //[HideInInspector] private bool deactivatedValidObjects = false;
+    //[HideInInspector] private bool activatedInvalidObjects = false;
+    //[HideInInspector] private bool deactivatedInvalidObjects = false;
 
     [HideInInspector] private float time = 0f;
 
-   // public event Action OnPressed;
+    // public event Action OnPressed;
     public event Action<PlayerQTE> OnPressed;
+    private UserInterfaceQTE UI;
 
     private float bufferWindow = 0.2f;
-
+    private float cooldownTimer = 0f;
+    private bool isCooldown = true;
     private bool resolved = false;
 
     private void Awake()
@@ -67,8 +62,6 @@ public class PlayerQTE : MonoBehaviour
     void Start()
     {
         if (onEnable) return;
-
-        //StartCoroutine(RunTimer());
     }
 
     private void OnEnable()
@@ -78,8 +71,10 @@ public class PlayerQTE : MonoBehaviour
             input.action.Enable();
             input.action.performed += OnInputPressed;
 
+            UI = GetComponent<UserInterfaceQTE>();
+            UI.HideHitResult();
+
             InitializeValues();
-            //   StartCoroutine(RunTimer());
             StartCooldown();
         }
     }
@@ -100,7 +95,6 @@ public class PlayerQTE : MonoBehaviour
         gameObject.SetActive(true);
         InitializeValues();
         StartCooldown();
-        // StartCoroutine(RunTimer());
     }
 
     void StartCooldown()
@@ -126,10 +120,7 @@ public class PlayerQTE : MonoBehaviour
                 isCooldown = false;
                 cooldownTimer = 0f;
                 time = 0f;
-                hasClicked = false;
-
-                HideSprite();
-                HideSprite();
+                UI.HideHitResult();
             }
 
             return;
@@ -146,37 +137,21 @@ public class PlayerQTE : MonoBehaviour
         {
             movingCircle.localScale = Vector3.one * endScale;
             StartCooldown();
-           // ResetInputs();
+            // ResetInputs();
         }
     }
-
-    public void HideSprite()
-    {
-        resultImage.sprite = null;
-        Color temp = resultImage.color;
-        temp.a = 0f;
-        resultImage.color = temp;
-    }
-
-    public void ShowSprite(Sprite sprite)
-    {
-        Color temp = resultImage.color;
-        temp.a = 1f;
-        resultImage.color = temp;
-        resultImage.sprite = sprite;
-    }
-
 
     void OnInputPressed(InputAction.CallbackContext ctx)
     {
         if (resolved) return;
 
         float value = ctx.ReadValue<float>();
-     //   p1Time = Time.time;
+        UI.PressFeedback(value);
+        StartCoroutine(ResetKey(value));
 
         bool valid = IsAOverlapB(movingCircle, targetCircle);
-        if (valid) ShowSprite(spriteHit);
-        else ShowSprite(spriteMiss);
+        if (valid) UI.ShowFeedbackUI("Hit"); 
+        else UI.ShowFeedbackUI("Miss");
 
         QTEManager.Instance.PlayerPressed(playerID, value, valid);
     }
@@ -195,17 +170,22 @@ public class PlayerQTE : MonoBehaviour
         return false;
     }
 
-    //void ResetInputs()
-    //{
-    //    p1Time = -1;
-    //    p2Time = -1;
+    public void ShowFeedbackUI(string name)
+    {
+        UI.ShowFeedbackUI(name);
+    }
 
-    //    p1Value = 0;
-    //    p2Value = 0;
+    public void HideResultsUIElements()
+    {
+        UI.HideHitResult();
+        UI.HideResultVisual();
+    }
 
-    //    resolved = false;
-    //}
-
+    IEnumerator ResetKey(float value)
+    {
+        yield return new WaitForSeconds(0.25f);
+        UI.ResetPressFeedback(value);
+    }
 
 
     void InitializeReferences()
@@ -223,6 +203,9 @@ public class PlayerQTE : MonoBehaviour
             Debug.LogError($"{gameObject.name}'s movingCircle is null");
         }
 
+        targetCircle.gameObject.SetActive(true);
+        movingCircle.gameObject.SetActive(true);
+
     }
     void InitializeValues()
     {
@@ -231,11 +214,14 @@ public class PlayerQTE : MonoBehaviour
     public void Deactivate()
     {
         time = 0f;
-        activatedValidObjects = false;
-        deactivatedValidObjects = false;
-        activatedInvalidObjects = false;
-        deactivatedInvalidObjects = false;
+        //activatedValidObjects = false;
+        //deactivatedValidObjects = false;
+        //activatedInvalidObjects = false;
+        //deactivatedInvalidObjects = false;
+       // targetCircle.gameObject.SetActive(false);
+       // movingCircle.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 
 }
+

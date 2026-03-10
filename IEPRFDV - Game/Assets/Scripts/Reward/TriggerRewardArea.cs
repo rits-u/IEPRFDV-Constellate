@@ -1,6 +1,7 @@
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+using System.Collections;
 
 public class TriggerRewardArea : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class TriggerRewardArea : MonoBehaviour
     [SerializeField] private float timeCheck;
     [SerializeField] private float timeSinceLast;
     [SerializeField] private bool startCount;
+    [SerializeField] private float leanDuration = 1.5f;
 
     [Header("UI Elements")]
     [SerializeField] private GameObject rewardPanel;
+    [SerializeField] private Button startBtn;
 
     private bool rewardDisplayed = false;
     private CircleCollider2D col;
@@ -52,20 +55,13 @@ public class TriggerRewardArea : MonoBehaviour
         if (timeSinceLast >= timeCheck && !rewardDisplayed)
         {
             chestLoot.RandomizeLoot();
-            ShowRewards();
+            ShowRewardsScreen();
             PlayerManager.Instance.DisableAllPlayerMovement();
             timeSinceLast = 0;
             rewardDisplayed = true;
             startCount = false;
         }
     }
-
-    //private void OnTriggerStay2D(Collider other)
-    //{
-
-    //}
-
-
 
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -77,8 +73,22 @@ public class TriggerRewardArea : MonoBehaviour
         }
     }
 
-    private void ShowRewards()
+    private void ShowRewardsScreen()
     {
-        rewardPanel.LeanMoveY(540, 1.5f);
+        rewardPanel.LeanMoveY(540, leanDuration);
+        startBtn.gameObject.SetActive(true);
      }
+
+    public void HideRewardsScreen()
+    {
+        rewardPanel.LeanMoveY(-549, leanDuration);
+        StartCoroutine(DisableRewardArea());
+    }
+
+    private IEnumerator DisableRewardArea()
+    {
+        yield return new WaitForSeconds(leanDuration + 0.5f);
+        PlayerManager.Instance.EnableAllPlayerMovement();
+        gameObject.SetActive(false);
+    }
 }

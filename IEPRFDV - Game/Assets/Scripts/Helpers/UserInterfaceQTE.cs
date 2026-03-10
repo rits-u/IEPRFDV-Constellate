@@ -3,27 +3,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.ComponentModel;
+using NaughtyAttributes;
 
 
 public class UserInterfaceQTE : MonoBehaviour
 {
-    //[Header("UI Visuals")]
-    //[SerializeField] Sprite spriteHit;
-    //[SerializeField] Sprite spriteMiss;
+    [Header("Properties")]
+    [SerializeField] private float keyOffsetScale = 0.08f;
 
     [Header("UI Objects")]
     [SerializeField] Image resultImage;
     [SerializeField] Image pressContainer;
 
     [Header("UI Visuals")]
-    [SerializeField] private List<SpritePair> spritesList = new();
+    [SerializeField] private Image leftKeyImage;
+    [SerializeField] private Image rightKeyImage;
+    [SerializeField] private List<SpriteData> spritesList = new();
 
     [System.Serializable]
-    private struct SpritePair 
+    public struct SpriteData
     {
         public string name;
         public Sprite sprite;
-      //  public Image container;
+        public Image container;
     }
 
 
@@ -35,15 +37,6 @@ public class UserInterfaceQTE : MonoBehaviour
         resultImage.color = temp;
     }
 
-    //public void SetResultSprite()
-    //{
-    //    Color temp = resultImage.color;
-    //    temp.a = 1f;
-    //    resultImage.color = temp;
-    //    resultImage.sprite = sprite;
-    //}
-
-
     public void HideHitResult()
     {
         pressContainer.sprite = null;
@@ -52,27 +45,58 @@ public class UserInterfaceQTE : MonoBehaviour
         pressContainer.color = temp;
     }
 
-
-
-    public void ShowHitResult(string name)
+    public SpriteData GetSpriteDataByName(string name)
     {
-        foreach (SpritePair pair in spritesList)
+        int index = 0;
+        for (int i = 0; i < spritesList.Count; i++)
         {
-            if(pair.name == name)
-            {
-                Color temp = pressContainer.color;
-                temp.a = 1f;
-                pressContainer.color = temp;
-                pressContainer.sprite = pair.sprite;
-            //    pressContainer.gameObject.SetActive(true);
-            } 
+            if (spritesList[i].name == name) break;
+            index++;
         }
-
+        return spritesList[index];
     }
 
-    public void ShowHitVisual()
+    public void PressFeedback(float value)
     {
+        Color dim = new Color32(167, 167, 167, 255);
+        if (value < -0.5f)
+        {
+            leftKeyImage.color = dim;
+            RectTransform rect = leftKeyImage.GetComponent<RectTransform>();
+            rect.localScale = rect.localScale * (1 - keyOffsetScale);
+        }
+        else
+        {
+            rightKeyImage.color = dim;
+            RectTransform rect = rightKeyImage.GetComponent<RectTransform>();
+            rect.localScale = rect.localScale * (1 - keyOffsetScale);
+        }
+    }
 
+    public void ResetPressFeedback(float value)
+    {
+        if(value < -0.5f)
+        {
+            leftKeyImage.color = Color.white;
+            RectTransform rect = leftKeyImage.GetComponent<RectTransform>();
+            rect.localScale = rect.localScale / (1 - keyOffsetScale); 
+        }
+        else
+        {
+            rightKeyImage.color = Color.white;
+            RectTransform rect = rightKeyImage.GetComponent<RectTransform>();
+            rect.localScale = rect.localScale / (1 - keyOffsetScale);
+        }
+    }
+
+
+    public void ShowFeedbackUI(string name)
+    {
+        SpriteData spriteData = GetSpriteDataByName(name);
+        Color temp = spriteData.container.color;
+        temp.a = 1f;
+        spriteData.container.color = temp;
+        spriteData.container.sprite = spriteData.sprite;
     }
 }
 

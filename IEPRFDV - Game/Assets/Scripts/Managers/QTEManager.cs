@@ -1,6 +1,9 @@
+using System.Collections;
+using TMPro;
 using UnityEditorInternal;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
+using static UnityEngine.Rigidbody2D;
 
 public class QTEManager : MonoBehaviour
 {
@@ -12,35 +15,23 @@ public class QTEManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
+    [Header("Player QTEs")]
     [SerializeField] private PlayerQTE p1QTE;
     [SerializeField] private PlayerQTE p2QTE;
-    //private QTEUserInterface ; 
 
+    [Header("Properties")]
     [SerializeField] float bufferWindow = 0.2f;
 
+    [Header("Fields")]
+    private float p1Time = -1, p2Time = -1;
+    [SerializeField] private float p1Value, p2Value;
+    [SerializeField] private bool p1Valid, p2Valid;
+    [SerializeField] private bool resolving = false;
+
     [Header("UI Elements")]
-    [SerializeField] private Sprite spriteShare;
-    [SerializeField] private Sprite spriteSteal;
+    [SerializeField] private TextMeshProUGUI resultText;
+    [SerializeField] private Button continueBtn;
 
-    private float p1Time = -1;
-    private float p2Time = -1;
-
-    private float p1Value;
-    private float p2Value;
-
-    private bool p1Valid;
-    private bool p2Valid;
-
-    private bool p1Ready;
-    private bool p2Ready;
-
-    private bool resolving = false;
-
-    //private void Start()
-    //{
-    //    p1QTE.OnPressed += OnPlayerPressed;
-    //    p2QTE.OnPressed += OnPlayerPressed;
-    //}
 
     public void PlayerPressed(int playerID, float value, bool valid)
     {
@@ -75,6 +66,7 @@ public class QTEManager : MonoBehaviour
 
         if (Mathf.Abs(p1Time - p2Time) <= bufferWindow)
         {
+            //Debug.Log("try resolve");
             Resolve();
         }
     }
@@ -83,10 +75,11 @@ public class QTEManager : MonoBehaviour
     {
         yield return new WaitForSeconds(bufferWindow);
 
-        if (!resolving)
-        {
-            Resolve();
-        }
+        //if (!resolving)
+        //{
+        //    Debug.Log("just resolve");
+        //    Resolve();
+        //}
     }
 
     void Resolve()
@@ -105,55 +98,55 @@ public class QTEManager : MonoBehaviour
 
             else if (p1Value > 0.5f && p2Value > 0.5f)
                 result = QTEResult.P2Steals;
+
+            SetResultSprites(result);
+            LootManager.Instance.ResolveLoot(result);
+            StartCoroutine(EnableContinueButton());
+            DeactivateAll();
+         //   resultText.text = "";
         }
 
-        Debug.Log($"Result: {result}");
-        SetResultSprites(result);
-        LootManager.Instance.ResolveLoot(result);
-        DeactivateAll();
+        resolving = false;
     }
-
-    //private void HideInputSprite(Image image)
-    //{
-    //    image.sprite = null;
-    //    Color temp = image.color;
-    //    temp.a = 0f;
-    //    image.color = temp;
-    //}
-
-    //private void ShowInputSprite(Image image, Sprite sprite)
-    //{
-    //    Color temp = image.color;
-    //    temp.a = 1f;
-    //    image.color = temp;
-    //    image.sprite = sprite;
-    //}
-
 
     void SetResultSprites(QTEResult result)
     {
-        //switch (result)
-        //{
-        //    case QTEResult.Share:
-        //        p1QTE.ShowSprite(spriteShare);
-        //        p2QTE.ShowSprite(spriteShare);
-        //        break;
+        switch (result)
+        {
+            case QTEResult.Share:
+                p1QTE.ShowFeedbackUI("Share");
+                p2QTE.ShowFeedbackUI("Share");
+                resultText.text = "Each player will share the loot and will get Tier 1 rewards.";
+                break;
+            case QTEResult.P1Steals:
+                p1QTE.ShowFeedbackUI("Steal");
+                p2QTE.ShowFeedbackUI("Share");
+                resultText.text = "Player 1 has stolen and got Tier 2 rewards! Player 2 gets none.";
+                break;
+            case QTEResult.P2Steals:
+                p1QTE.ShowFeedbackUI("Share");
+                p2QTE.ShowFeedbackUI("Steal");
+                resultText.text = "Player 2 has stolen and got Tier 2 rewards! Player 1 gets none.";
+                break;
+            case QTEResult.None:
+                p1QTE.ShowFeedbackUI("Steal");
+                p2QTE.ShowFeedbackUI("Steal");
+                resultText.text = "Both attempted to steal, no rewards will be given for this round.";
+                break;
+        }
+    }
 
-        //    case QTEResult.P1Steals:
-        //        p1QTE.ShowSprite(spriteSteal);
-        //        p2QTE.ShowSprite(spriteShare);
-        //        break;
+    private IEnumerator EnableContinueButton()
+    {
+        yield return new WaitForSeconds(3f);
+        continueBtn.gameObject.SetActive(true);
+    }
 
-        //    case QTEResult.P2Steals:
-        //        p1QTE.ShowSprite(spriteShare);
-        //        p2QTE.ShowSprite(spriteSteal);
-        //        break;
-
-        //    case QTEResult.None:
-        //        p1QTE.ShowSprite(spriteSteal);
-        //        p2QTE.ShowSprite(spriteSteal);
-        //        break;
-        //}
+    public void HideResults()
+    {
+        p1QTE.HideResultsUIElements();
+        p2QTE.HideResultsUIElements();
+        resultText.text = "";
     }
 
     private void DeactivateAll()
