@@ -51,24 +51,24 @@ public class LootManager : MonoBehaviour
         lootDrops.Clear();
     }
 
-    private void DistributeItem(int playerID, int multiplier)
+    private void DistributeItem(int playerID, int tier)
     {
         foreach (Item item in lootDrops)
         {
             if (item.type == LootType.GEAR)
             {
                 Gear gear = (Gear)item;
-                PlayerManager.Instance.ApplyGearToPlayer(gear, playerID, multiplier);
+                PlayerManager.Instance.ApplyGearToPlayer(gear, playerID, tier);
             }
             else if (item.type == LootType.WEAPON)
             {
                 Gun gun = (Gun)item;
-                PlayerManager.Instance.SwitchWeaponOfPlayer(gun, playerID, multiplier);
+                PlayerManager.Instance.SwitchWeaponOfPlayer(gun, playerID, tier);
             }
             else if(item.type == LootType.HEAL)
             {
                 Heal heal = (Heal)item;
-                PlayerManager.Instance.ApplyHealToPlayer(heal, playerID, multiplier);
+                PlayerManager.Instance.ApplyHealToPlayer(heal, playerID, tier);
             }
 
         }

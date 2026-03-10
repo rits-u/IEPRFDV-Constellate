@@ -39,19 +39,23 @@ public class PlayerInventory : MonoBehaviour
 
     public void EquipGear(Gear gear, int tier)
     {
-        playerStats.MaxHP += gear.HP * tier;
-        playerStats.ATK += gear.ATK * tier;
-        playerStats.SP += gear.SP * tier;
+        Gear copy = Instantiate(gear);
+        copy.CurrentTier = tier;
+        playerStats.MaxHP += copy.GetStatsByType(InfoType.HP);
+        playerStats.ATK += copy.GetStatsByType(InfoType.ATK);
+        playerStats.SP += copy.GetStatsByType(InfoType.SP);
         
-        gearList.Add(new GearInfo(gear, tier));
+        gearList.Add(new GearInfo(copy, tier));
         Debug.Log($"{gameObject.name} equipped {gear.itemName}");
     }
 
+
+    //fix, discard
     public void UnEquipGear(Gear gear)
     {
-        playerStats.MaxHP -= gear.HP;
-        playerStats.ATK -= gear.ATK;
-        playerStats.SP -= gear.SP;
+        //playerStats.MaxHP -= gear.HP;
+        //playerStats.ATK -= gear.ATK;
+        //playerStats.SP -= gear.SP;
 
         int index = 0;
         foreach (var g in gearList)
@@ -65,16 +69,11 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    public void EquipGun(Gun newGun, int tier)
+    public void EquipGun(Gun gunToEquip, int tier)
     {
-        Gun temp = ScriptableObject.CreateInstance<Gun>();
-        temp.Damage = newGun.Damage;
-        temp.NumBullets = newGun.NumBullets;
-
-        if (tier > 1)
-            temp.Upgrade(tier);
-
-        gun = temp;       
+        Gun copy = Instantiate(gunToEquip);
+        copy.CurrentTier = tier;
+        gun = copy;
     }
 
     public int GetEquippedGearCount()

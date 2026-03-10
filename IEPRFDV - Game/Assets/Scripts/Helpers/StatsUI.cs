@@ -26,8 +26,8 @@ public class StatsUI : MonoBehaviour
     void Update()
     {
         PlayerInventory inventory = player.GetComponent<PlayerInventory>();
-        dmgTextbox.text = "DMG: " + inventory.GetPlayerGun().Damage;
-        numBulletsTextbox.text = "BU: " + inventory.GetPlayerGun().NumBullets;
+     //   dmgTextbox.text = "DMG: " + inventory.GetPlayerGun().Damage;
+     //   numBulletsTextbox.text = "BU: " + inventory.GetPlayerGun().NumBullets;
 
         Stats playerStats = player.GetComponent<Stats>();
         hpTextbox.text = "HP: " + playerStats.HP;

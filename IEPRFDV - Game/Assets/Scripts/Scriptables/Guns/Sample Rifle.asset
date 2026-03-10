@@ -10,12 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 970cdc445ac20364c896ad7c211e76d8, type: 3}
-  m_Name: sTRONGGun
+  m_Name: Sample Rifle
   m_EditorClassIdentifier: Assembly-CSharp::Gun
-  itemName: stronk gun
+  itemName: Rifle
   type: 0
-  damage: 111
-  numBullets: 3
-  burstInterval: 3
-  fireInterval: 2
-  bulletPrefab: {fileID: 0}
+  currentTier: 1
+  rangeRadius: 12
+  gunProperties:
+  - damage: 2
+    numBullets: 5
+    burstInterval: 0.2
+    fireRate: 1
+  - damage: 4
+    numBullets: 8
+    burstInterval: 0.2
+    fireRate: 1
+  bulletPrefab: {fileID: 5080210413143449869, guid: 8f923a1d40748144cbb1918977e2bc8d, type: 3}

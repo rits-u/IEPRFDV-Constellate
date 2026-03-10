@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class BasicGunBehavior : MonoBehaviour
 {
-    //[Header("Fields")]
-    //[SerializeField] private int numBullets = 3;
-    //[SerializeField] private float burstInterval = 0.15f;
-    //[SerializeField] private float fireInterval = 2f;
-
-    //[SerializeField] GameObject bulletPrefab;
-    //[SerializeField] Gun gun;
-
-
-    [SerializeField] float rangeRadius; //should be in gun template instead(?)
-    private Gun gun;
+    [SerializeField] private Gun gun;
 
     private float fireUpdate = 0;
     private bool isBursting = false;
@@ -27,34 +17,26 @@ public class BasicGunBehavior : MonoBehaviour
     private void Start()
     {
         col = GetComponent<CircleCollider2D>();
-        col.radius = rangeRadius;
-        gun = transform.parent.GetComponent<PlayerInventory>().GetPlayerGun();
-        //gun = 
     }
 
     private void Update()
     {
         gun = transform.parent.GetComponent<PlayerInventory>().GetPlayerGun(); //(??)
+        col.radius = gun.RangeRadius;
 
         if (numEnemies <= 0)
             return;
 
         fireUpdate += Time.deltaTime;
 
-        //if (fireUpdate >= fireInterval)
-        //{
-        //    //FireBullets();
-        //    StartCoroutine(FireBullets());
-        //    fireUpdate = 0f;
-        //}
+        float fireRate = gun.GetPropertyByType(InfoType.FIRE_RATE);
 
-        if (fireUpdate >= gun.FireInterval)
+        if (fireUpdate >= fireRate)
         {
             if (!isBursting)
             {
                 StartCoroutine(FireBurstWrapper());
                 fireUpdate = 0f;
-             //   Debug.Log("Fire");
             }
         }
 
@@ -128,7 +110,12 @@ public class BasicGunBehavior : MonoBehaviour
         GameObject target = FindNearestEnemy();
         if (target == null) yield break;
 
-        for (int i = 0; i < gun.NumBullets; i++)
+
+        int numBullets = (int)gun.GetPropertyByType(InfoType.BULLETS);
+        int damage = (int)gun.GetPropertyByType(InfoType.DAMAGE);
+        float burstInterval = gun.GetPropertyByType(InfoType.BURST_INTERVAL);
+
+        for (int i = 0; i < numBullets; i++)
         {
             if (target == null) yield break;
 
@@ -139,9 +126,11 @@ public class BasicGunBehavior : MonoBehaviour
             PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
             Stats playerStats = GetComponentInParent<Stats>();
             bullet.SetDirection(direction);
-            bullet.SetDamageInfo(playerStats.ATK + gun.Damage, playerStats.gameObject);
+            bullet.SetDamageInfo(playerStats.ATK + damage, playerStats.gameObject);
 
-            yield return new WaitForSeconds(gun.BurstInterval); //small burst gap
+            yield return new WaitForSeconds(burstInterval); //small burst gap
         }
+
+        yield return null;
     }
 }

@@ -10,11 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0c256aec729a934ea2d515ae8aae30e, type: 3}
-  m_Name: Gear 1
+  m_Name: Haha Gear 1
   m_EditorClassIdentifier: Assembly-CSharp::Gear
   itemName: Haha Gear
   type: 1
-  health: 11
-  attack: 3
-  shield: 0
+  gearStats:
+  - health: 0
+    attack: 5
+    shield: 4
+  - health: 0
+    attack: 7
+    shield: 8
+  hasHPStat: 0
+  hasATKStat: 1
+  hasSPStat: 1
   effect: 

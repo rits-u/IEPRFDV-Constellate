@@ -7,15 +7,7 @@ using Unity.UIElements;
 using System.Runtime.CompilerServices;
 using UnityEngine.UI;
 
-public enum InfoType
-{
-    HP,
-    ATK,
-    SP,
-    DAMAGE,
-    BULLETS,
-    HEAL
-}
+
 
 public class ItemDisplay : MonoBehaviour
 {

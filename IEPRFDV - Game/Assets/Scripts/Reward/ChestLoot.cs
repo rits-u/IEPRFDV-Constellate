@@ -1,26 +1,26 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
+using System;
+using Unity.XR.Oculus.Input;
 using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ChestLoot : MonoBehaviour
 {
+    [Header("Loot Properties")]
+    [SerializeField] private int maxLoot = 2;
     [SerializeField] private WeightedRandomList<Item> lootTable;
- //   [SerializeField] private List<WeightedRandomList.Pair> lootList = new();
-
-    [SerializeField] private int numLoot;
-
-    [SerializeField] private GameObject displayPrefab;
 
     [Header("UI Elements")]
     [SerializeField] private GameObject upperPanel;
+    [SerializeField] private GameObject displayPrefab;
 
     private int lootWeaponAmount;
 
     public void RandomizeLoot()
     {
-      //  numLoot = Random.Range(1, 2);
-        numLoot = 2;
+        int numLoot = UnityEngine.Random.Range(1, maxLoot);
+      //  int numLoot = 3;
         lootWeaponAmount = 0;
 
         for (int i = 0; i < numLoot; i++)
@@ -34,66 +34,27 @@ public class ChestLoot : MonoBehaviour
                 continue;
             }
 
-
-            //itemdisplay prefab -> display stats and effect
-
             switch (item.type)
             {
                 case LootType.WEAPON:
-                {
                     Gun gun = (Gun)item.item;
-                    ItemDisplay itemDisplay = InstantiateDisplay().GetComponent<ItemDisplay>();
-                    itemDisplay.EditNameTextBox(gun.itemName);
-
-                    itemDisplay.EditTextBoxByIndex(gun.Damage.ToString(), 0);
-                    itemDisplay.SetIconByIndex(InfoType.DAMAGE, 0);
-
-                    itemDisplay.EditTextBoxByIndex(gun.NumBullets.ToString(), 1);
-                    itemDisplay.SetIconByIndex(InfoType.BULLETS, 1);
-                        // EditTextBoxByIndex
+                    DisplayGunItem(gun);
                     lootWeaponAmount++;
-
-
                     lootTable.Remove(item); //remove from the drops
                     LootManager.Instance.AddItemToLoot(item.item);
-
                     break;
-                }
+                
                 case LootType.GEAR:
-                {
                     Gear gear = (Gear)item.item;
-                    ItemDisplay itemDisplay = InstantiateDisplay().GetComponent<ItemDisplay>();
-                    itemDisplay.EditNameTextBox(gear.itemName);
-
-                    Dictionary<InfoType, int> stats = new();
-                    if (gear.HP != 0) stats.Add(InfoType.HP, gear.HP);
-                    if (gear.ATK != 0) stats.Add(InfoType.ATK, gear.ATK);
-                    if (gear.SP != 0) stats.Add(InfoType.SP, gear.SP);
-
-                    int index = 0;
-
-                    foreach (var stat in stats)
-                    {
-                        itemDisplay.EditTextBoxByIndex(stat.Value.ToString(), index);
-                        itemDisplay.SetIconByIndex(stat.Key, index);
-                        index++;
-                    }
-
+                    DisplayGearItem(gear);
                     LootManager.Instance.AddItemToLoot(item.item);
                     break;
-                }
+                
                 case LootType.HEAL:
-                {
                     Heal heal = (Heal)item.item;
-                    ItemDisplay itemDisplay = InstantiateDisplay().GetComponent<ItemDisplay>();
-                    itemDisplay.EditNameTextBox(heal.itemName);
-
-                    itemDisplay.EditTextBoxByIndex(heal.HealAmount.ToString(), 0);
-                    itemDisplay.SetIconByIndex(InfoType.HEAL, 0);
-
+                    DisplayHeal(heal);
                     LootManager.Instance.AddItemToLoot(item.item);
                     break;
-                }
             }            
         }
     }
@@ -106,5 +67,60 @@ public class ChestLoot : MonoBehaviour
         display.SetActive(true);
 
         return display;
+    }
+
+    private void DisplayGunItem(Gun gun)
+    {
+        ItemDisplay itemDisplay = InstantiateDisplay().GetComponent<ItemDisplay>();
+        itemDisplay.EditNameTextBox(gun.itemName);
+
+        int index = 0;
+        foreach (InfoType type in Enum.GetValues(typeof(InfoType)))
+        {
+            if (type != InfoType.DAMAGE && type != InfoType.BULLETS && type != InfoType.FIRE_RATE) continue;
+
+            int T1 = (int)gun.GetProperty(type, 1);
+            int T2 = (int)gun.GetProperty(type, 2);
+            string text;
+            if (T1 != T2) text = $"{T1} <color=green>+{T2 - T1}</color>";
+            else text = $"{T1}";
+            itemDisplay.EditTextBoxByIndex(text, index);
+            itemDisplay.SetIconByIndex(type, index);
+            index++;
+        }
+    }
+
+    private void DisplayGearItem(Gear gear)
+    {
+        ItemDisplay itemDisplay = InstantiateDisplay().GetComponent<ItemDisplay>();
+        itemDisplay.EditNameTextBox(gear.itemName);
+
+        Dictionary<InfoType, bool> stats = new();
+        if (gear.hasHPStat) stats.Add(InfoType.HP, gear.hasHPStat);
+        if (gear.hasATKStat) stats.Add(InfoType.ATK, gear.hasATKStat);
+        if (gear.hasSPStat) stats.Add(InfoType.SP, gear.hasSPStat);
+
+        int index = 0;
+        foreach (var stat in stats)
+        {
+            string text;
+            int T1 = gear.GetStats(stat.Key, 1);
+            int T2 = gear.GetStats(stat.Key, 2);
+
+            text = $"{T1} <color=green>+{T2 - T1}</color>";
+
+            itemDisplay.EditTextBoxByIndex(text, index);
+            itemDisplay.SetIconByIndex(stat.Key, index);
+            index++;
+        }
+    }
+
+    private void DisplayHeal(Heal heal)
+    {
+        ItemDisplay itemDisplay = InstantiateDisplay().GetComponent<ItemDisplay>();
+        itemDisplay.EditNameTextBox(heal.itemName);
+
+        itemDisplay.EditTextBoxByIndex(heal.HealAmount.ToString(), 0);
+        itemDisplay.SetIconByIndex(InfoType.HEAL, 0);
     }
 }

@@ -450,6 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565a182561e0b3344b708e8515f5e310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+  maxLoot: 2
   lootTable:
     list:
     - item: {fileID: 11400000, guid: 1a51137a41f22214999f0a145f753920, type: 2}
@@ -462,11 +463,13 @@ MonoBehaviour:
       weight: 2
       type: 0
     - item: {fileID: 11400000, guid: 9b96df994070c7242b2855aaefda8d02, type: 2}
-      weight: 4
+      weight: 2
       type: 2
-  numLoot: 0
-  displayPrefab: {fileID: 2113237408210829636, guid: 8e89bed9d4b8a2e4e9759be8333bf9bd, type: 3}
+    - item: {fileID: 11400000, guid: 64709eca8ef9435419caad68a9b52d41, type: 2}
+      weight: 2
+      type: 0
   upperPanel: {fileID: 194643271}
+  displayPrefab: {fileID: 2113237408210829636, guid: 8e89bed9d4b8a2e4e9759be8333bf9bd, type: 3}
 --- !u!1 &69991846
 GameObject:
   m_ObjectHideFlags: 0
@@ -5164,7 +5167,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 208329455b5b8ba47a027a13020684d6, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

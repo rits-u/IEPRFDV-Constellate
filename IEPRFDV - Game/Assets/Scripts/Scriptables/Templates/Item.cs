@@ -7,8 +7,21 @@ public enum LootType
     HEAL
 }
 
+public enum InfoType
+{
+    HP,
+    ATK,
+    SP,
+    DAMAGE,
+    BULLETS,
+    HEAL,
+    BURST_INTERVAL,
+    FIRE_RATE, //for weapons interval
+}
+
 public abstract class Item : ScriptableObject
 {
+    [Header("Info")]
     public string itemName;
     public LootType type;
 

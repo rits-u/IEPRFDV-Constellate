@@ -9157,6 +9157,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1455867387
       objectReference: {fileID: 0}
+    - target: {fileID: 3741476412755077232, guid: 16f9340e0b2164148b1f22c8335d4287, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 11400000, guid: 64709eca8ef9435419caad68a9b52d41, type: 2}
     - target: {fileID: 3923943442594459765, guid: 16f9340e0b2164148b1f22c8335d4287, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.8
@@ -36085,6 +36089,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1455867387
       objectReference: {fileID: 0}
+    - target: {fileID: 5084167118429814213, guid: 22a9be90c746a0d49b070ded33fff8a5, type: 3}
+      propertyPath: gun
+      value: 
+      objectReference: {fileID: 11400000, guid: 64709eca8ef9435419caad68a9b52d41, type: 2}
     - target: {fileID: 6112974131803768534, guid: 22a9be90c746a0d49b070ded33fff8a5, type: 3}
       propertyPath: m_Name
       value: Player 2
