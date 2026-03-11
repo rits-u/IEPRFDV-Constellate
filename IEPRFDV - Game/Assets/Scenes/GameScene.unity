@@ -1406,8 +1406,8 @@ MonoBehaviour:
   countdown: {fileID: 21297949}
   roundNumberText: {fileID: 411472122}
   roundDurationText: {fileID: 725409058}
-  qteCountdown: 5
-  chestQTE: {fileID: 0}
+  roundTrigger: {fileID: 0}
+  rewardTrigger: {fileID: 0}
   UICanvas: {fileID: 1494282816}
   player1: {fileID: 1346292405}
   player2: {fileID: 1519587962}
@@ -9317,9 +9317,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
+      propertyPath: enemyPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: 'enemyPrefabs.Array.data[0]'
       value: 
       objectReference: {fileID: 7727712613359759040, guid: 5a50e1c17e1844944b439deb70e8bd24, type: 3}
+    - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
+      propertyPath: 'enemyPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 7727712613359759040, guid: 03205341c333e414485de0e90255ce3c, type: 3}
     - target: {fileID: 3085039453810706123, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.5
@@ -9392,6 +9400,7 @@ MonoBehaviour:
   playerList:
   - {fileID: 1346292405}
   - {fileID: 1519587962}
+  offsets: []
 --- !u!4 &1439157934
 Transform:
   m_ObjectHideFlags: 0
@@ -9630,9 +9639,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2636363689529075222, guid: b07f6b668275b264cbdb248c06fe1dd3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 21297946}
     - targetCorrespondingSourceObject: {fileID: 2636363689529075222, guid: b07f6b668275b264cbdb248c06fe1dd3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 620230692}
@@ -37082,6 +37088,7 @@ RectTransform:
   - {fileID: 41056327792483220}
   - {fileID: 1950636013}
   - {fileID: 255337921}
+  - {fileID: 21297946}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

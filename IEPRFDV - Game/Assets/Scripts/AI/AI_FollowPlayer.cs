@@ -17,18 +17,31 @@ public class AI_FollowPlayer : MonoBehaviour
     //[ShowIf("hasLimitedVisibility")][SerializeField] private float detectionRadius = 5.0f;
     //[ShowIf("randomMovement")][SerializeField] private float randomMovementRange = 5.0f;
     [SerializeField] private float pathRefreshTime = 3.0f;
+    [SerializeField] private float moveSpeed = 2.6f;
+    [SerializeField] private float acceleration = 8f;
+
+    [SerializeField] private bool canDash = false;
+    [ShowIf("canDash")][SerializeField] private bool dashRandomInterval = true;
+    [ShowIf("canDash")][HideIf("dashRandomInterval")][SerializeField] private float dashIntervalSeconds = 2f;
+    [ShowIf("canDash")] private float dashMoveSpeed = 5.5f;
+    [ShowIf("canDash")] private float dashDuration = 1.2f;
+    [ShowIf("canDash")] private bool dashStopMovement = false;
 
 
     [Header("Attack")]
     [SerializeField] private bool stopOnAttack = false;
     //[SerializeField] private float cooldown;
-    
+
     private Vector3 positionOffset;
     private NavMeshAgent navAgent;
     //private Animator animator;
     //private float detectionBuffer = 1.0f;
     private float targetDistance;
 
+    private void Awake()
+    {
+        InitializeValues();
+    }
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
@@ -87,41 +100,21 @@ public class AI_FollowPlayer : MonoBehaviour
     void LateUpdate()
     {
         if (target == null) return;
+
         
-        //targetDistance = Vector3.Distance(navAgent.transform.position, target.transform.position);
         SetRotation();
 
-        //if (!hasLimitedVisibility)
-        //{
-            navAgent.SetDestination(target.transform.position);
-        //}
-        //if (targetDistance <= detectionRadius)
-        //{
-            //if (targetDistance <= attackDistance)
-            //{
-            //    //if (stopOnAttack)
-            //    //{
-            //    //    navAgent.isStopped = true;
-            //    //    animator.SetBool("Attack", true);
-            //    //}
-            //}
-            //else
-            //{
-                //if (stopOnAttack)
-                //{
-                //    navAgent.isStopped = false;
-                //    animator.SetBool("Attack", false);
-                //}
-                //navAgent.SetDestination(target.transform.position);
+        navAgent.SetDestination(target.transform.position);
 
-            //}   
+
+        //}   
         //}
         //else if (randomMovementRange && targetDistance > detectionRadius + detectionBuffer)
         //{
         //    //Prevents auto braking from stopping random movement
         //    if (navAgent.remainingDistance > navAgent.stoppingDistance)
         //    {
-                
+
         //    }
         //    else
         //    {
@@ -190,6 +183,50 @@ public class AI_FollowPlayer : MonoBehaviour
     //        navAgent.speed = (animator.deltaPosition / Time.deltaTime).magnitude;
     //    }
     //}
+
+    private void Dash()
+    {
+        if (dashRandomInterval)
+        {
+        
+        }
+        else
+        {
+        
+        }
+    }
+    private void LimitedVisibiility(){
+        //targetDistance = Vector3.Distance(navAgent.transform.position, target.transform.position);
+        //if (!hasLimitedVisibility)
+        //{
+        //navAgent.SetDestination(target.transform.position);
+        //}
+        //if (targetDistance <= detectionRadius)
+        //{
+        //if (targetDistance <= attackDistance)
+        //{
+        //    //if (stopOnAttack)
+        //    //{
+        //    //    navAgent.isStopped = true;
+        //    //    animator.SetBool("Attack", true);
+        //    //}
+        //}
+        //else
+        //{
+        //if (stopOnAttack)
+        //{
+        //    navAgent.isStopped = false;
+        //    animator.SetBool("Attack", false);
+        //}
+        //navAgent.SetDestination(target.transform.position);
+    }
+
+    void InitializeValues()
+    {
+        navAgent.speed = moveSpeed;
+        navAgent.acceleration = acceleration;
+        Debug.Log($"speed: {navAgent.speed}, accel: {navAgent.acceleration}");
+    }
 }
 
 
