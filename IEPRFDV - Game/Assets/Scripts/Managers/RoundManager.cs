@@ -90,7 +90,6 @@ public class RoundManager : MonoBehaviour
 
     IEnumerator RoundTime()
     {
-        Debug.Log($"RM: Start round time");
         int timer = roundDuration;
         int secondsCount = timer;
         int minutesCount = timer / 60;
@@ -99,7 +98,6 @@ public class RoundManager : MonoBehaviour
         string minutes = "";
         string seconds = "";
 
-        Debug.Log($"RM: RT: Start Spawning");
         SpawnManager.Instance.StartSpawning();
 
         while(timer > 0)
@@ -121,7 +119,6 @@ public class RoundManager : MonoBehaviour
             
         }
 
-        Debug.Log($"RM: RT: Stop Spawning");
         SpawnManager.Instance.StopSpawning();
         //EnemyManager.Instance.UnregisterAllEnemies();
 
@@ -131,7 +128,6 @@ public class RoundManager : MonoBehaviour
 
     public void ExecuteRound()
     {
-        Debug.Log($"RM: Start ExecuteRound");
         StartCoroutine(RoundTime());
 
     }
@@ -163,11 +159,9 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator RoundFlow()
     {
-        Debug.Log($"RM: Start RoundFlow");
         //have !gameOver condition
         while (IsGameRunning())
         {
-            Debug.Log($"RM: Start RoundFlow While loop");
             //yield return StartCoroutine(Countdown());
             yield return StartCoroutine(Countdown(countdownDuration, countdownText));
 
@@ -179,7 +173,6 @@ public class RoundManager : MonoBehaviour
 
             yield return StartCoroutine(Countdown(5f, countdownText));
 
-            Debug.Log($"RM: WL: instance qte1 ");
             RunQTE(player1);
             RunQTE(player2);
 
@@ -187,7 +180,6 @@ public class RoundManager : MonoBehaviour
 
             //let players decide when to start the next round
         }
-        Debug.Log($"RM: End RoundFlow While loop ");
 
         //losing condition, exit loop when a player's HP reaches 0
     }
