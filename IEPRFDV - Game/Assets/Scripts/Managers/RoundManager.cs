@@ -63,7 +63,7 @@ public class RoundManager : MonoBehaviour
     {
         // countdownPanel.SetActive(true);
         //StartCoroutine(Countdown());
-        StartCoroutine(RoundFlow());
+        //StartCoroutine(RoundFlow());
 
     }
 
@@ -143,74 +143,69 @@ public class RoundManager : MonoBehaviour
     public void ExecuteRound()
     {
         Debug.Log($"RM: Start ExecuteRound");
-        StartCoroutine(RoundTime());
+        StartCoroutine(RoundProper());
 
     }
 
-    //private IEnumerator RoundFlow()
-    //{
-    //    yield return StartCoroutine(Countdown());
-    //    yield return StartCoroutine(Countdown(3f, countdownText));
-    //    ExecuteRound();
-
-    //    yield return StartCoroutine(RoundTime());
-
-    //    EnemyManager.Instance.DestroyAllEnemies();
-
-    //    yield return new WaitForSeconds(1);
-    //    round timer
-    //    yield return StartCoroutine(Countdown(5f, countdownText));
-
-    //    chestQTE.StartQTE();
-
-    //    adjust enemy
-
-
-    //    StartCoroutine(RoundFlow());
-
-
-    //    losing condition, exit loop when a player's HP reaches 0
-    //}
-
-    private IEnumerator RoundFlow()
+    private IEnumerator RoundProper()
     {
-        Debug.Log($"RM: Start RoundFlow");
-        //have !gameOver condition
-        while (IsGameRunning())
-        {
-            roundNumberText.text = "Round: " + round;
+        while(true) {
+            roundNumberText.text = $"Round: {round}";
 
-            Debug.Log($"RM: Start RoundFlow While loop");
-            //yield return StartCoroutine(Countdown());
             PlayerManager.Instance.EnableAllPlayerMovement();
-            yield return countdown.CountdownTo(countdownDuration);
-
             yield return StartCoroutine(RoundTime());
-
             EnemyManager.Instance.DestroyAllEnemies();
-
             yield return new WaitForSeconds(1);
-
-            PlayerManager.Instance.DisableAllPlayerMovement();
-         //   yield return countdown.CountdownTo(qteCountdown);
-            // yield return StartCoroutine(Countdown(5f, countdownText));
-
-            Debug.Log($"RM: WL: instance qte1 ");
-            RunQTE(player1);
-            RunQTE(player2);
-
-
-            //adjust enemy stats
-            // ^^^ handled by Enemy Manager already
-
-            //let players decide when to start the next round
 
             round++;
         }
-        Debug.Log($"RM: End RoundFlow While loop ");
-
-        //losing condition, exit loop when a player's HP reaches 0
     }
+
+    private void CheckPlayersCondition()
+    {
+        
+    }
+
+
+    //private IEnumerator RoundFlow()
+    //{
+    //    Debug.Log($"RM: Start RoundFlow");
+    //    //have !gameOver condition
+    //    while (IsGameRunning())
+    //    {
+    //        roundNumberText.text = "Round: " + round;
+
+    //        Debug.Log($"RM: Start RoundFlow While loop");
+    //        //yield return StartCoroutine(Countdown());
+    //        PlayerManager.Instance.EnableAllPlayerMovement();
+    //        yield return countdown.CountdownTo(countdownDuration);
+
+    //        yield return StartCoroutine(RoundTime());
+
+    //        EnemyManager.Instance.DestroyAllEnemies();
+
+    //        yield return new WaitForSeconds(1);
+
+    //        PlayerManager.Instance.DisableAllPlayerMovement();
+    //     //   yield return countdown.CountdownTo(qteCountdown);
+    //        // yield return StartCoroutine(Countdown(5f, countdownText));
+
+    //        Debug.Log($"RM: WL: instance qte1 ");
+    //        RunQTE(player1);
+    //        RunQTE(player2);
+
+
+    //        //adjust enemy stats
+    //        // ^^^ handled by Enemy Manager already
+
+    //        //let players decide when to start the next round
+
+    //        round++;
+    //    }
+    //    Debug.Log($"RM: End RoundFlow While loop ");
+
+    //    //losing condition, exit loop when a player's HP reaches 0
+    //}
 
     private bool IsGameRunning()
     {
@@ -224,12 +219,11 @@ public class RoundManager : MonoBehaviour
         GameObject qte = Instantiate(QTEPrefab, UICanvas.transform, false);
         yield return StartCoroutine(qte.GetComponent<QuickTimeEvent>().PlayQTE(player));
     }
+
+
     //list
    /* disable player movement on countdowns
     * dash cooldown ui
-    * input ui on QTEs
-    * fix player input on QTEs
-    * item choices / randomize gear
     * finalize player gear system
     * adjust difficulty (increase enemy stats) 
     * winning/losing conditions

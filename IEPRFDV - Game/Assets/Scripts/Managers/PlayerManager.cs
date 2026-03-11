@@ -8,7 +8,11 @@ public class PlayerManager : MonoBehaviour
 
     //[Header("")]
     [SerializeField] private List<GameObject> playerList = new();
+    [SerializeField] private List<Transform> offsets = new();
 
+    private int playersAlive;
+
+    //singleton
     private void Awake()
     {
         if(Instance == null)
@@ -19,6 +23,50 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        //foreach (var player in playerList)
+        //{
+        //    offsets.Add(player.GetComponentInChildren<OffsetTransform>().transform);
+        //    Debug.Log(player.GetComponentInChildren<OffsetTransform>().transform.position);
+        //}
+        InitializePlayers();
+    }
+
+    public List<Transform> GetTransformList()
+    {
+        return offsets;
+    }
+
+    public void InitializePlayers()
+    {
+        foreach (var player in playerList)
+        {
+            Stats playerStats = player.GetComponent<Stats>();
+            playerStats.OnDeath += UnregisterPlayer;
+            playersAlive++;
+        }
+    }
+
+    private void UnregisterPlayer(Stats playerStats)
+    {
+        playerStats.OnDeath -= UnregisterPlayer;
+        int index = 0;
+        foreach(var player in playerList)
+        {
+            if(player == playerStats.gameObject)
+            {
+                Debug.Log($"PM: {player.name} was defeated!");
+                //DAWG //spawn resurrect circle stuff here hhkhsgkh
+                //playersAlive--;
+                break;
+            }
+            index++;
+        }
+
+        playerList.RemoveAt(index);
     }
 
     public GameObject GetPlayerByIndex(int index)
@@ -101,5 +149,11 @@ public class PlayerManager : MonoBehaviour
     {
         Stats stats = playerList[playerID - 1].GetComponent<Stats>();
         stats.Heal(heal.HealAmount * tier);
+    }
+
+    public bool ArePlayersAlive()
+    {
+        if (playersAlive <= 1) return false;
+        return true;
     }
 }

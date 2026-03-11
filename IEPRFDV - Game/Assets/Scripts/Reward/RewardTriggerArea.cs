@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class TriggerRewardArea : MonoBehaviour
+public class RewardTriggerArea : MonoBehaviour
 {
     
     [SerializeField] private int playersDetected;

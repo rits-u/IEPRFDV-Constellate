@@ -3,11 +3,13 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class Teleporter : MonoBehaviour
+public class RoundTriggerArea : MonoBehaviour
 {
     [Tooltip("Get panel from UI object")]
     [SerializeField] Countdown countdown;
-    [SerializeField] int playersDetected;
+
+    [SerializeField] private float countdownDuration;
+    [SerializeField] private int playersDetected;
     [SerializeField] private bool isCountingDown;
 
     private void Start()
@@ -18,17 +20,17 @@ public class Teleporter : MonoBehaviour
 
     private void OnEnable()
     {
-        countdown.OnCountdownFinished += TeleportPlayers;
+        countdown.OnCountdownFinished += PrepareRound;
     }
 
     private void OnDisable()
     {
-        countdown.OnCountdownFinished -= TeleportPlayers;
+        countdown.OnCountdownFinished -= PrepareRound;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             playersDetected++;
         }
@@ -36,8 +38,8 @@ public class Teleporter : MonoBehaviour
         if (playersDetected == 2 && !isCountingDown)
         {
             isCountingDown = true;
-           // StartCoroutine(countdown.CountdownTo(5f));
-            countdown.StartCountdown(5f, "");
+            // StartCoroutine(countdown.CountdownTo(5f));
+            countdown.StartCountdown(countdownDuration, "Starting in... ");
         }
     }
 
@@ -56,18 +58,18 @@ public class Teleporter : MonoBehaviour
         }
     }
 
-    private void TeleportPlayers()
+    private void PrepareRound()
     {
-        StartCoroutine("TransitionToGameScene");
+        StartCoroutine(StartRoundProper());
     }
 
-    IEnumerator TransitionToGameScene()
+    IEnumerator StartRoundProper()
     {
-        yield return StartCoroutine(countdown.OnCountdownEnd("Teleporting...", 2f));
+        if (PlayerManager.Instance != null) PlayerManager.Instance.DisableAllPlayerMovement();
+        yield return StartCoroutine(countdown.OnCountdownEnd("Starting Round...", 1f));
         countdown.StopCountdown();
-        SceneManager.LoadScene("GameScene");
+
+        RoundManager.Instance.ExecuteRound();
     }
-
-
 
 }

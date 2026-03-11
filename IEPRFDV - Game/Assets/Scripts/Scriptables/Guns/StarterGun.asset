@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunTemplate
   itemName: Starter Gun
   type: 0
-  damage: 1
-  numBullets: 3
-  burstInterval: 0.2
-  fireInterval: 2
+  currentTier: 1
+  rangeRadius: 10
+  gunProperties:
+  - damage: 1
+    numBullets: 3
+    burstInterval: 0.2
+    fireRate: 2
   bulletPrefab: {fileID: 5080210413143449869, guid: 8f923a1d40748144cbb1918977e2bc8d, type: 3}

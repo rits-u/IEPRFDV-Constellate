@@ -15,12 +15,12 @@ public class Countdown : MonoBehaviour
         countdownText = GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public void StartCountdown(float duration)
+    public void StartCountdown(float duration, string startingText)
     {
-        countdownRoutine = StartCoroutine(CountdownTo(duration));
+        countdownRoutine = StartCoroutine(CountdownTo(duration, startingText));
     }
 
-    public IEnumerator CountdownTo(float duration)
+    public IEnumerator CountdownTo(float duration, string startingText)
     {
         if (countdownText == null)
         {
@@ -32,7 +32,7 @@ public class Countdown : MonoBehaviour
 
         while (countdown > 0)
         {
-            countdownText.text = Mathf.CeilToInt(countdown).ToString();
+            countdownText.text = startingText + Mathf.CeilToInt(countdown).ToString();
             yield return new WaitForSeconds(1f);
             countdown -= 1f;
         }
