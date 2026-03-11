@@ -1,0 +1,507 @@
+fileFormatVersion: 2
+guid: 2e1f9f54afb96584c948434925f67a3b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8412169645645076104
+    second: constellate logo long_0
+  - first:
+      213: 2879135896703194277
+    second: constellate logo long_1
+  - first:
+      213: -655633802717032071
+    second: constellate logo long_2
+  - first:
+      213: -4522740057657332640
+    second: constellate logo long_3
+  - first:
+      213: 4697951864522008309
+    second: constellate logo long_4
+  - first:
+      213: -1319385468264090948
+    second: constellate logo long_5
+  - first:
+      213: 426614091673304425
+    second: constellate logo long_6
+  - first:
+      213: -4020711749730593859
+    second: constellate logo long_7
+  - first:
+      213: -3132532041731102323
+    second: constellate logo long_8
+  - first:
+      213: 1928091231613275305
+    second: constellate logo long_9
+  - first:
+      213: -3987977776876594357
+    second: constellate logo long_10
+  - first:
+      213: -7889553788225477771
+    second: constellate logo long_11
+  - first:
+      213: 8329442510657087772
+    second: constellate logo long_12
+  - first:
+      213: 3154383857654720141
+    second: constellate logo long_13
+  - first:
+      213: -593556295772425990
+    second: constellate logo long_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: constellate logo long_0
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 178
+        width: 384
+        height: 445
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8796001e648f14b80800000000000000
+      internalID: -8412169645645076104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_1
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 531
+        width: 1374
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a4d11ff7deb4f720800000000000000
+      internalID: 2879135896703194277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_2
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 251
+        width: 181
+        height: 289
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9711056b788b6e6f0800000000000000
+      internalID: -655633802717032071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_3
+      rect:
+        serializedVersion: 2
+        x: 1479
+        y: 258
+        width: 167
+        height: 290
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06ca7eb41effb31c0800000000000000
+      internalID: -4522740057657332640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_4
+      rect:
+        serializedVersion: 2
+        x: 1973
+        y: 238
+        width: 231
+        height: 299
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f6e7b8745a723140800000000000000
+      internalID: 4697951864522008309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_5
+      rect:
+        serializedVersion: 2
+        x: 2184
+        y: 348
+        width: 197
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb27e4238e990bde0800000000000000
+      internalID: -1319385468264090948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_6
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 238
+        width: 206
+        height: 273
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96dfc5e8143abe500800000000000000
+      internalID: 426614091673304425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_7
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 226
+        width: 230
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db3911d57ff8338c0800000000000000
+      internalID: -4020711749730593859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_8
+      rect:
+        serializedVersion: 2
+        x: 873
+        y: 219
+        width: 183
+        height: 304
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d89a61574b20784d0800000000000000
+      internalID: -3132532041731102323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_9
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 216
+        width: 193
+        height: 306
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9accada72c4f1ca10800000000000000
+      internalID: 1928091231613275305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_10
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 219
+        width: 155
+        height: 292
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4b5e15575bd7a8c0800000000000000
+      internalID: -3987977776876594357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_11
+      rect:
+        serializedVersion: 2
+        x: 1625
+        y: 206
+        width: 228
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 573ab7851aca28290800000000000000
+      internalID: -7889553788225477771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_12
+      rect:
+        serializedVersion: 2
+        x: 1819
+        y: 213
+        width: 173
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c19e0c805df189370800000000000000
+      internalID: 8329442510657087772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_13
+      rect:
+        serializedVersion: 2
+        x: 2088
+        y: 131
+        width: 154
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d866cb8e76f96cb20800000000000000
+      internalID: 3154383857654720141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: constellate logo long_14
+      rect:
+        serializedVersion: 2
+        x: 2182
+        y: 234
+        width: 199
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af0b94c91b343c7f0800000000000000
+      internalID: -593556295772425990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      constellate logo long_0: -8412169645645076104
+      constellate logo long_1: 2879135896703194277
+      constellate logo long_10: -3987977776876594357
+      constellate logo long_11: -7889553788225477771
+      constellate logo long_12: 8329442510657087772
+      constellate logo long_13: 3154383857654720141
+      constellate logo long_14: -593556295772425990
+      constellate logo long_2: -655633802717032071
+      constellate logo long_3: -4522740057657332640
+      constellate logo long_4: 4697951864522008309
+      constellate logo long_5: -1319385468264090948
+      constellate logo long_6: 426614091673304425
+      constellate logo long_7: -4020711749730593859
+      constellate logo long_8: -3132532041731102323
+      constellate logo long_9: 1928091231613275305
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
