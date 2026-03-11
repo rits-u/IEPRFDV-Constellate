@@ -44,6 +44,7 @@ public class PlayerInventory : MonoBehaviour
         playerStats.MaxHP += copy.GetStatsByType(InfoType.HP);
         playerStats.ATK += copy.GetStatsByType(InfoType.ATK);
         playerStats.SP += copy.GetStatsByType(InfoType.SP);
+        playerStats.UpdateHealthBar();
         
         gearList.Add(new GearInfo(copy, tier));
         Debug.Log($"{gameObject.name} equipped {gear.itemName}");

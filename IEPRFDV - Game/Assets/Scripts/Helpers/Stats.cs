@@ -46,11 +46,7 @@ public class Stats : MonoBehaviour
     {
         health = maxHealth;
 
-        if (healthBar != null)
-        {
-            healthBar.SetMaxHealth(HP);
-            healthBar.SetMaxShield(SP);
-        }
+        UpdateHealthBar();
     }
 
     public bool TakeDamage(int damage)
@@ -98,6 +94,15 @@ public class Stats : MonoBehaviour
         if(HP > maxHealth)
         {
             HP = maxHealth;
+        }
+    }
+
+    public void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(HP);
+            healthBar.SetMaxShield(SP);
         }
     }
 }

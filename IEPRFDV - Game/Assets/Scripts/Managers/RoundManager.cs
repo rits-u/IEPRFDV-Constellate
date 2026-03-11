@@ -20,9 +20,11 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roundNumberText;
     [SerializeField] private TextMeshProUGUI roundDurationText;
 
-    [Header("QTE")]
-    [SerializeField] private float qteCountdown = 5f;
-    [SerializeField] private QuickTimeEvent chestQTE;
+    [Header("Triggers")]
+    [SerializeField] private RoundTriggerArea roundTrigger;
+    [SerializeField] private RewardTriggerArea rewardTrigger;
+    //[SerializeField] private float qteCountdown = 5f;
+    //[SerializeField] private QuickTimeEvent chestQTE;
 
     [Header("References")]
     [SerializeField] private GameObject UICanvas;
@@ -144,12 +146,13 @@ public class RoundManager : MonoBehaviour
     {
         Debug.Log($"RM: Start ExecuteRound");
         StartCoroutine(RoundProper());
+        DeactivateRoundTrigger();
 
     }
 
     private IEnumerator RoundProper()
     {
-        while(true) {
+        //while(true) {
             roundNumberText.text = $"Round: {round}";
 
             PlayerManager.Instance.EnableAllPlayerMovement();
@@ -157,8 +160,44 @@ public class RoundManager : MonoBehaviour
             EnemyManager.Instance.DestroyAllEnemies();
             yield return new WaitForSeconds(1);
 
+            //reward qte phase
+            ActivateRewardTrigger();
+
             round++;
-        }
+       // }
+    }
+
+    public void NextRound()
+    {
+        DeactivateRewardTrigger();
+        StartCoroutine(PrepareTrigger());
+        //ExecuteRound();
+    }
+
+    IEnumerator PrepareTrigger()
+    {
+        yield return new WaitForSeconds(2f);
+        ActivateRoundTrigger();
+    }
+
+    private void ActivateRoundTrigger()
+    {
+        roundTrigger.gameObject.SetActive(true);
+    }
+
+    private void DeactivateRoundTrigger()
+    {
+        roundTrigger.gameObject.SetActive(false);
+    }
+
+    private void ActivateRewardTrigger()
+    {
+        rewardTrigger.gameObject.SetActive(true);
+    }
+
+    private void DeactivateRewardTrigger()
+    {
+        rewardTrigger.gameObject.SetActive(false);
     }
 
     private void CheckPlayersCondition()

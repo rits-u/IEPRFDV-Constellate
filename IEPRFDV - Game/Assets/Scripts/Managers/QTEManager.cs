@@ -1,9 +1,7 @@
 using System.Collections;
 using TMPro;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rigidbody2D;
 
 public class QTEManager : MonoBehaviour
 {

@@ -83,7 +83,7 @@ public class PlayerManager : MonoBehaviour
     public void EnablePlayerMovement(GameObject player)
     {
         if (player == null) return;
-        player.GetComponent <PlayerMovement>().EnableMovement();
+        player.GetComponent<PlayerMovement>().EnableMovement();
     }
 
     public void DisableAllPlayerMovement()

@@ -1,8 +1,5 @@
-﻿using NUnit.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
-using Unity.XR.Oculus.Input;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ChestLoot : MonoBehaviour
@@ -16,12 +13,14 @@ public class ChestLoot : MonoBehaviour
     [SerializeField] private GameObject displayPrefab;
 
     private int lootWeaponAmount;
+    private List<GameObject> itemDisplays = new();
 
     public void RandomizeLoot()
     {
-        int numLoot = UnityEngine.Random.Range(1, maxLoot);
+        int numLoot = UnityEngine.Random.Range(1, maxLoot+1);
       //  int numLoot = 3;
         lootWeaponAmount = 0;
+        ResetDisplay();
 
         for (int i = 0; i < numLoot; i++)
         {
@@ -42,6 +41,7 @@ public class ChestLoot : MonoBehaviour
                     lootWeaponAmount++;
                     lootTable.Remove(item); //remove from the drops
                     LootManager.Instance.AddItemToLoot(item.item);
+
                     break;
                 
                 case LootType.GEAR:
@@ -49,7 +49,7 @@ public class ChestLoot : MonoBehaviour
                     DisplayGearItem(gear);
                     LootManager.Instance.AddItemToLoot(item.item);
                     break;
-                
+
                 case LootType.HEAL:
                     Heal heal = (Heal)item.item;
                     DisplayHeal(heal);
@@ -65,7 +65,7 @@ public class ChestLoot : MonoBehaviour
         display.transform.localScale = Vector3.one;
         display.transform.SetParent(upperPanel.transform, false);
         display.SetActive(true);
-
+        itemDisplays.Add(display);
         return display;
     }
 
@@ -122,5 +122,15 @@ public class ChestLoot : MonoBehaviour
 
         itemDisplay.EditTextBoxByIndex(heal.HealAmount.ToString(), 0);
         itemDisplay.SetIconByIndex(InfoType.HEAL, 0);
+    }
+
+    private void ResetDisplay()
+    {
+        foreach(var display in itemDisplays)
+        {
+            Destroy(display);
+        }
+
+        itemDisplays.Clear();
     }
 }

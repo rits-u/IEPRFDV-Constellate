@@ -19,12 +19,15 @@ public class RewardTriggerArea : MonoBehaviour
     private bool rewardDisplayed = false;
     private CircleCollider2D col;
     private ChestLoot chestLoot;
+
+    private Vector3 panelStartPosition;
    
 
     private void Start()
     {
+        panelStartPosition = rewardPanel.GetComponent<RectTransform>().position;
         col = GetComponent<CircleCollider2D>();
-        chestLoot = GetComponent<ChestLoot>();
+        chestLoot = GetComponentInParent<ChestLoot>();
     }
 
     private void OnEnable()
@@ -32,6 +35,7 @@ public class RewardTriggerArea : MonoBehaviour
         playersDetected = 0;
         timeSinceLast = 0;
         startCount = false;
+        rewardDisplayed = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -57,6 +61,7 @@ public class RewardTriggerArea : MonoBehaviour
             chestLoot.RandomizeLoot();
             ShowRewardsScreen();
             PlayerManager.Instance.DisableAllPlayerMovement();
+
             timeSinceLast = 0;
             rewardDisplayed = true;
             startCount = false;
@@ -73,22 +78,29 @@ public class RewardTriggerArea : MonoBehaviour
         }
     }
 
+    private void ResetRewardPanel()
+    {
+        RectTransform rect = rewardPanel.GetComponent<RectTransform>();
+        rect.position = panelStartPosition;
+    }
+
     private void ShowRewardsScreen()
     {
+        ResetRewardPanel();
         rewardPanel.LeanMoveY(540, leanDuration);
         startBtn.gameObject.SetActive(true);
      }
 
     public void HideRewardsScreen()
     {
-        rewardPanel.LeanMoveY(-549, leanDuration);
+        PlayerManager.Instance.EnableAllPlayerMovement();
+        rewardPanel.LeanMoveY(1800, leanDuration);
         StartCoroutine(DisableRewardArea());
     }
 
     private IEnumerator DisableRewardArea()
     {
         yield return new WaitForSeconds(leanDuration + 0.5f);
-        PlayerManager.Instance.EnableAllPlayerMovement();
-        gameObject.SetActive(false);
+        gameObject.SetActive(false);    
     }
 }
