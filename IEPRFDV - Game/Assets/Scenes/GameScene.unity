@@ -678,7 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
   round: 0
-  roundDuration: 2
+  roundDuration: 30
   countdownDuration: 2
   countdownText: {fileID: 762639569}
   roundDurationText: {fileID: 725409058}
@@ -7745,6 +7745,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
+      propertyPath: 'enemyPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7727712613359759040, guid: 7168af77d65ee4e4090279dede1fbd6e, type: 3}
     - target: {fileID: 3085039453810706123, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.5

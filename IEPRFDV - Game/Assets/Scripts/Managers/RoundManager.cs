@@ -30,6 +30,7 @@ public class RoundManager : MonoBehaviour
     //private float countdown;
 
     private bool roundEnded = false;
+    private Vector3 lastPos;
 
     private void Awake()
     {
