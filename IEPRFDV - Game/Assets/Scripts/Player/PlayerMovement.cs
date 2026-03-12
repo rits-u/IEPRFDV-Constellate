@@ -39,10 +39,14 @@ public class PlayerMovement : MonoBehaviour
     private enum DashState { Idle, WaitingSecondTap, Dashing }
     private DashState dashState = DashState.Idle;
 
+    private PlayerSprite playerSprite;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        playerSprite = GetComponentInChildren<PlayerSprite>();
+
         EnableMovement();
 
         contactFilter = new ContactFilter2D();
@@ -64,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Vector2 input = move.action.ReadValue<Vector2>();
+        playerSprite.UpdateVisual(input.x);
 
         //movement input
         if (!isDashing)
@@ -134,9 +139,21 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+
+
         if (isDashing) return;
 
-        if (direction == Vector2.zero) return;
+        if (direction == Vector2.zero)
+        {
+            //playerSprite.Hover();
+            return;
+            //if (playerSprite != null) playerSprite.Hover();
+        }
+        else
+        {
+           // playerSprite.Lean(direction.x);
+        }
+
 
         Vector2 movement = direction.normalized * moveSpeed * Time.fixedDeltaTime;
 
@@ -150,9 +167,20 @@ public class PlayerMovement : MonoBehaviour
 
         // rotation
         if (direction.x < 0)
-            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        {
+            if (playerSprite != null)
+            {
+                playerSprite.SwitchToLeft();
+
+            }
+          //  transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        }
         else if (direction.x > 0)
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        {
+            if(playerSprite != null) 
+                playerSprite.SwitchToRight();
+           // transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
     }
 
     //IEnumerator Dash(Vector2 dir)
@@ -194,6 +222,7 @@ public class PlayerMovement : MonoBehaviour
             if (IsHittingWall(dir)) break;
             rb.linearVelocity = dir * dashSpeed;
             timer += Time.fixedDeltaTime;
+           // if (playerSprite != null) playerSprite.DashLean(dir.x);
             yield return new WaitForFixedUpdate();
         }
 

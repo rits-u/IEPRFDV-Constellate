@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77512bac316ed6e468b163454dab8724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+  maxHealth: 10
   health: 10
   attack: 3
   shield: 0
@@ -284,7 +285,7 @@ GameObject:
   - component: {fileID: 7303572489393671657}
   - component: {fileID: 4804685948836237735}
   - component: {fileID: 4382232452554447876}
-  - component: {fileID: 4491070298139180576}
+  - component: {fileID: 8977362977475222964}
   m_Layer: 6
   m_Name: Gun
   m_TagString: Untagged
@@ -378,9 +379,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aed00f7f9bb6f4408e5f14c7bf393a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicGun
-  rangeRadius: 0
+  gun: {fileID: 0}
   enemiesInRange: []
---- !u!58 &4491070298139180576
+--- !u!58 &8977362977475222964
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -410,9 +411,9 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.74740475, y: 0}
-  m_Radius: 8.792414
+  m_Offset: {x: 0, y: -0.00000035762787}
+  m_Radius: 0.5

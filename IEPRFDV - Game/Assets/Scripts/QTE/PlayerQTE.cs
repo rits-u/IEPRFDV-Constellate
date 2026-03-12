@@ -10,7 +10,6 @@ public class PlayerQTE : MonoBehaviour
 {
 
     [Header("References")]
-    [HideInInspector] private string name;
     [SerializeField] private RectTransform targetCircle;
     [SerializeField] private RectTransform movingCircle;
 
@@ -44,11 +43,8 @@ public class PlayerQTE : MonoBehaviour
 
     [HideInInspector] private float time = 0f;
 
-    // public event Action OnPressed;
-    public event Action<PlayerQTE> OnPressed;
     private UserInterfaceQTE UI;
 
-    private float bufferWindow = 0.2f;
     private float cooldownTimer = 0f;
     private bool isCooldown = true;
     private bool resolved = false;

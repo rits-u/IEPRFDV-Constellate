@@ -13,7 +13,7 @@ public class RoundManager : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private int round;
     [SerializeField] int roundDuration;
-    [SerializeField] private float countdownDuration = 3f;
+ //   [SerializeField] private float countdownDuration = 3f;
 
     [Header("UI Elements")]
     [SerializeField] private Countdown countdown;
@@ -68,38 +68,6 @@ public class RoundManager : MonoBehaviour
         //StartCoroutine(RoundFlow());
 
     }
-
-    //IEnumerator Countdown()
-    //{
-    //    float countdown = countdownDuration;
-       
-    //    while (countdown > 0)
-    //    {
-    //        countdownText.text = countdown.ToString();
-    //        yield return new WaitForSeconds(1f);
-    //        countdown -= 1;
-    //    }
-
-    //  //  countdownText.text = "START!";
-       
-    //    countdownText.text = "";
-    //    //ExecuteRound();
-    //}
-
-    //IEnumerator Countdown(float duration, TextMeshProUGUI textUI)
-    //{
-    //    float countdown = duration;
-
-    //    while (countdown > 0)
-    //    {
-    //        textUI.text = Mathf.CeilToInt(countdown).ToString();
-    //        yield return new WaitForSeconds(1f);
-    //        countdown -= 1f;
-    //    }
-
-    //    textUI.text = "";
-    //}
-
     IEnumerator RoundTime()
     {
         roundEnded = false;
@@ -153,17 +121,17 @@ public class RoundManager : MonoBehaviour
     private IEnumerator RoundProper()
     {
         //while(true) {
-            roundNumberText.text = $"Round: {round}";
+        roundNumberText.text = $"Round: {round}";
 
-            PlayerManager.Instance.EnableAllPlayerMovement();
-            yield return StartCoroutine(RoundTime());
-            EnemyManager.Instance.DestroyAllEnemies();
-            yield return new WaitForSeconds(1);
+        PlayerManager.Instance.EnableAllPlayerMovement();
+        yield return StartCoroutine(RoundTime());
+        EnemyManager.Instance.DestroyAllEnemies();
+        yield return new WaitForSeconds(1);
 
-            //reward qte phase
-            ActivateRewardTrigger();
+        //reward qte phase
+        ActivateRewardTrigger();
 
-            round++;
+        round++;
        // }
     }
 
