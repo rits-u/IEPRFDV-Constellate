@@ -9,6 +9,9 @@ public class PlayerSprite : MonoBehaviour
     [SerializeField] private Sprite leftSprite;
     [SerializeField] private Sprite rightSprite;
 
+    [Header("Weapon")]
+    [SerializeField] private Transform visualWeapon;
+
     [Header("Properties")]
     [SerializeField] private float hoverDistance = 0.3f;
     [SerializeField] private float hoverDuration = 2;
@@ -71,11 +74,15 @@ public class PlayerSprite : MonoBehaviour
     public void SwitchToLeft()
     {
         spriteRenderer.sprite = leftSprite;
+        visualWeapon.localScale = new Vector3(1, 1, 1);
+        visualWeapon.localPosition = new Vector3(-0.2f, -0.2f, 0f);
     }
 
     public void SwitchToRight()
     {
         spriteRenderer.sprite = rightSprite;
+        visualWeapon.localScale = new Vector3(-1, 1, 1);
+        visualWeapon.localPosition = new Vector3(0.2f, -0.2f, 0f);
     }
 
     //public void DashLean(float input)
