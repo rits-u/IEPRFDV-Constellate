@@ -7,6 +7,8 @@ public class PlayerInventory : MonoBehaviour
 
     [Header("Weapon")]
     [SerializeField] private Gun gun;
+    [SerializeField] private Melee melee;
+  //  [SerializeField] pri
 
     [Header("Gear")]
     [SerializeField] private int maxSlots;
@@ -32,9 +34,14 @@ public class PlayerInventory : MonoBehaviour
         playerStats = GetComponent<Stats>();
     }
 
-    public Gun GetPlayerGun()
+    public Gun GetPlayerGunWeapon()
     {
         return gun;
+    }
+
+    public Melee GetPlayerMeleeWeapon()
+    {
+        return melee;
     }
 
     public void EquipGear(Gear gear, int tier)

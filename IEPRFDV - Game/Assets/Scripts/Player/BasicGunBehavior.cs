@@ -21,7 +21,7 @@ public class BasicGunBehavior : MonoBehaviour
 
     private void Update()
     {
-        gun = transform.parent.GetComponent<PlayerInventory>().GetPlayerGun(); //(??)
+        gun = transform.parent.GetComponent<PlayerInventory>().GetPlayerGunWeapon(); //(??)
         col.radius = gun.RangeRadius;
 
         if (numEnemies <= 0)

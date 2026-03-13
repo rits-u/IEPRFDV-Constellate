@@ -7,28 +7,6 @@ using static UnityEngine.Rendering.DebugUI;
 [CreateAssetMenu(fileName = "Gun", menuName = "Constellate/Gun")]
 public class Gun : Item
 {
-    //[SerializeField] private int damage;
-    //[SerializeField] private int numBullets;
-
-    //[Tooltip("Interval between each bullet")]
-    //[SerializeField] private float burstInterval;
-
-    //[Tooltip("Interval between bursts")]
-    //[SerializeField] private float fireInterval;
-
-    //[Tooltip("Visuals/Sprite of Bullets")]
-    //[SerializeField] private GameObject bulletPrefab;
-
-    //public int Damage => damage;
-
-    //public int NumBullets => numBullets;
-
-    //public float BurstInterval => burstInterval;
-
-    //public float FireInterval => fireInterval;
-
-    //public GameObject BulletPrefab => bulletPrefab;
-
     [Header("Properties")]
     [SerializeField] private int currentTier = 1;
     public int CurrentTier

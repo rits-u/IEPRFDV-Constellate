@@ -16,7 +16,8 @@ public enum InfoType
     BULLETS,
     HEAL,
     BURST_INTERVAL,
-    FIRE_RATE, //for weapons interval
+    FIRE_RATE, //for guns interval
+    SLASH_INTERVAL
 }
 
 public abstract class Item : ScriptableObject

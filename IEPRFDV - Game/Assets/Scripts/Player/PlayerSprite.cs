@@ -15,7 +15,7 @@ public class PlayerSprite : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private float hoverDistance = 0.3f;
     [SerializeField] private float hoverDuration = 2;
-    [SerializeField] private float leanAmount = 15;
+    [SerializeField] private float leanAmount = 20;
     [SerializeField] private float leanTime = 0.5f;
 
     private SpriteRenderer spriteRenderer;
