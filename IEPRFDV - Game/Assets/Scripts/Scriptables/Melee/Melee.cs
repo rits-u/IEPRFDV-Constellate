@@ -1,26 +1,25 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Gun;
 
 
 [CreateAssetMenu(fileName = "Melee", menuName = "Constellate/Melee")]
-public class Melee : ScriptableObject
+public class Melee : Weapon
 {
     [Header("Properties")]
-    [SerializeField] private int currentTier = 1;
-    public int CurrentTier
-    {
-        get => currentTier;
-        set => currentTier = value;
-    }
+    //[SerializeField] private int currentTier = 1;
+    //public int CurrentTier
+    //{
+    //    get => currentTier;
+    //    set => currentTier = value;
+    //}
 
-    [SerializeField] private float rangeRadius = 5f;
-    public float RangeRadius
-    {
-        get => rangeRadius;
-        set => rangeRadius = value;
-    }
+    //[SerializeField] private float rangeRadius = 5f;
+    //public float RangeRadius
+    //{
+    //    get => rangeRadius;
+    //    set => rangeRadius = value;
+    //}
 
 
     [Tooltip("Each element is by tier")]
@@ -45,10 +44,10 @@ public class Melee : ScriptableObject
         switch (type)
         {
             case InfoType.DAMAGE:   //int
-                property = meleeProperties[currentTier - 1].Damage;
+                property = meleeProperties[CurrentTier - 1].Damage;
                 break;
             case InfoType.SLASH_INTERVAL:
-                property = meleeProperties[currentTier - 1].SlashInterval;
+                property = meleeProperties[CurrentTier - 1].SlashInterval;
                 break;
         }
 

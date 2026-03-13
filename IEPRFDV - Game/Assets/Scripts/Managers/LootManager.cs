@@ -62,8 +62,8 @@ public class LootManager : MonoBehaviour
             }
             else if (item.type == LootType.WEAPON)
             {
-                Gun gun = (Gun)item;
-                PlayerManager.Instance.SwitchWeaponOfPlayer(gun, playerID, tier);
+                Weapon weapon = (Weapon)item;
+                PlayerManager.Instance.SwitchWeaponOfPlayer(weapon, playerID, tier);
             }
             else if(item.type == LootType.HEAL)
             {

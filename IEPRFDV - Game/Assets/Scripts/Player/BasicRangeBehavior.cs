@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicGunBehavior : MonoBehaviour
+public class BasicRangeBehavior : MonoBehaviour
 {
-    [SerializeField] private Gun gun;
+    [SerializeField] private Range gun;
 
     private float fireUpdate = 0;
     private bool isBursting = false;
@@ -19,9 +19,21 @@ public class BasicGunBehavior : MonoBehaviour
         col = GetComponent<CircleCollider2D>();
     }
 
+    private void OnEnable()
+    {
+        gun = (Range)GetComponent<WeaponObject>().weapon;
+       
+    }
+
+    private void OnDisable()
+    {
+        gun = null;
+        col.radius = 0;
+    }
+
     private void Update()
     {
-        gun = transform.parent.GetComponent<PlayerInventory>().GetPlayerGunWeapon(); //(??)
+        gun = (Range)GetComponent<WeaponObject>().weapon;
         col.radius = gun.RangeRadius;
 
         if (numEnemies <= 0)
@@ -111,7 +123,7 @@ public class BasicGunBehavior : MonoBehaviour
         if (target == null) yield break;
 
 
-        int numBullets = (int)gun.GetPropertyByType(InfoType.BULLETS);
+        int numBullets = (int)gun.GetPropertyByType(InfoType.PROJECTILES);
         int damage = (int)gun.GetPropertyByType(InfoType.DAMAGE);
         float burstInterval = gun.GetPropertyByType(InfoType.BURST_INTERVAL);
 

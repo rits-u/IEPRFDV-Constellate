@@ -36,8 +36,17 @@ public class ChestLoot : MonoBehaviour
             switch (item.type)
             {
                 case LootType.WEAPON:
-                    Gun gun = (Gun)item.item;
-                    DisplayGunItem(gun);
+                    Weapon weapon = (Weapon)item.item;
+                    if (weapon.IsMelee)
+                    {
+                        DisplayMeleeItem((Melee)weapon);
+                    }
+                    else
+                    {
+                        DisplayRangeItem((Range)weapon);
+                    }
+                        // 
+                       
                     lootWeaponAmount++;
                     lootTable.Remove(item); //remove from the drops
                     LootManager.Instance.AddItemToLoot(item.item);
@@ -69,18 +78,39 @@ public class ChestLoot : MonoBehaviour
         return display;
     }
 
-    private void DisplayGunItem(Gun gun)
+    private void DisplayRangeItem(Range range)
     {
         ItemDisplay itemDisplay = InstantiateDisplay().GetComponent<ItemDisplay>();
-        itemDisplay.EditNameTextBox(gun.itemName);
+        itemDisplay.EditNameTextBox(range.itemName);
 
         int index = 0;
         foreach (InfoType type in Enum.GetValues(typeof(InfoType)))
         {
-            if (type != InfoType.DAMAGE && type != InfoType.BULLETS && type != InfoType.FIRE_RATE) continue;
+            if (type != InfoType.DAMAGE && type != InfoType.PROJECTILES && type != InfoType.FIRE_RATE) continue;
 
-            int T1 = (int)gun.GetProperty(type, 1);
-            int T2 = (int)gun.GetProperty(type, 2);
+            int T1 = (int)range.GetProperty(type, 1);
+            int T2 = (int)range.GetProperty(type, 2);
+            string text;
+            if (T1 != T2) text = $"{T1} <color=green>+{T2 - T1}</color>";
+            else text = $"{T1}";
+            itemDisplay.EditTextBoxByIndex(text, index);
+            itemDisplay.SetIconByIndex(type, index);
+            index++;
+        }
+    }
+
+    private void DisplayMeleeItem(Melee melee)
+    {
+        ItemDisplay itemDisplay = InstantiateDisplay().GetComponent<ItemDisplay>();
+        itemDisplay.EditNameTextBox(melee.itemName);
+
+        int index = 0;
+        foreach (InfoType type in Enum.GetValues(typeof(InfoType)))
+        {
+            if (type != InfoType.DAMAGE && type != InfoType.SLASH_INTERVAL) continue;
+
+            int T1 = (int)melee.GetProperty(type, 1);
+            int T2 = (int)melee.GetProperty(type, 2);
             string text;
             if (T1 != T2) text = $"{T1} <color=green>+{T2 - T1}</color>";
             else text = $"{T1}";

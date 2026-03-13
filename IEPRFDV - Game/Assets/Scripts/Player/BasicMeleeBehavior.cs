@@ -17,9 +17,22 @@ public class BasicMeleeBehavior : MonoBehaviour
         col = GetComponent<CircleCollider2D>();
     }
 
+    private void OnEnable()
+    {
+        melee = (Melee)GetComponent<WeaponObject>().weapon;
+        
+    }
+
+    private void OnDisable()
+    {
+        melee = null;
+      //  col.radius = 0;
+    }
+
     private void Update()
     {
-       // melee = transform.parent.GetComponent<PlayerInventory>().GetPlayerMeleeWeapon(); //(??)
+        //   melee = (Melee)GetComponentInParent<PlayerInventory>().GetPlayerWeapon(); //(??)
+        melee = (Melee)GetComponent<WeaponObject>().weapon;
         col.radius = melee.RangeRadius;
 
         if (numEnemies <= 0)

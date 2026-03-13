@@ -139,10 +139,10 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void SwitchWeaponOfPlayer(Gun gun, int playerID, int tier)
+    public void SwitchWeaponOfPlayer(Weapon weapon, int playerID, int tier)
     {
         PlayerInventory inventory = playerList[playerID - 1].GetComponent<PlayerInventory>();
-        inventory.EquipGun(gun, tier);
+        inventory.EquipWeapon(weapon, tier);
     }
 
     public void ApplyHealToPlayer(Heal heal, int playerID, int tier)

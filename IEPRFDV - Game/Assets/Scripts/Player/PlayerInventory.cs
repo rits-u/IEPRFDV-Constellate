@@ -6,8 +6,10 @@ public class PlayerInventory : MonoBehaviour
 {
 
     [Header("Weapon")]
-    [SerializeField] private Gun gun;
-    [SerializeField] private Melee melee;
+    [SerializeField] private Weapon weapon;
+    [SerializeField] private WeaponObject weaponObj;
+    //[SerializeField] private Gun gun;
+    //[SerializeField] private Melee melee;
   //  [SerializeField] pri
 
     [Header("Gear")]
@@ -29,19 +31,47 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        InitializeWeapon();
+    }
+
     private void Start()
     {
         playerStats = GetComponent<Stats>();
+
+        
     }
 
-    public Gun GetPlayerGunWeapon()
+    private void InitializeWeapon()
     {
-        return gun;
+        weaponObj.weapon = weapon;
+        weaponObj.SetWeaponSprite(weapon.IsMelee, weapon.sprite);
+        if (weapon.IsMelee)
+        {
+            Debug.Log($"{weapon.itemName}");
+            weaponObj.SwitchToMelee();
+        }
+        else
+        {
+            weaponObj.SwitchToRange();
+        }
+        
     }
 
-    public Melee GetPlayerMeleeWeapon()
+    //public Gun GetPlayerGunWeapon()
+    //{
+    //    return gun;
+    //}
+
+    //public Melee GetPlayerMeleeWeapon()
+    //{
+    //    return melee;
+    //}
+
+    public Weapon GetPlayerWeapon()
     {
-        return melee;
+        return weapon;
     }
 
     public void EquipGear(Gear gear, int tier)
@@ -59,7 +89,7 @@ public class PlayerInventory : MonoBehaviour
 
 
     //fix, discard
-    public void UnEquipGear(Gear gear)
+    public void UnequipGear(Gear gear)
     {
         //playerStats.MaxHP -= gear.HP;
         //playerStats.ATK -= gear.ATK;
@@ -77,11 +107,31 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    public void EquipGun(Gun gunToEquip, int tier)
+    //public void EquipGun(Gun gunToEquip, int tier)
+    //{
+    //    Gun copy = Instantiate(gunToEquip);
+    //    copy.CurrentTier = tier;
+    //    gun = copy;
+    //}
+
+    public void EquipWeapon(Weapon weaponToEquip, int tier)
     {
-        Gun copy = Instantiate(gunToEquip);
+        Weapon copy = Instantiate(weaponToEquip);
         copy.CurrentTier = tier;
-        gun = copy;
+        weapon = copy;
+
+        InitializeWeapon();
+
+        weaponObj.SetWeaponSprite(copy.IsMelee, copy.sprite);
+
+        //if (weapon.IsMelee) weaponObj.gameObject.AddComponent<BasicMeleeBehavior>();
+        //else weaponObj.gameObject.AddComponent<BasicRangeBehavior>();
+    }
+
+    public void UnequipCurrentWeapon()
+    {
+        if (weapon.IsMelee) Destroy(weaponObj.GetComponent<BasicMeleeBehavior>());
+        else Destroy(weaponObj.GetComponent<BasicRangeBehavior>());
     }
 
     public int GetEquippedGearCount()

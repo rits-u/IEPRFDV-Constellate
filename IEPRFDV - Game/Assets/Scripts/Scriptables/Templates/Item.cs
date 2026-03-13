@@ -13,7 +13,7 @@ public enum InfoType
     ATK,
     SP,
     DAMAGE,
-    BULLETS,
+    PROJECTILES,
     HEAL,
     BURST_INTERVAL,
     FIRE_RATE, //for guns interval
@@ -25,6 +25,7 @@ public abstract class Item : ScriptableObject
     [Header("Info")]
     public string itemName;
     public LootType type;
+    public Sprite sprite;
 
    // public virtual void UpgradeToNextTier() { }
 }

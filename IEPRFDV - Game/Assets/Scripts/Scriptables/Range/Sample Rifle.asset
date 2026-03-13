@@ -15,14 +15,15 @@ MonoBehaviour:
   itemName: Rifle
   type: 0
   currentTier: 1
+  isMelee: 0
   rangeRadius: 12
   gunProperties:
   - damage: 2
-    numBullets: 5
+    numProjectiles: 5
     burstInterval: 0.2
     fireRate: 1
   - damage: 4
-    numBullets: 8
+    numProjectiles: 7
     burstInterval: 0.2
     fireRate: 1
   bulletPrefab: {fileID: 5080210413143449869, guid: 8f923a1d40748144cbb1918977e2bc8d, type: 3}

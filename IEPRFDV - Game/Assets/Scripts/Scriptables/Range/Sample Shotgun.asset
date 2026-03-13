@@ -15,14 +15,15 @@ MonoBehaviour:
   itemName: Shotgun
   type: 0
   currentTier: 1
+  isMelee: 0
   rangeRadius: 5
   gunProperties:
   - damage: 10
-    numBullets: 2
+    numProjectiles: 2
     burstInterval: 0.5
     fireRate: 2
   - damage: 15
-    numBullets: 2
+    numProjectiles: 4
     burstInterval: 0.5
     fireRate: 1
   bulletPrefab: {fileID: 5080210413143449869, guid: 8f923a1d40748144cbb1918977e2bc8d, type: 3}

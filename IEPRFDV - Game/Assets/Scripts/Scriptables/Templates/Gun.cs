@@ -4,36 +4,36 @@ using UnityEngine;
 using System.Collections.Generic;
 using static UnityEngine.Rendering.DebugUI;
 
-[CreateAssetMenu(fileName = "Gun", menuName = "Constellate/Gun")]
-public class Gun : Item
+[CreateAssetMenu(fileName = "Range", menuName = "Constellate/Range")]
+public class Range : Weapon
 {
     [Header("Properties")]
-    [SerializeField] private int currentTier = 1;
-    public int CurrentTier
-    {
-        get => currentTier;
-        set => currentTier = value;
-    }
+    //[SerializeField] private int currentTier = 1;
+    //public int CurrentTier
+    //{
+    //    get => currentTier;
+    //    set => currentTier = value;
+    //}
 
-    [SerializeField] private float rangeRadius = 10f;
-    public float RangeRadius
-    {
-        get => rangeRadius;
-        set => rangeRadius = value;
-    }
+    //[SerializeField] private float rangeRadius = 10f;
+    //public float RangeRadius
+    //{
+    //    get => rangeRadius;
+    //    set => rangeRadius = value;
+    //}
 
     [Tooltip("Each element is by tier")]
-    [SerializeField] private List<GunProperties> gunProperties = new();
+    [SerializeField] private List<RangeProperties> gunProperties = new();
     [Serializable]
-    public class GunProperties
+    public class RangeProperties
     {
         [SerializeField] private int damage;
-        [SerializeField] private int numBullets;
+        [SerializeField] private int numProjectiles;
         [SerializeField] private float burstInterval;
         [SerializeField] private float fireRate;
 
         public int Damage => damage;
-        public int NumBullets => numBullets;
+        public int NumProjectiles => numProjectiles;
         public float BurstInterval => burstInterval;
         public float FireRate => fireRate;
     }
@@ -48,16 +48,16 @@ public class Gun : Item
         switch(type)
         {
             case InfoType.DAMAGE:   //int
-                property = gunProperties[currentTier - 1].Damage;
+                property = gunProperties[CurrentTier - 1].Damage;
                 break;
-            case InfoType.BULLETS:
-                property = gunProperties[currentTier - 1].NumBullets;
+            case InfoType.PROJECTILES:
+                property = gunProperties[CurrentTier - 1].NumProjectiles;
                 break;
             case InfoType.BURST_INTERVAL:
-                property = gunProperties[currentTier - 1].BurstInterval;
+                property = gunProperties[CurrentTier - 1].BurstInterval;
                 break;
             case InfoType.FIRE_RATE:
-                property = gunProperties[currentTier - 1].FireRate;
+                property = gunProperties[CurrentTier - 1].FireRate;
                 break;
         }
 
@@ -72,8 +72,8 @@ public class Gun : Item
             case InfoType.DAMAGE:   //int
                 property = gunProperties[tier - 1].Damage;
                 break;
-            case InfoType.BULLETS:
-                property = gunProperties[tier - 1].NumBullets;
+            case InfoType.PROJECTILES:
+                property = gunProperties[tier - 1].NumProjectiles;
                 break;
             case InfoType.BURST_INTERVAL:
                 property = gunProperties[tier - 1].BurstInterval;
