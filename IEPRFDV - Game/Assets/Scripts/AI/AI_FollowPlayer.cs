@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,6 +22,7 @@ public class AI_FollowPlayer : MonoBehaviour
     [SerializeField] private const float moveSpeed = 2.6f;
     [SerializeField] private const float acceleration = 8f;
 
+    [Header("Dash")]
     [SerializeField] private bool hasDash = false;
     [ShowIf("hasDash")][SerializeField] private bool dashRandomInterval = true;
     [ShowIf("hasDash")][SerializeField] private float dashDuration = 1.2f;
@@ -31,6 +33,13 @@ public class AI_FollowPlayer : MonoBehaviour
     [ShowIf("hasDash")][SerializeField] private float dashAccelerationMult = 2f;
     [ShowIf("hasDash")][SerializeField] private bool dashStopMovement = false;
 
+    [Header("Teleport")]
+    [SerializeField] private bool hasTeleport = false;
+    [ShowIf("hasTeleport")][SerializeField] private bool TPRandomInterval = false;
+    [ShowIf("hasTeleport")][SerializeField] private float TPInterval = 4f;
+    [ShowIf("hasTeleport")][SerializeField] private float TPDist = 0.5f;
+    [ShowIf("hasDash")][SerializeField] private bool TPHasDash = false;
+    [ShowIf("hasTeleport")][SerializeField] private bool TPStopMovement = false;
 
     [Header("Attack")]
     [SerializeField] private bool stopOnAttack = false;
@@ -38,6 +47,7 @@ public class AI_FollowPlayer : MonoBehaviour
 
     [Header("Flags")]
     [HideInInspector] private bool canDash = true;
+    [HideInInspector] private bool canTeleport = true;
 
     private Vector3 positionOffset;
     private NavMeshAgent navAgent;
@@ -48,6 +58,8 @@ public class AI_FollowPlayer : MonoBehaviour
     private float dashTime = 0f;
     private Vector3 dashDirection;
     private Vector3 lastPosition;
+    private bool hasDebug = true;
+    private bool debugStopMovement = true;
 
     private void Awake()
     {
@@ -93,15 +105,29 @@ public class AI_FollowPlayer : MonoBehaviour
         if (target == null) return;
         SetRotation();
 
-        if (hasDash && canDash)
+        if (canDash && hasDash)
         {
             canDash = false;
             StartCoroutine(Dash());
         }
-        else if (!hasDash && !dashStopMovement)
+        else if (hasDash && !dashStopMovement)
         {
+            Debug.Log("has dash else");
             navAgent.SetDestination(target.transform.position);
         }
+
+        if (canTeleport && hasTeleport)
+        {
+            canTeleport = false;
+            StartCoroutine(Teleport());
+        }
+        else if (hasTeleport && !TPStopMovement)
+        {
+            Debug.Log("has tp else");
+            //navAgent.SetDestination(target.transform.position);
+        }
+
+        
 
 
         //}   
@@ -192,7 +218,7 @@ public class AI_FollowPlayer : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        
+        Debug.Log("dash");
         float totalInterval;
         if (dashRandomInterval)
         {
@@ -210,7 +236,6 @@ public class AI_FollowPlayer : MonoBehaviour
         while (time < dashDuration)
         {
             time += Time.deltaTime;
-
             if (target) navAgent.SetDestination(target.transform.position);
             else navAgent.SetDestination(lastPosition);
 
@@ -227,6 +252,37 @@ public class AI_FollowPlayer : MonoBehaviour
 
         yield return new WaitForSeconds(totalInterval);
         canDash = true;
+    }
+
+    private IEnumerator Teleport()
+    {
+        Vector3 direction;
+        if (target)
+            direction = (target.transform.position - transform.position).normalized;
+        else
+            direction = transform.forward;
+
+        float time = 0f;
+        while (time < TPInterval)
+        {
+            time += Time.deltaTime;
+
+            if (!TPStopMovement)
+            {
+                Debug.Log("in tpstop movemt");
+                if (target) navAgent.SetDestination(target.transform.position);
+                else navAgent.SetDestination(lastPosition);
+            }
+
+            yield return null;
+        }
+
+        Vector3 teleportPos = transform.position + direction * TPDist;
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(teleportPos, out hit, 3f, NavMesh.AllAreas))
+            navAgent.Warp(hit.position);
+
+        canTeleport = true;
     }
     private void LimitedVisibiility()
     {
@@ -279,7 +335,11 @@ public class AI_FollowPlayer : MonoBehaviour
             Debug.LogError($"{transform.name} Agent not on Navmesh");
         }
 
-
+        if (hasDash && hasTeleport)
+        {
+            Debug.LogError("cannot have two abilities");
+            hasDash = false;
+        }
         navAgent.updateRotation = false;
         navAgent.updateUpAxis = false;
     }

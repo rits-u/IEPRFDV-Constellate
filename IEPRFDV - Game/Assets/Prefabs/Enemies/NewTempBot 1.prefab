@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_FollowPlayer
   players: []
-  hasDash: 1
+  hasDash: 0
   dashRandomInterval: 0
   dashDuration: 0.2
   dashIntervalSeconds: 2.5
@@ -75,7 +75,13 @@ MonoBehaviour:
   dashRandomMinSeconds: 2
   dashSpeedMult: 2.4
   dashAccelerationMult: 3.2
-  dashStopMovement: 1
+  dashStopMovement: 0
+  hasTeleport: 1
+  TPRandomInterval: 0
+  TPInterval: 2.2
+  TPDist: 3
+  TPHasDash: 0
+  TPStopMovement: 0
   stopOnAttack: 0
 --- !u!195 &3473504130444254772
 NavMeshAgent:
