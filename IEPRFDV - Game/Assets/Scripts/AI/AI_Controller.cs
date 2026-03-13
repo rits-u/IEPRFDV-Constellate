@@ -30,7 +30,7 @@ public class AI_Controller : MonoBehaviour
 
     void Start()
     {
-        
+        projectilePool = AI_Pool.instance;
     }
 
     // Update is called once per frame
@@ -61,7 +61,6 @@ public class AI_Controller : MonoBehaviour
     }
     void Ranged()
     {
-
         if (rangedTimer <= 0f)
         {
             GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, transform.rotation);
@@ -76,14 +75,14 @@ public class AI_Controller : MonoBehaviour
 
     private void InitializeValues()
     {
-        projectilePool = AI_Pool.instance;
+        
         meleeTimer = meleeInterval;
-        rangedTimer = rangedInterval;
+        rangedTimer = 0.4f;
     }
 
     private void InitializeReferences()
     {
-        throw new NotImplementedException();
+
     }
 
 }

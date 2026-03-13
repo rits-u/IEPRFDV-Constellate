@@ -54,6 +54,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_Controller
   projectileInterval: 1.5
+  hasMelee: 0
+  meleeInterval: 1
+  meleeRange: 2
+  hasRanged: 1
+  rangedInterval: 2
 --- !u!114 &4258615396906989230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_FollowPlayer
   players: []
-  hasDash: 0
+  hasDash: 1
   dashRandomInterval: 0
   dashDuration: 0.2
   dashIntervalSeconds: 2.5
@@ -76,7 +81,7 @@ MonoBehaviour:
   dashSpeedMult: 2.4
   dashAccelerationMult: 3.2
   dashStopMovement: 0
-  hasTeleport: 1
+  hasTeleport: 0
   TPRandomInterval: 0
   TPInterval: 2.2
   TPDist: 3

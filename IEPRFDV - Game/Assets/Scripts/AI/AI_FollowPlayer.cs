@@ -112,7 +112,6 @@ public class AI_FollowPlayer : MonoBehaviour
         }
         else if (hasDash && !dashStopMovement)
         {
-            Debug.Log("has dash else");
             navAgent.SetDestination(target.transform.position);
         }
 
@@ -123,7 +122,6 @@ public class AI_FollowPlayer : MonoBehaviour
         }
         else if (hasTeleport && !TPStopMovement)
         {
-            Debug.Log("has tp else");
             //navAgent.SetDestination(target.transform.position);
         }
 
@@ -218,7 +216,6 @@ public class AI_FollowPlayer : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        Debug.Log("dash");
         float totalInterval;
         if (dashRandomInterval)
         {
@@ -269,7 +266,6 @@ public class AI_FollowPlayer : MonoBehaviour
 
             if (!TPStopMovement)
             {
-                Debug.Log("in tpstop movemt");
                 if (target) navAgent.SetDestination(target.transform.position);
                 else navAgent.SetDestination(lastPosition);
             }
