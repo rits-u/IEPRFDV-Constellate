@@ -82,7 +82,7 @@ public class AI_FollowPlayer : MonoBehaviour
         if (target)
         {
             target.GetComponent<Stats>().OnDeath += OnTargetDeath;
-            SetRotation();
+            //SetRotation();
             StartCoroutine(WaitTimer());
         }
 
@@ -101,7 +101,7 @@ public class AI_FollowPlayer : MonoBehaviour
     void Update()
     {
         if (target == null) return;
-        SetRotation();
+        //SetRotation();
 
         if (canDash && hasDash)
         {
@@ -144,15 +144,17 @@ public class AI_FollowPlayer : MonoBehaviour
         //}
     }
 
-    GameObject GetTarget()
+    public GameObject GetTarget()
     {
-        if (players == null || players.Length == 0)
-        {
-            return null;
-        }
-
         float shortest = Mathf.Infinity;
         GameObject toFollow = null;
+        if (players == null || players.Length == 0)
+        {
+            toFollow = new GameObject("fallback");
+            toFollow.transform.position = lastPosition;
+            return toFollow;
+        }
+
         foreach (GameObject player in players)
         {
             if (player == null) continue;
@@ -189,9 +191,12 @@ public class AI_FollowPlayer : MonoBehaviour
                 currentTargetStats.OnDeath += OnTargetDeath;
             }
 
-            Vector3 directionToTarget = target.transform.position - transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            if (target.transform.position.x <= transform.position.x) sr.flipX = true;
+            else sr.flipX = false;
+            //Vector3 directionToTarget = target.transform.position - transform.position;
+            //Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
     }
 
@@ -231,7 +236,7 @@ public class AI_FollowPlayer : MonoBehaviour
         navAgent.speed = Mathf.Clamp(dashSpeedMult * moveSpeed, 0f, 100000f);
         navAgent.acceleration = Mathf.Clamp(dashAccelerationMult * acceleration, 0f, 100000f);
 
-        animator.SetBool("Dashing", true);
+        animator.SetBool("isDashing", true);
         float time = 0f;
         while (time < dashDuration)
         {
@@ -241,7 +246,7 @@ public class AI_FollowPlayer : MonoBehaviour
 
             yield return null;
         }
-        animator.SetBool("Dashing", false);
+        animator.SetBool("isDashing", false);
 
         navAgent.speed = moveSpeed;
         navAgent.acceleration = acceleration;

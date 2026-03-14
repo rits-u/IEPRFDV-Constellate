@@ -14,6 +14,7 @@ public class AI_Controller : MonoBehaviour
     [SerializeField] private DamageDealer damageDealer;
     private NavMeshAgent navAgent;
     private Animator animator;
+    private AI_FollowPlayer followPlayer;
 
     [Header("Melee")]
     [SerializeField] private bool hasMelee = false;
@@ -72,7 +73,8 @@ public class AI_Controller : MonoBehaviour
     {
         if (rangedTimer <= 0f)
         {
-            GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, transform.rotation);
+            GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, GetTargetRotation());
+            
             rangedTimer = rangedInterval;
         }
     }
@@ -82,6 +84,20 @@ public class AI_Controller : MonoBehaviour
         meleeHitbox.SetActive(true);
         yield return new WaitForSeconds(meleeDuration);
         meleeHitbox.SetActive(false);
+    }
+    private Quaternion GetTargetRotation()
+    {
+        Vector3 direction = Vector3.zero;
+
+        if (followPlayer)
+        {
+            GameObject target = followPlayer.GetTarget();
+            if (target != null) direction = target.transform.position - transform.position;
+        }
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        angle -= 90f;
+        return Quaternion.Euler(0, 0, angle);
     }
 
     private void InitializeValues()
@@ -105,6 +121,7 @@ public class AI_Controller : MonoBehaviour
     {
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        followPlayer = GetComponent<AI_FollowPlayer>();
 
         if (!hasMelee)
         {
@@ -118,7 +135,6 @@ public class AI_Controller : MonoBehaviour
                 Debug.LogError($"{gameObject} has no gameobject Melee Hitbox");
             }
         }
-
 
         if (!damageDealer)
         {
