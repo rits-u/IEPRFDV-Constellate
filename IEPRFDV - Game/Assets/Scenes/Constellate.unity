@@ -1638,7 +1638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
   round: 1
-  roundDuration: 10
+  roundDuration: 120
   countdown: {fileID: 0}
   roundNumberText: {fileID: 411472122}
   roundDurationText: {fileID: 725409058}
@@ -9445,6 +9445,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1640861284}
     m_Modifications:
+    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: a6e016e64e8f0424c8dbde4c28440c33, type: 2}
     - target: {fileID: 587964699332851486, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.8
