@@ -55,17 +55,17 @@ public class LootManager : MonoBehaviour
     {
         foreach (Item item in lootDrops)
         {
-            if (item.type == LootType.GEAR)
+            if (item.type == ItemType.GEAR)
             {
                 Gear gear = (Gear)item;
                 PlayerManager.Instance.ApplyGearToPlayer(gear, playerID, tier);
             }
-            else if (item.type == LootType.WEAPON)
+            else if (item.type == ItemType.WEAPON)
             {
                 Weapon weapon = (Weapon)item;
                 PlayerManager.Instance.SwitchWeaponOfPlayer(weapon, playerID, tier);
             }
-            else if(item.type == LootType.HEAL)
+            else if(item.type == ItemType.HEAL)
             {
                 Heal heal = (Heal)item;
                 PlayerManager.Instance.ApplyHealToPlayer(heal, playerID, tier);

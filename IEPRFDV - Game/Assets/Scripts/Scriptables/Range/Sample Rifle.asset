@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gun
   itemName: Rifle
   type: 0
+  sprite: {fileID: 0}
   currentTier: 1
-  isMelee: 0
   rangeRadius: 12
-  gunProperties:
-  - damage: 2
+  isMelee: 0
+  rangeProperties:
+  - damage: 1
     numProjectiles: 5
     burstInterval: 0.2
     fireRate: 1
-  - damage: 4
+  - damage: 2
     numProjectiles: 7
     burstInterval: 0.2
     fireRate: 1

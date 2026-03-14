@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3667644022308f246bd2e9d9ebae18be
+guid: 85f1bcf5c55c63846bed762a62a93dfd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1939687965644730518
-    second: star ownership certificate_0
+      213: 3824146322478515066
+    second: hourglass_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: star ownership certificate_0
+      name: hourglass_0
       rect:
         serializedVersion: 2
-        x: 287
-        y: 786
-        width: 1956
-        height: 1046
+        x: 62
+        y: 0
+        width: 388
+        height: 512
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a6f45a87218d415e0800000000000000
-      internalID: -1939687965644730518
+      spriteID: a73c270b1d8121530800000000000000
+      internalID: 3824146322478515066
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      star ownership certificate_0: -1939687965644730518
+      hourglass_0: 3824146322478515066
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

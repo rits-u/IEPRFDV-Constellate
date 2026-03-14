@@ -10,12 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0c256aec729a934ea2d515ae8aae30e, type: 3}
-  m_Name: Gear 2
+  m_Name: Wiwiwi gear
   m_EditorClassIdentifier: Assembly-CSharp::Gear
-  itemName: 
-  type: 0
-  HP: 0
-  ATK: 0
-  SP: 0
-  tier: 0
+  itemName: wiwiwi uwawa
+  type: 1
+  sprite: {fileID: 21300000, guid: 918327eff04114248923418d4f57dbd8, type: 3}
+  currentTier: 1
+  expiration: 2
+  gearStats:
+  - health: 3
+    attack: 3
+    shield: 5
+  - health: 6
+    attack: 5
+    shield: 8
+  hasHPStat: 1
+  hasATKStat: 1
+  hasSPStat: 1
   effect: 

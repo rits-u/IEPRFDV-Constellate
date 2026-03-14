@@ -49,7 +49,6 @@ public class PlayerInventory : MonoBehaviour
         weaponObj.SetWeaponSprite(weapon.IsMelee, weapon.sprite);
         if (weapon.IsMelee)
         {
-            Debug.Log($"{weapon.itemName}");
             weaponObj.SwitchToMelee();
         }
         else

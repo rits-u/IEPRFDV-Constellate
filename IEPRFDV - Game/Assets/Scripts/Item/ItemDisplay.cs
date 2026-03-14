@@ -4,17 +4,19 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-
-
 public class ItemDisplay : MonoBehaviour
 {
-    [SerializeField] private List<TextMeshProUGUI> numTextBoxes;
+    [Header("Display")]
     [SerializeField] private TextMeshProUGUI nameTextBox;
-    [SerializeField] private TextMeshProUGUI descTextBox;
+    [SerializeField] private TextMeshProUGUI itemType;
+    [SerializeField] private Image iconItem;
+    [SerializeField] private Transform slotsHolder;
 
+    private List<TextMeshProUGUI> slotStats = new();
+    private List<Image> icons = new();
+
+    [Header("Icon Mappings")]
     private static Dictionary<InfoType, Sprite> iconDictionary;
-    [SerializeField] private List<Image> icons;
-
     [SerializeField] private List<StatIconPair> iconMappings;
 
     [System.Serializable]
@@ -22,13 +24,6 @@ public class ItemDisplay : MonoBehaviour
     {
         public InfoType type;
         public Sprite sprite;
-
-        //public StatIconPair(InfoType type, int value)
-        //{
-        //    this.type = type;
-        //    this.value = value;
-        //}
-
     }
 
     private void Awake()
@@ -40,25 +35,38 @@ public class ItemDisplay : MonoBehaviour
             if (!iconDictionary.ContainsKey(pair.type))
                 iconDictionary.Add(pair.type, pair.sprite);
         }
+
+        for(int i = 0; i < slotsHolder.childCount; i++)
+        {
+            var child = slotsHolder.GetChild(i);
+            slotStats.Add(child.GetComponent<TextMeshProUGUI>());
+            var grandChild = child.GetComponentInChildren<Image>();
+            icons.Add(grandChild);
+        }
     }
 
-    public void EditTextBoxByIndex(string text, int index)
+    public void EditStatByIndex(string text, int index)
     {
-        numTextBoxes[index].text = text;
-        numTextBoxes[index].gameObject.SetActive(true);
-        if (text == "0") numTextBoxes[index].text = "";
+        slotStats[index].text = text;
+        slotStats[index].gameObject.SetActive(true);
+        if (text == "0") slotStats[index].text = "";
     }
 
     public void EditNameTextBox(string name) { 
         nameTextBox.text = name;
     }
 
-    public void EditDescTextBox(string desc)
+    public void EditTypeTextBox(string type)
     {
-        descTextBox.text = desc;
+        itemType.text = type;
     }
 
-    public void SetIconByIndex(InfoType type, int index)
+    //public void EditDescTextBox(string desc)
+    //{
+    //    descTextBox.text = desc;
+    //}
+
+    public void SetIconInfoByIndex(InfoType type, int index)
     {
         if (iconDictionary.TryGetValue(type, out Sprite sprite))
         {
@@ -67,6 +75,18 @@ public class ItemDisplay : MonoBehaviour
         }
     }
 
-    
+    public void HideUnusedSlots()
+    {
+        foreach(var icon in icons)
+        {
+            if(icon.sprite == null) icon.gameObject.SetActive(false);
+        }
+    }
+
+    public void SetIconItem(Sprite sprite)
+    {
+        iconItem.sprite = sprite;
+    }
+
 
 }

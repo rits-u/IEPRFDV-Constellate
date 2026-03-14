@@ -18,9 +18,13 @@ MonoBehaviour:
   currentTier: 1
   rangeRadius: 10
   isMelee: 0
-  gunProperties:
+  rangeProperties:
   - damage: 1
     numProjectiles: 3
+    burstInterval: 0.2
+    fireRate: 2
+  - damage: 2
+    numProjectiles: 4
     burstInterval: 0.2
     fireRate: 2
   bulletPrefab: {fileID: 5080210413143449869, guid: bc91ba8d73ebfa14bb69aca7e5c0a675, type: 3}

@@ -8,22 +8,8 @@ using static UnityEngine.Rendering.DebugUI;
 public class Range : Weapon
 {
     [Header("Properties")]
-    //[SerializeField] private int currentTier = 1;
-    //public int CurrentTier
-    //{
-    //    get => currentTier;
-    //    set => currentTier = value;
-    //}
-
-    //[SerializeField] private float rangeRadius = 10f;
-    //public float RangeRadius
-    //{
-    //    get => rangeRadius;
-    //    set => rangeRadius = value;
-    //}
-
     [Tooltip("Each element is by tier")]
-    [SerializeField] private List<RangeProperties> gunProperties = new();
+    [SerializeField] private List<RangeProperties> rangeProperties = new();
     [Serializable]
     public class RangeProperties
     {
@@ -48,16 +34,16 @@ public class Range : Weapon
         switch(type)
         {
             case InfoType.DAMAGE:   //int
-                property = gunProperties[CurrentTier - 1].Damage;
+                property = rangeProperties[CurrentTier - 1].Damage;
                 break;
             case InfoType.PROJECTILES:
-                property = gunProperties[CurrentTier - 1].NumProjectiles;
+                property = rangeProperties[CurrentTier - 1].NumProjectiles;
                 break;
             case InfoType.BURST_INTERVAL:
-                property = gunProperties[CurrentTier - 1].BurstInterval;
+                property = rangeProperties[CurrentTier - 1].BurstInterval;
                 break;
             case InfoType.FIRE_RATE:
-                property = gunProperties[CurrentTier - 1].FireRate;
+                property = rangeProperties[CurrentTier - 1].FireRate;
                 break;
         }
 
@@ -70,28 +56,19 @@ public class Range : Weapon
         switch(type)
         {
             case InfoType.DAMAGE:   //int
-                property = gunProperties[tier - 1].Damage;
+                property = rangeProperties[tier - 1].Damage;
                 break;
             case InfoType.PROJECTILES:
-                property = gunProperties[tier - 1].NumProjectiles;
+                property = rangeProperties[tier - 1].NumProjectiles;
                 break;
             case InfoType.BURST_INTERVAL:
-                property = gunProperties[tier - 1].BurstInterval;
+                property = rangeProperties[tier - 1].BurstInterval;
                 break;
             case InfoType.FIRE_RATE:
-                property = gunProperties[tier - 1].FireRate;
+                property = rangeProperties[tier - 1].FireRate;
                 break;
         }
 
         return property;
     }
-
-    
-
-    //public void Upgrade(int tier)
-    //{
-    //    damage = damage * tier;
-    //    numBullets += (Mathf.CeilToInt(numBullets / 2));
-    //}
-
 }

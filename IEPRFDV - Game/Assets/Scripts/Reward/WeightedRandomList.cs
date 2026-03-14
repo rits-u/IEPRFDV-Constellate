@@ -15,9 +15,9 @@ public class WeightedRandomList<T>
     {
         public T item;
         public float weight;
-        public LootType type;
+        public ItemType type;
 
-        public Pair(T item, float weight, LootType type)
+        public Pair(T item, float weight, ItemType type)
         {
             this.item = item;
             this.weight = weight;
@@ -32,7 +32,7 @@ public class WeightedRandomList<T>
         get => list.Count;
     }
 
-    public void Add(T item, float weight, LootType type)
+    public void Add(T item, float weight, ItemType type)
     {
         list.Add(new Pair(item, weight, type));
     }

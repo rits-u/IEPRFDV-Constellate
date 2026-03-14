@@ -7,12 +7,20 @@ using System;
 public class Gear : Item
 {
     [Header("Properties")]
-    [SerializeField] int currentTier = 1;
+    [SerializeField] private int currentTier = 1;
     public int CurrentTier
     {
         get => currentTier;
         set => currentTier = value;
     }
+
+    [SerializeField] private int expiration;
+    public int Expiration
+    {
+        get => expiration;
+        set => expiration = value;
+    }
+
 
     [Tooltip("Each element of the list is by tier")]
     public List<GearStats> gearStats = new();
@@ -22,6 +30,7 @@ public class Gear : Item
         [SerializeField] private int health;
         [SerializeField] private int attack;
         [SerializeField] private int shield;
+        
 
         public int HP => health;
         public int ATK => attack;
@@ -38,22 +47,6 @@ public class Gear : Item
     public string effect;
 
     
-
-    //public int GetHPByTier(int tier)
-    //{
-    //    return gearStats[tier - 1].HP;
-    //}
-
-    //public int GetATKByTier(int tier)
-    //{
-    //    return gearStats[tier - 1].ATK;
-    //}
-
-    //public int GetSPByTier(int tier)
-    //{
-    //    return gearStats[tier - 1].SP;
-    //}
-
     public int GetStatsByType(InfoType type)
     {
         int stat = 0;
