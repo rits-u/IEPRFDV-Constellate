@@ -13,6 +13,7 @@ public class AI_Controller : MonoBehaviour
     [SerializeField] private GameObject meleeHitbox;
     [SerializeField] private DamageDealer damageDealer;
     private NavMeshAgent navAgent;
+    private Animator animator;
 
     [Header("Melee")]
     [SerializeField] private bool hasMelee = false;
@@ -103,6 +104,7 @@ public class AI_Controller : MonoBehaviour
     private void InitializeReferences()
     {
         navAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
         if (!hasMelee)
         {

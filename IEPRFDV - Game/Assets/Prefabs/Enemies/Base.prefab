@@ -89,7 +89,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7727712613359759040
 GameObject:
@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 4078287370622076540}
   - component: {fileID: 6842891517884846396}
   - component: {fileID: 8188350944221004721}
+  - component: {fileID: -1287714768474876280}
   m_Layer: 7
   m_Name: Base
   m_TagString: Enemy
@@ -152,7 +153,7 @@ MonoBehaviour:
   meleeDamage: 2
   meleeInterval: 1
   meleeDuration: 1
-  meleeRange: 2
+  stoppingRange: 0.4
   hasRanged: 1
   rangedDamage: 1
   rangedInterval: 2
@@ -373,6 +374,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db51d5b4e87e364a909adc68b7fa3c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityCollision
+--- !u!95 &-1287714768474876280
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7727712613359759040}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8264816899410446821
 GameObject:
   m_ObjectHideFlags: 0

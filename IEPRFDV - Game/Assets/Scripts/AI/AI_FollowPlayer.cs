@@ -12,6 +12,7 @@ public class AI_FollowPlayer : MonoBehaviour
     [SerializeField] private GameObject[] players;
     private GameObject target = null;
     private NavMeshAgent navAgent;
+    private Animator animator;
 
     [Header("Consts")]
     //[SerializeField] private float moveSpeed = 0.8f;
@@ -230,6 +231,7 @@ public class AI_FollowPlayer : MonoBehaviour
         navAgent.speed = Mathf.Clamp(dashSpeedMult * moveSpeed, 0f, 100000f);
         navAgent.acceleration = Mathf.Clamp(dashAccelerationMult * acceleration, 0f, 100000f);
 
+        animator.SetBool("Dashing", true);
         float time = 0f;
         while (time < dashDuration)
         {
@@ -239,6 +241,7 @@ public class AI_FollowPlayer : MonoBehaviour
 
             yield return null;
         }
+        animator.SetBool("Dashing", false);
 
         navAgent.speed = moveSpeed;
         navAgent.acceleration = acceleration;
@@ -339,6 +342,8 @@ public class AI_FollowPlayer : MonoBehaviour
         }
         navAgent.updateRotation = false;
         navAgent.updateUpAxis = false;
+
+        animator = navAgent.GetComponent<Animator>();
     }
     void InitializeValues()
     {
