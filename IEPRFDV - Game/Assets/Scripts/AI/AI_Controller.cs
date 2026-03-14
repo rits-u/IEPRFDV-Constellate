@@ -1,22 +1,30 @@
 using System;
 using System.Collections;
+using UnityEditor.Tilemaps;
 using UnityEngine;
+using UnityEngine.AI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class AI_Controller : MonoBehaviour
 {
 
-    [SerializeField] private float projectileInterval = 0.5f;
-
+    [Header("References")]
     private AI_Pool projectilePool;
-    private float nextProjectileTime = 0f;
+    [SerializeField] private GameObject meleeHitbox;
+    [SerializeField] private DamageDealer damageDealer;
+    private NavMeshAgent navAgent;
 
     [Header("Melee")]
     [SerializeField] private bool hasMelee = false;
+    [SerializeField] private bool meleeAttackOnProximity = false;
+    [SerializeField] private int meleeDamage = 2;
     [SerializeField] private float meleeInterval = 1f;
-    [SerializeField] private float meleeRange = 2f;
+    [SerializeField] private float meleeDuration = 1f;
+    [SerializeField] private float stoppingRange = 0.4f;
 
     [Header("Ranged")]
     [SerializeField] private bool hasRanged = false;
+    [SerializeField] private int rangedDamage = 1;
     [SerializeField] private float rangedInterval = 2f;
 
     private float meleeTimer = 0f;
@@ -52,10 +60,10 @@ public class AI_Controller : MonoBehaviour
 
     void Melee()
     {
-        float distance = Vector3.Distance(transform.position, transform.forward);
-        if (distance <= meleeRange && meleeTimer <= 0f)
+        //use meleehitbox to check if any collision
+        if (meleeTimer <= 0f)
         {
-            Attack();
+            StartCoroutine(MeleeAttack());
             meleeTimer = meleeInterval;
         }
     }
@@ -68,9 +76,11 @@ public class AI_Controller : MonoBehaviour
         }
     }
 
-    void Attack()
+    private IEnumerator MeleeAttack()
     {
-        Debug.Log("Enemy attack");
+        meleeHitbox.SetActive(true);
+        yield return new WaitForSeconds(meleeDuration);
+        meleeHitbox.SetActive(false);
     }
 
     private void InitializeValues()
@@ -78,10 +88,40 @@ public class AI_Controller : MonoBehaviour
         
         meleeTimer = meleeInterval;
         rangedTimer = 0.4f;
+        if (hasMelee && hasRanged)
+        {
+            Debug.Log($"{gameObject.name} cannot have two damage types");
+        }
+        if (hasMelee)
+        {
+            damageDealer.damage = meleeDamage;
+            navAgent.stoppingDistance = stoppingRange;
+        }
+        if (hasRanged) damageDealer.damage = rangedDamage;
     }
 
     private void InitializeReferences()
     {
+        navAgent = GetComponent<NavMeshAgent>();
+
+        if (!hasMelee)
+        {
+            Transform child = transform.Find("Melee Hitbox");
+            if (child != null)
+            {
+                meleeHitbox = child.gameObject;
+            }
+            else
+            {
+                Debug.LogError($"{gameObject} has no gameobject Melee Hitbox");
+            }
+        }
+
+
+        if (!damageDealer)
+        {
+            damageDealer = GetComponent<DamageDealer>();
+        }
 
     }
 

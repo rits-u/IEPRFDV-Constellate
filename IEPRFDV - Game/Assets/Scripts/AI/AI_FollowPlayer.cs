@@ -11,6 +11,7 @@ public class AI_FollowPlayer : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject[] players;
     private GameObject target = null;
+    private NavMeshAgent navAgent;
 
     [Header("Consts")]
     //[SerializeField] private float moveSpeed = 0.8f;
@@ -49,17 +50,13 @@ public class AI_FollowPlayer : MonoBehaviour
     [HideInInspector] private bool canDash = true;
     [HideInInspector] private bool canTeleport = true;
 
-    private Vector3 positionOffset;
-    private NavMeshAgent navAgent;
+    
     //private Animator animator;
     //private float detectionBuffer = 1.0f;
-    private float targetDistance;
+    // private float targetDistance;
 
-    private float dashTime = 0f;
-    private Vector3 dashDirection;
+    private float rotationSpeed = 2f;
     private Vector3 lastPosition;
-    private bool hasDebug = true;
-    private bool debugStopMovement = true;
 
     private void Awake()
     {
@@ -190,6 +187,10 @@ public class AI_FollowPlayer : MonoBehaviour
             {
                 currentTargetStats.OnDeath += OnTargetDeath;
             }
+
+            Vector3 directionToTarget = target.transform.position - transform.position;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
     }
 

@@ -7746,9 +7746,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
+      propertyPath: maxSpawns
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: 'enemyPrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 7727712613359759040, guid: 7168af77d65ee4e4090279dede1fbd6e, type: 3}
+      objectReference: {fileID: 7727712613359759040, guid: 2e0fb83dde4219844800ec2c75089c7d, type: 3}
     - target: {fileID: 3085039453810706123, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.5
