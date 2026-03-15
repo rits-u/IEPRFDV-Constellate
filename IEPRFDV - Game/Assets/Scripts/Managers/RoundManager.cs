@@ -199,9 +199,9 @@ public class RoundManager : MonoBehaviour
     //        RunQTE(player2);
 
 
-            Debug.Log($"RM: WL: instance qte1 ");
-            RunQTE(player1);
-            RunQTE(player2);
+            //Debug.Log($"RM: WL: instance qte1 ");
+            //RunQTE(player1);
+            //RunQTE(player2);
 
     //        //let players decide when to start the next round
 

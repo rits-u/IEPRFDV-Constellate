@@ -38,7 +38,7 @@ public class AI_Controller : MonoBehaviour
         InitializeValues();
     }
 
-    private AI_Pool projectilePool;
+ //   private AI_Pool projectilePool;
     private float nextProjectileTime = 0f;
 
     private Stats stats;
@@ -118,10 +118,10 @@ public class AI_Controller : MonoBehaviour
         }
         if (hasMelee)
         {
-            damageDealer.damage = meleeDamage;
+            damageDealer.Damage = meleeDamage;
             navAgent.stoppingDistance = stoppingRange;
         }
-        if (hasRanged) damageDealer.damage = rangedDamage;
+        if (hasRanged) damageDealer.Damage = rangedDamage;
     }
 
     private void InitializeReferences()
@@ -150,7 +150,7 @@ public class AI_Controller : MonoBehaviour
             //initialize bullet dmg
             projectile.GetComponent<DamageDealer>().Damage = stats.ATK;
 
-            nextProjectileTime = Time.time + projectileInterval;
+           // nextProjectileTime = Time.time + projectileInterval;
             damageDealer = GetComponent<DamageDealer>();
         }
 
