@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cfff68060280f064ab96017d3028ed32
+guid: 0b1c7d9bdf6efd94d94f0589f0135e03
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8832792566631651748
-    second: beige_floor_tile_0
+      213: -68462605695988439
+    second: normal space pirate with no boost_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: beige_floor_tile_0
+      name: normal space pirate with no boost_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 128
-        height: 128
+        x: 520
+        y: 320
+        width: 1233
+        height: 1558
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c56a53375fd9b6580800000000000000
-      internalID: -8832792566631651748
+      spriteID: 92dc7137f95cc0ff0800000000000000
+      internalID: -68462605695988439
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      beige_floor_tile_0: -8832792566631651748
+      normal space pirate with no boost_0: -68462605695988439
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

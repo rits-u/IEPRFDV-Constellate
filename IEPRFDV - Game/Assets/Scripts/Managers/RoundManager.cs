@@ -37,6 +37,7 @@ public class RoundManager : MonoBehaviour
     //private float countdown;
 
     private bool roundEnded = false;
+    private Vector3 lastPos;
 
     public int RoundNumber
     {
@@ -70,8 +71,6 @@ public class RoundManager : MonoBehaviour
     }
     IEnumerator RoundTime()
     {
-        roundEnded = false;
-        Debug.Log($"RM: Start round time");
         int timer = roundDuration;
         int secondsCount = timer;
         int minutesCount = timer / 60;
@@ -80,7 +79,6 @@ public class RoundManager : MonoBehaviour
         string minutes = "";
         string seconds = "";
 
-        Debug.Log($"RM: RT: Start Spawning");
         SpawnManager.Instance.StartSpawning();
 
         while(timer > 0)
@@ -102,7 +100,6 @@ public class RoundManager : MonoBehaviour
             
         }
 
-        Debug.Log($"RM: RT: Stop Spawning");
         SpawnManager.Instance.StopSpawning();
         //EnemyManager.Instance.UnregisterAllEnemies();
 
@@ -202,8 +199,9 @@ public class RoundManager : MonoBehaviour
     //        RunQTE(player2);
 
 
-    //        //adjust enemy stats
-    //        // ^^^ handled by Enemy Manager already
+            Debug.Log($"RM: WL: instance qte1 ");
+            RunQTE(player1);
+            RunQTE(player2);
 
     //        //let players decide when to start the next round
 

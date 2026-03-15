@@ -32,6 +32,7 @@ public class AI_Pool : MonoBehaviour
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
         poolLookup = new Dictionary<string, Pool>();
 
+
         foreach (Pool pool in pools)
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
@@ -39,7 +40,11 @@ public class AI_Pool : MonoBehaviour
 
             for (int i = 0; i < pool.size; i++)
             {
-                GameObject obj = Instantiate(pool.prefab);
+                GameObject obj = null;
+                //if (transform) obj = Instantiate(pool.prefab, transform, true);
+                //else obj = Instantiate(pool.prefab);
+                obj = Instantiate(pool.prefab);
+
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
