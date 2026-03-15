@@ -73,6 +73,16 @@ public class PlayerInventory : MonoBehaviour
         return weapon;
     }
 
+    public List<GearInfo> GetAllEquippedGears()
+    {
+        return gearList;
+    }
+
+    public GearInfo GetEquippedGearByIndex(int index)
+    {
+        return gearList[index];
+    }
+
     public void EquipGear(Gear gear, int tier)
     {
         Gear copy = Instantiate(gear);

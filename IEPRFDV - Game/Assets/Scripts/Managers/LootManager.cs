@@ -53,11 +53,34 @@ public class LootManager : MonoBehaviour
 
     private void DistributeItem(int playerID, int tier)
     {
+        int gearCount = 0;
+
+        //DISCARD
+        foreach(Item item in lootDrops)
+        {
+            if (item.type == ItemType.GEAR) gearCount++;
+        }
+
+        PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(playerID);
+        int equipped = inventory.GetEquippedGearCount();
+        if (inventory.GetMaxSlots() <= equipped + gearCount)
+        {
+            Debug.Log("its full");
+        }
+
+
         foreach (Item item in lootDrops)
         {
             if (item.type == ItemType.GEAR)
             {
                 Gear gear = (Gear)item;
+                //Discard system
+              //  PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(playerID);
+                //check
+
+
+
+
                 PlayerManager.Instance.ApplyGearToPlayer(gear, playerID, tier);
             }
             else if (item.type == ItemType.WEAPON)

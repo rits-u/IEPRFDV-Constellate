@@ -19,7 +19,7 @@ public class StatsUI : MonoBehaviour
 
     private void Start()
     {
-        player = PlayerManager.Instance.GetPlayerByIndex(playerIndex-1);
+        player = PlayerManager.Instance.GetPlayerByID(playerIndex);
     }
 
     // Update is called once per frame

@@ -2373,7 +2373,6 @@ MonoBehaviour:
   screenName: Inventory
   players:
   - root: {fileID: 1635991142}
-  closeButton: {fileID: 458909425}
 --- !u!1 &301258955
 GameObject:
   m_ObjectHideFlags: 0
@@ -18684,58 +18683,6 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 11400000, guid: b5c12c65e95cf2f45929c6a422cd5328, type: 2}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[0].gear
-      value: 
-      objectReference: {fileID: 11400000, guid: 1a51137a41f22214999f0a145f753920, type: 2}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[0].tier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[1].gear
-      value: 
-      objectReference: {fileID: 11400000, guid: 1a51137a41f22214999f0a145f753920, type: 2}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[1].tier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[2].gear
-      value: 
-      objectReference: {fileID: 11400000, guid: 1a51137a41f22214999f0a145f753920, type: 2}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[2].tier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[3].gear
-      value: 
-      objectReference: {fileID: 11400000, guid: 1a51137a41f22214999f0a145f753920, type: 2}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[3].tier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[4].gear
-      value: 
-      objectReference: {fileID: 11400000, guid: 1a51137a41f22214999f0a145f753920, type: 2}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[4].tier
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[5].gear
-      value: 
-      objectReference: {fileID: 11400000, guid: 1a51137a41f22214999f0a145f753920, type: 2}
-    - target: {fileID: 537539322807672461, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
-      propertyPath: gearList.Array.data[5].tier
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 587964699332851486, guid: a446811d3d605f34fb210778a63e6db3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.8

@@ -69,9 +69,9 @@ public class PlayerManager : MonoBehaviour
         playerList.RemoveAt(index);
     }
 
-    public GameObject GetPlayerByIndex(int index)
+    public GameObject GetPlayerByID(int ID)
     {
-        return playerList[index];
+        return playerList[ID-1];
     }
 
     public void DisablePlayerMovement(GameObject player)
@@ -135,7 +135,10 @@ public class PlayerManager : MonoBehaviour
         else
         {
             //let it discard// 
-            Debug.Log($"LM: {gameObject.name}'s inventory is already FULL");
+           // InventoryUI ui = (InventoryUI)UIManager.Instance.GetScreen("Inventory");
+           // ui.DiscardWindow();
+            //  UIManager.Instance.
+           // Debug.Log($"LM: {gameObject.name}'s inventory is already FULL");
         }
     }
 
@@ -156,4 +159,18 @@ public class PlayerManager : MonoBehaviour
         if (playersAlive <= 1) return false;
         return true;
     }
+
+    public Weapon GetPlayerWeapon(int ID)
+    {
+        Weapon weapon = playerList[ID - 1].GetComponent<PlayerInventory>().GetPlayerWeapon();
+        return weapon;
+    }
+
+    public PlayerInventory AccessPlayerInventory(int ID)
+    {
+        PlayerInventory inventory = playerList[ID - 1].GetComponent<PlayerInventory>();
+        return inventory;
+    }
+
+ //   public List<Gear>
 }
