@@ -16,7 +16,7 @@ public class RoundManager : MonoBehaviour
  //   [SerializeField] private float countdownDuration = 3f;
 
     [Header("UI Elements")]
-    [SerializeField] private Countdown countdown;
+  //  [SerializeField] private Countdown countdown;
     [SerializeField] private TextMeshProUGUI roundNumberText;
     [SerializeField] private TextMeshProUGUI roundDurationText;
 
@@ -56,19 +56,19 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        //CountdownToStart();
-    }
+    //private void Start()
+    //{
+    //    //CountdownToStart();
+    //}
 
 
-    public void CountdownToStart()
-    {
-        // countdownPanel.SetActive(true);
-        //StartCoroutine(Countdown());
-        //StartCoroutine(RoundFlow());
+    //public void CountdownToStart()
+    //{
+    //    // countdownPanel.SetActive(true);
+    //    //StartCoroutine(Countdown());
+    //    //StartCoroutine(RoundFlow());
 
-    }
+    //}
     IEnumerator RoundTime()
     {
         int timer = roundDuration;

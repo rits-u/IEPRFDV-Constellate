@@ -81,7 +81,7 @@ public class AI_Controller : MonoBehaviour
         if (rangedTimer <= 0f)
         {
             GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, GetTargetRotation());
-            
+            projectile.GetComponent<DamageDealer>().Damage = stats.ATK;
             rangedTimer = rangedInterval;
         }
     }
@@ -144,16 +144,16 @@ public class AI_Controller : MonoBehaviour
         }
 
         if (!damageDealer)
-        {
-            GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, transform.rotation);
+        //{
+        //    GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, transform.rotation);
 
-            //initialize bullet dmg
-            projectile.GetComponent<DamageDealer>().Damage = stats.ATK;
+        //    initialize bullet dmg
+        //    projectile.GetComponent<DamageDealer>().Damage = stats.ATK;
 
-           // nextProjectileTime = Time.time + projectileInterval;
+        //    nextProjectileTime = Time.time + projectileInterval;
             damageDealer = GetComponent<DamageDealer>();
         }
 
     }
 
-}
+
