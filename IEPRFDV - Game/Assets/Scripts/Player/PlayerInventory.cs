@@ -97,23 +97,32 @@ public class PlayerInventory : MonoBehaviour
     }
 
 
-    //fix, discard
-    public void UnequipGear(Gear gear)
-    {
-        //playerStats.MaxHP -= gear.HP;
-        //playerStats.ATK -= gear.ATK;
-        //playerStats.SP -= gear.SP;
+    ////fix, discard
+    //public void UnequipGear(Gear gear)
+    //{
+    //    int index = 0;
+    //    foreach (var g in gearList)
+    //    {
+    //        if (g.gear == gear) break;
+    //        index++;
+    //    }
 
-        int index = 0;
-        foreach (var g in gearList)
-        {
-            if (g.gear == gear) break;
-            index++;
-        }
+    //    gearList.RemoveAt(index);
+
+
+    //}
+
+    public void UnequipGearByIndex(int index)
+    {
+        Gear copy = gearList[index].gear;
+        playerStats.MaxHP -= copy.GetStatsByType(InfoType.HP);
+        playerStats.SP -= copy.GetStatsByType(InfoType.SP);
+        playerStats.ATK -= copy.GetStatsByType(InfoType.ATK);
+        playerStats.UpdateHealthBar();
 
         gearList.RemoveAt(index);
 
-
+        Debug.Log($"{gameObject.name} has unequipped {copy.itemName}");
     }
 
     //public void EquipGun(Gun gunToEquip, int tier)
@@ -132,9 +141,6 @@ public class PlayerInventory : MonoBehaviour
         InitializeWeapon();
 
         weaponObj.SetWeaponSprite(copy.IsMelee, copy.sprite);
-
-        //if (weapon.IsMelee) weaponObj.gameObject.AddComponent<BasicMeleeBehavior>();
-        //else weaponObj.gameObject.AddComponent<BasicRangeBehavior>();
     }
 
     public void UnequipCurrentWeapon()

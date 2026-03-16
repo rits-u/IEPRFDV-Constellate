@@ -466,7 +466,7 @@ public class TestQTE : MonoBehaviour
                 break;
         }
 
-        LootManager.Instance.ResolveLoot(result);
+//        LootManager.Instance.ResolveLoot(result);
 
         yield return new WaitForSeconds(2.0f);
     }

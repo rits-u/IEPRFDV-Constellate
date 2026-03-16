@@ -1,12 +1,15 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class LootManager : MonoBehaviour
 {
     public static LootManager Instance;
 
     [SerializeField] private List<Item> lootDrops = new();
+
+    public QTEResult result;
 
     private void Awake()
     {
@@ -25,77 +28,82 @@ public class LootManager : MonoBehaviour
     {
         lootDrops.Remove(item);
     }
-
-    public void ResolveLoot(QTEResult result)
+    
+    public void ResolveLoot()
     {
-        switch (result)
-        {
-            case QTEResult.Share:
-                DistributeItem(1, 1);
-                DistributeItem(2, 1);
-                Debug.Log($"Each player gets Tier 1");
-                break;
-            case QTEResult.P1Steals:
-                DistributeItem(1, 2);
-                Debug.Log($"P1 gets Tier 2, P2 gets none");
-                break;
-            case QTEResult.P2Steals:
-                DistributeItem(2, 2);
-                Debug.Log($"P1 gets none, P2 gets Tier 2");
-                break;
-            case QTEResult.None:
-                Debug.Log($"get good");
-                break;
-        }
-
-        lootDrops.Clear();
+        StartCoroutine(ResolveLootRoutine(result));
     }
 
-    private void DistributeItem(int playerID, int tier)
+
+    //need to update
+    private IEnumerator ResolveLootRoutine(QTEResult result)
+    {
+        yield return new WaitForSeconds(1f);
+        List<Item> lootCopy = new List<Item>(lootDrops);
+        switch(result)
+        {
+            case QTEResult.Share:
+                yield return StartCoroutine(DistributeItem(1, 1, lootCopy));
+                break;
+        }
+    }
+
+    private IEnumerator DistributeItem(int playerID, int tier, List<Item> loot)
     {
         int gearCount = 0;
+        List<Gear> gearLoots = new();
 
-        //DISCARD
-        foreach(Item item in lootDrops)
+        foreach (Item item in loot)
         {
-            if (item.type == ItemType.GEAR) gearCount++;
+            if (item.type == ItemType.GEAR)
+            {
+                gearCount++;
+                gearLoots.Add((Gear)item);
+            }
         }
 
         PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(playerID);
         int equipped = inventory.GetEquippedGearCount();
-        if (inventory.GetMaxSlots() <= equipped + gearCount)
+
+        int overflow = (equipped + gearCount) - inventory.GetMaxSlots();
+
+        if (overflow > 0)
         {
-            Debug.Log("its full");
+            Debug.Log("inventory is full, will need to discard");
+            bool discardFinished = false;
+
+            DiscardUI ui = (DiscardUI)UIManager.Instance.GetScreen("Discard");
+            ui.InitializeDisplayPanel(gearLoots);
+
+            UIManager.Instance.OpenScreen("Discard");
+            ui.OpenDiscardWindow(playerID, overflow, tier, () => { discardFinished = true; });
+
+            yield return new WaitUntil(() => discardFinished);
+        }
+        else
+        {
+            foreach (Item item in loot)
+            {
+                switch (item)
+                {
+                    case Gear gear:
+                        PlayerManager.Instance.ApplyGearToPlayer(gear, playerID, tier);
+                        break;
+                    case Weapon weapon:
+                        PlayerManager.Instance.SwitchWeaponOfPlayer(weapon, playerID, tier);
+                        break;
+                    case Heal heal:
+                        PlayerManager.Instance.ApplyHealToPlayer(heal, playerID, tier);
+                        break;
+                }
+
+                RemoveItemFromLoot(item);
+            }
         }
 
+        lootDrops.Clear();
+        gearLoots.Clear();
 
-        foreach (Item item in lootDrops)
-        {
-            if (item.type == ItemType.GEAR)
-            {
-                Gear gear = (Gear)item;
-                //Discard system
-              //  PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(playerID);
-                //check
-
-
-
-
-                PlayerManager.Instance.ApplyGearToPlayer(gear, playerID, tier);
-            }
-            else if (item.type == ItemType.WEAPON)
-            {
-                Weapon weapon = (Weapon)item;
-                PlayerManager.Instance.SwitchWeaponOfPlayer(weapon, playerID, tier);
-            }
-            else if(item.type == ItemType.HEAL)
-            {
-                Heal heal = (Heal)item;
-                PlayerManager.Instance.ApplyHealToPlayer(heal, playerID, tier);
-            }
-
-        }
-
-        
+        RoundManager.Instance.NextRound();
     }
 }

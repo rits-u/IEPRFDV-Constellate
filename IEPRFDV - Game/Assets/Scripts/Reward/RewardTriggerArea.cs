@@ -95,7 +95,13 @@ public class RewardTriggerArea : MonoBehaviour
     {
         PlayerManager.Instance.EnableAllPlayerMovement();
         rewardPanel.LeanMoveY(1800, leanDuration);
-        StartCoroutine(DisableRewardArea());
+        //StartCoroutine(DisableRewardArea());
+        DisableArea();
+    }
+
+    private void DisableArea()
+    {
+        gameObject.SetActive(false);
     }
 
     private IEnumerator DisableRewardArea()

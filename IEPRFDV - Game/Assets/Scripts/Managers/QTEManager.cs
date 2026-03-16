@@ -98,10 +98,10 @@ public class QTEManager : MonoBehaviour
                 result = QTEResult.P2Steals;
 
             SetResultSprites(result);
-            LootManager.Instance.ResolveLoot(result);
+
+            LootManager.Instance.result = result;
             StartCoroutine(EnableContinueButton());
             DeactivateAll();
-         //   resultText.text = "";
         }
 
         resolving = false;

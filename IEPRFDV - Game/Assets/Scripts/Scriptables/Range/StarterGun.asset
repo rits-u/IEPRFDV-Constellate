@@ -16,15 +16,15 @@ MonoBehaviour:
   type: 0
   sprite: {fileID: 21300000, guid: 24b43f7389b84434f8b8bf278893d637, type: 3}
   currentTier: 1
-  rangeRadius: 10
+  rangeRadius: 15
   isMelee: 0
   rangeProperties:
-  - damage: 1
-    numProjectiles: 3
-    burstInterval: 0.2
-    fireRate: 2
   - damage: 2
+    numProjectiles: 3
+    burstInterval: 0.4
+    fireRate: 2
+  - damage: 3
     numProjectiles: 4
-    burstInterval: 0.2
+    burstInterval: 0.4
     fireRate: 2
   bulletPrefab: {fileID: 5080210413143449869, guid: bc91ba8d73ebfa14bb69aca7e5c0a675, type: 3}

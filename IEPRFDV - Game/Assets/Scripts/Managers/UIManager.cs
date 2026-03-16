@@ -12,10 +12,11 @@ public class UIManager : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private GameObject dimPanel;
+    [SerializeField] private GameObject itemDisplay;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if(Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
@@ -56,13 +57,24 @@ public class UIManager : MonoBehaviour
         return null;
     }
 
-    private void Dim()
+    public void Dim()
     {
         dimPanel.SetActive(true);
     }
 
-    private void RemoveDim()
+    public void RemoveDim()
     {
         dimPanel.SetActive(false);
     }
+
+    public ItemDisplay CreateItemDisplay(Transform parentPanel, float scaleOffset)
+    {
+        GameObject display = Instantiate(itemDisplay);
+        display.transform.localScale = new Vector3(scaleOffset, scaleOffset, scaleOffset);
+        display.transform.SetParent(parentPanel, false);
+        display.SetActive(true);
+
+        return display.GetComponent<ItemDisplay>();
+    }
+
 }

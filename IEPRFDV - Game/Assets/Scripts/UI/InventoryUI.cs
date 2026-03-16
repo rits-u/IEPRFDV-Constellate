@@ -14,6 +14,7 @@ public class InventoryUI : ScreenUI
     [SerializeField] private Button closeButton;
 
     private List<Transform> gearSlots = new();
+    private System.Action discardCallback;
 
     [System.Serializable]
     private class PlayerPanel
@@ -165,6 +166,7 @@ public class InventoryUI : ScreenUI
             Gear gear = info.gear;
             Image gearIcon = gearSlots[j].GetChild(0).GetComponent<Image>();    //icon
             gearIcon.sprite = gear.sprite;
+            gearIcon.GetComponent<ItemHover>().Initialize(ID, j);
             gearIcon.gameObject.SetActive(true);
 
             TextMeshProUGUI expire = gearSlots[j].GetChild(1).GetComponent<TextMeshProUGUI>();  //expiration
@@ -230,5 +232,18 @@ public class InventoryUI : ScreenUI
         }
 
 
+    }
+
+    public void OpenDiscardWindow(int playerID, int amountToDiscard, System.Action onFinished)
+    {
+        discardCallback = onFinished;
+        Debug.Log("galing tangina");
+    }
+
+    public void ConfirmDiscard()
+    {
+       // discardUI.SetActive(false);
+
+        discardCallback?.Invoke();
     }
 }
