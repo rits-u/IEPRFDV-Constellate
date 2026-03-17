@@ -1,11 +1,16 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class ItemHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private float hoverDuration = 0.25f;
+
     private int playerID;
     private int slotIndex;
+
+    Coroutine hoverRoutine;
 
     public void Initialize(int playerID, int slotIndex)
     {
@@ -15,15 +20,23 @@ public class ItemHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // UIManager.Instance.OpenScreen("Item Info");
-        ItemInfoUI ui = (ItemInfoUI)UIManager.Instance.GetScreen("Item Info");
-        ui.DisplayItemInfo(slotIndex, playerID);
+        hoverRoutine = StartCoroutine(HoverToItem());
     }
+
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // UIManager.Instance.CloseScreen("Item Info", false);
+        StopCoroutine(hoverRoutine);
+
         ItemInfoUI ui = (ItemInfoUI)UIManager.Instance.GetScreen("Item Info");
         ui.HideScreenUI();
+    }
+
+    private IEnumerator HoverToItem()
+    {
+        yield return new WaitForSeconds(hoverDuration);
+
+        ItemInfoUI ui = (ItemInfoUI)UIManager.Instance.GetScreen("Item Info");
+        ui.DisplayItemInfo(slotIndex, playerID);
     }
 }

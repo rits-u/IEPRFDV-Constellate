@@ -1,69 +1,73 @@
-using Mono.Cecil;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Profiling;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class InventoryUI : ScreenUI
 {
-    [Header("UI Elements")]
-    [SerializeField] private List<PlayerPanel> players = new();
-    [SerializeField] private Button closeButton;
-
-    private List<Transform> gearSlots = new();
-    private System.Action discardCallback;
+    [SerializeField] private PlayerPanel P1;
+    [SerializeField] private PlayerPanel P2;
 
     [System.Serializable]
-    private class PlayerPanel
+    public class PlayerPanel
     {
-        public Transform root;
-        private PanelUI profile;
-        private PanelUI weapon;
-        private PanelUI gear;
-
-        public PanelUI Profile 
-        {
-            get => profile;
-            set => profile = value;
-        }
-
-        public PanelUI Weapon 
-        {
-            get => weapon;
-            set => weapon = value;
-        }
-        public PanelUI Gear
-        {
-            get => gear;
-            set => gear = value;
-        }
+        public ProfileUI profileUI;
+        public WeaponUI weaponUI;
+        public GearUI gearUI;
     }
 
-    private void Awake()
+
+    [System.Serializable]
+    public class ProfileUI
     {
-        foreach (var player in players)
-        {
-            player.Profile = player.root.GetChild(0).GetComponent<PanelUI>();
-            player.Weapon = player.root.GetChild(1).GetComponent<PanelUI>();
-            player.Gear = player.root.GetChild(2).GetComponent<PanelUI>();   
-        }
+        public GameObject iconSlot;
+        public TextMeshProUGUI name;
+        public TextMeshProUGUI[] stats;
     }
 
-    private void Start()
+    [System.Serializable]
+    public class WeaponUI
     {
-        screenName = "Inventory";
+        public GameObject iconSlot;
+        public TextMeshProUGUI name;
+        public TextMeshProUGUI tier;
+        public GameObject meleeGroup;
+        public GameObject rangeGroup;
+        public TextMeshProUGUI[] melee;
+        public TextMeshProUGUI[] range;
+    }
+
+    [System.Serializable]
+    public class GearUI
+    {
+        public GearSlot[] gearSlots;
+    }
+
+    [System.Serializable]
+    public class GearSlot
+    {
+        public GameObject iconSlot;
+        public TextMeshProUGUI expire;
+        public TextMeshProUGUI tier;
+
+        public void SetActive(bool value)
+        {
+            iconSlot.SetActive(value);
+            expire.gameObject.SetActive(value);
+            tier.gameObject.SetActive(value);
+        }
     }
 
     public override void ShowScreenUI()
     {
         gameObject.SetActive(true);
-        
-        UpdateProfileUI(1);
-        UpdateWeaponUI(1);
-        UpdateGearUI(1);
+        for (int i = 1; i <= 2; i++) //update on both players
+        {
+            UpdateProfileUI(i);
+            UpdateWeaponUI(i);
+            UpdateGearUI(i);
+        }
     }
 
     public override void HideScreenUI()
@@ -71,166 +75,85 @@ public class InventoryUI : ScreenUI
         gameObject.SetActive(false);
     }
 
+    private void Start()
+    {
+        screenName = "Inventory";
+    }
+
     private void UpdateProfileUI(int ID)
     {
-        int i = ID - 1;
-        PanelUI profileUI = players[i].root.GetChild(0).GetComponent<PanelUI>();
-        Stats player = PlayerManager.Instance.GetPlayerByID(ID).GetComponent<Stats>();
-        if (profileUI == null || player == null) return;
+        PlayerPanel panel = ID == 1 ? P1 : P2;
+        Player player = PlayerManager.Instance.GetPlayerByID(ID);
+        Stats playerStats = player.GetComponent<Stats>();
 
-        //Icon
-        Image profileIcon = profileUI.transform.GetChild(0).GetComponent<Image>();
-        //profileIcon.sprite =  //insert player icon
+        Image icon = panel.profileUI.iconSlot.transform.GetChild(0).GetComponent<Image>();
+        //icon.sprite = charIcon;
 
-        //stats 
-        var statsGroup = profileUI.transform.GetChild(1); 
-        List<TextMeshProUGUI> statsList = new();
-        for(int j = 0; j < statsGroup.transform.childCount; j++)
-        {
-            statsList.Add(statsGroup.transform.GetChild(j).GetComponent<TextMeshProUGUI>());
-        }
+        panel.profileUI.name.text = player.Name;
 
-        statsList[0].text = $"HP : {player.HP}/{player.MaxHP}";
-        statsList[1].text = $"SP : {player.SP}";
-        statsList[2].text = $"ATK: {player.ATK}";
-
+        panel.profileUI.stats[0].text = $"HP : {playerStats.HP}/{playerStats.MaxHP}";
+        panel.profileUI.stats[1].text = $"SP : {playerStats.SP}";
+        panel.profileUI.stats[2].text = $"ATK: {playerStats.ATK}";
     }
 
     private void UpdateWeaponUI(int ID)
     {
-        int i = ID - 1;
-        PanelUI weaponUI = players[i].root.GetChild(1).GetComponent<PanelUI>();
+        PlayerPanel panel = ID == 1 ? P1 : P2;
         Weapon weapon = PlayerManager.Instance.GetPlayerWeapon(ID);
-        if (weaponUI == null || weapon == null) return;
 
-        //icon
-        Image weaponIcon = weaponUI.transform.GetChild(0).GetComponent<Image>();
-        weaponIcon.sprite = weapon.sprite;
+        Image icon = panel.weaponUI.iconSlot.transform.GetChild(0).GetComponent<Image>();
+        icon.sprite = weapon.sprite;
 
-        //name
-        TextMeshProUGUI nameTextBox = weaponUI.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        nameTextBox.text = weapon.name;
+        panel.weaponUI.name.text = weapon.itemName;     //item
 
-        //properties
-        Transform statsGroup = weapon.IsMelee ? weaponUI.transform.GetChild(2) : weaponUI.transform.GetChild(3);
-        
-      //  statsGroup = weaponUI.transform.GetChild(2);
-        List<TextMeshProUGUI> statsList = new();
-        for (int j = 0; j < statsGroup.transform.childCount; j++)
-        {
-            statsList.Add(statsGroup.transform.GetChild(j).GetComponent<TextMeshProUGUI>());
-        }
+        panel.weaponUI.tier.text = $"Tier {weapon.CurrentTier}";    //tier
 
         if (weapon.IsMelee)
         {
-            Melee melee = (Melee)weapon;
-            statsList[0].text = $"DMG: {melee.GetPropertyByType(InfoType.DAMAGE)}";
-            statsList[1].text = $"SPD: {melee.GetPropertyByType(InfoType.SLASH_INTERVAL)}";
-            weaponUI.transform.GetChild(2).gameObject.SetActive(true);
-            weaponUI.transform.GetChild(3).gameObject.SetActive(false);
+            Melee m = (Melee)weapon;
+            panel.weaponUI.meleeGroup.gameObject.SetActive(true);
+            panel.weaponUI.rangeGroup.gameObject.SetActive(false);
+
+            panel.weaponUI.melee[0].text = $"DMG: {m.GetPropertyByType(InfoType.DAMAGE)}";
+            panel.weaponUI.melee[1].text = $"SPD: {m.GetPropertyByType(InfoType.SLASH_INTERVAL)}";
         }
         else
         {
-            Range range = (Range)weapon;
-            statsList[0].text = $"DMG: {range.GetPropertyByType(InfoType.DAMAGE)}";
-            statsList[1].text = $"BUL: {range.GetPropertyByType(InfoType.PROJECTILES)}";
-            statsList[1].text = $"FRT: {range.GetPropertyByType(InfoType.FIRE_RATE)}";
-            weaponUI.transform.GetChild(3).gameObject.SetActive(true);
-            weaponUI.transform.GetChild(2).gameObject.SetActive(false);
-        }
+            Range r = (Range)weapon;
+            panel.weaponUI.meleeGroup.gameObject.SetActive(false);
+            panel.weaponUI.rangeGroup.gameObject.SetActive(true);
 
+            panel.weaponUI.range[0].text = $"DMG: {r.GetPropertyByType(InfoType.DAMAGE)}";
+            panel.weaponUI.range[1].text = $"BUL: {r.GetPropertyByType(InfoType.PROJECTILES)}";
+            panel.weaponUI.range[2].text = $"FRT: {r.GetPropertyByType(InfoType.FIRE_RATE)}";
+        }
     }
 
     private void UpdateGearUI(int ID)
     {
-        int i = ID - 1;
-        PanelUI gearUI = players[i].root.GetChild(2).GetComponent<PanelUI>();
-        if (gearUI == null) return;
-
-        Transform gearGroup = gearUI.transform.GetChild(0);
-        gearSlots.Clear();
-        for (int j = 0; j < gearGroup.childCount; j++)
-        {
-            gearSlots.Add(gearGroup.GetChild(j).GetComponent<Transform>());
-        }
-        // GetOccupiedGearSlots(i);
-
+        PlayerPanel panel = ID == 1 ? P1 : P2;
         PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(ID);
-        int equipped = inventory.GetEquippedGearCount();
+        int count = inventory.GetEquippedGearCount();
 
-        for (int j = 0; j < equipped; j++)
+        for (int i = 0; i < count; i++)
         {
-            var info = inventory.GetEquippedGearByIndex(j);
-            int tier = info.tier;
+            Gear gear = inventory.GetEquippedGearByIndex(i).gear;
+            panel.gearUI.gearSlots[i].SetActive(true);
 
-            Gear gear = info.gear;
-            Image gearIcon = gearSlots[j].GetChild(0).GetComponent<Image>();    //icon
-            gearIcon.sprite = gear.sprite;
-            gearIcon.GetComponent<ItemHover>().Initialize(ID, j);
-            gearIcon.gameObject.SetActive(true);
+            Image icon = panel.gearUI.gearSlots[i].iconSlot.transform.GetChild(0).GetComponent<Image>();
+            icon.sprite = gear.sprite;
+            icon.GetComponent<ItemHover>().Initialize(ID, i);
 
-            TextMeshProUGUI expire = gearSlots[j].GetChild(1).GetComponent<TextMeshProUGUI>();  //expiration
-            expire.text = gear.Expiration.ToString();
-            expire.gameObject.SetActive(true);
+            panel.gearUI.gearSlots[i].expire.text = $"{gear.Expiration}";   //expiration
 
+            panel.gearUI.gearSlots[i].tier.text = $"Tier {gear.CurrentTier}";    //tier
         }
 
-        //hide unused slots
-        for(int j = equipped; j < gearSlots.Count; j++)
+        for(int i = count; i < inventory.GetMaxSlots(); i++)
         {
-            gearSlots[j].GetChild(0).gameObject.SetActive(false);
-            gearSlots[j].GetChild(1).gameObject.SetActive(false);
+            panel.gearUI.gearSlots[i].SetActive(false);
         }
 
-        HideDiscardButtons();
     }
 
-    private void HideDiscardButtons()
-    {
-        for(int i = 0; i < gearSlots.Count; i++)
-        {
-            gearSlots[i].GetChild(2).gameObject.SetActive(false);
-        }
-    }
-
-    public void HideCloseButton()
-    {
-        closeButton.gameObject.SetActive(false);
-    }
-
-    public void ShowCloseButton()
-    {
-        closeButton.gameObject.SetActive(false);
-    }
-
-    private void GetOccupiedGearSlots(int index)
-    {
-        PanelUI gearUI = players[index].root.GetChild(2).GetComponent<PanelUI>();
-        Transform gearGroup = gearUI.transform.GetChild(0);
-        //Debug.Log("chidsald: " + gearGroup.childCount);
-        gearSlots.Clear();
-        for (int j = 0; j < gearGroup.childCount; j++)
-        {
-            gearSlots.Add(gearGroup.GetChild(j).GetComponent<Transform>());
-        }
-    }
-
-    public void DiscardWindow()
-    {
-        HideCloseButton();
-        ShowScreenUI();
-
-        for (int i = 0; i < players.Count; i++)
-        {
-            PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(i + 1);
-            int equipped = inventory.GetEquippedGearCount();
-
-            for (int j = 0; j < equipped; j++)
-            {
-                gearSlots[j].GetChild(3).gameObject.SetActive(true);
-            }
-        }
-
-
-    }
 }

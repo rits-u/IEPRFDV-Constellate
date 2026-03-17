@@ -3,21 +3,24 @@ using UnityEngine;
 
 public class DamageFlash : MonoBehaviour
 {
-    private SpriteRenderer sr;
-    private Color originalColor;
+    private SpriteRenderer[] renderers;
+    private Color[] originalColors;
 
     [SerializeField] private Color flashColor = Color.red;
     [SerializeField] private float flashDuration = 0.3f;
 
     private void Awake()
     {
-        sr = GetComponentInChildren<SpriteRenderer>();
-        originalColor = sr.color;
+        renderers = GetComponentsInChildren<SpriteRenderer>();
+
+        originalColors = new Color[renderers.Length];
+        for (int i = 0; i < renderers.Length; i++)
+            originalColors[i] = renderers[i].color;
     }
 
     private void Start()
     {
-        
+
     }
 
     private void OnEnable()
@@ -32,21 +35,24 @@ public class DamageFlash : MonoBehaviour
 
     public void Flash()
     {
-        StopAllCoroutines(); 
+        StopAllCoroutines();
         StartCoroutine(FlashRoutine());
     }
 
-    IEnumerator FlashRoutine()
+    private IEnumerator FlashRoutine()
     {
-        float t = 0;
 
-        while (t < flashDuration)
-        {
-            sr.color = Color.Lerp(flashColor, originalColor, t / flashDuration);
-            t += Time.deltaTime;
-            yield return null;
-        }
+        for (int i = 0; i < renderers.Length; i++)
+            renderers[i].color = flashColor;
 
-        sr.color = originalColor;
+        Animator animator = GetComponent<Animator>();
+        if (animator != null) animator.enabled = false;
+
+        yield return new WaitForSeconds(flashDuration);
+
+        if (animator != null) animator.enabled = true;
+
+        for (int i = 0; i < renderers.Length; i++)
+            renderers[i].color = originalColors[i];
     }
 }

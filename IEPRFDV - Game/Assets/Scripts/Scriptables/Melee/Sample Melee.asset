@@ -19,7 +19,7 @@ MonoBehaviour:
   rangeRadius: 8
   isMelee: 1
   meleeProperties:
-  - damage: 5
+  - damage: 2
     slashInterval: 2
   - damage: 10
     slashInterval: 1.5

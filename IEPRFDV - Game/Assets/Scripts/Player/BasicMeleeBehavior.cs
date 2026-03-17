@@ -98,18 +98,17 @@ public class BasicMeleeBehavior : MonoBehaviour
         return nearest;
     }
 
-
-
+    
     private void Slash()
     {
         int damage = (int)melee.GetPropertyByType(InfoType.DAMAGE);
+        Stats playerStats = GetComponentInParent<Stats>();
 
         GameObject slashObj = Instantiate(melee.SlashPrefab, transform.position, Quaternion.identity);
-
         PlayerSlash slash = slashObj.GetComponent<PlayerSlash>();
         if (slash != null)
         {
-            slash.SetDamageInfo(damage, gameObject);
+            slash.SetDamageInfo(damage + playerStats.ATK, playerStats.gameObject);
 
             GameObject target = FindNearestEnemy();
             Vector3 direction;
