@@ -10,7 +10,7 @@ public class LootManager : MonoBehaviour
     [SerializeField] private List<Item> lootDrops = new();
 
     public QTEResult result;
-
+    private int toDistribute = 0;
     private void Awake()
     {
         if (Instance == null)
@@ -34,26 +34,42 @@ public class LootManager : MonoBehaviour
         StartCoroutine(ResolveLootRoutine(result));
     }
 
-
-    //need to update
     private IEnumerator ResolveLootRoutine(QTEResult result)
     {
         yield return new WaitForSeconds(1f);
-        List<Item> lootCopy = new List<Item>(lootDrops);
-        switch(result)
+      
+        switch (result)
         {
             case QTEResult.Share:
-                yield return StartCoroutine(DistributeItem(1, 1, lootCopy));
+                toDistribute = 2;
+                yield return StartCoroutine(DistributeItem(1, 1));
+                yield return StartCoroutine(DistributeItem(2, 1));
                 break;
+
+            case QTEResult.P1Steals:
+                toDistribute = 1;
+                yield return StartCoroutine(DistributeItem(1, 2));
+                break;
+
+            case QTEResult.P2Steals:
+                toDistribute = 1;
+                yield return StartCoroutine(DistributeItem(2, 2));
+                break;
+
+            case QTEResult.None:
+                RoundManager.Instance.NextRound();
+                break;
+
         }
     }
 
-    private IEnumerator DistributeItem(int playerID, int tier, List<Item> loot)
+    private IEnumerator DistributeItem(int playerID, int tier)
     {
         int gearCount = 0;
+        List<Item> lootCopy = new List<Item>(lootDrops);
         List<Gear> gearLoots = new();
 
-        foreach (Item item in loot)
+        foreach (Item item in lootCopy)
         {
             if (item.type == ItemType.GEAR)
             {
@@ -64,46 +80,60 @@ public class LootManager : MonoBehaviour
 
         PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(playerID);
         int equipped = inventory.GetEquippedGearCount();
+        int overflow = (equipped + gearCount) - inventory.GetMaxSlots(); //check if theres overflow
 
-        int overflow = (equipped + gearCount) - inventory.GetMaxSlots();
-
+        //discard
         if (overflow > 0)
         {
-            Debug.Log("inventory is full, will need to discard");
+            //Debug.Log("inventory is full, will need to discard");
+            List<Gear> remainingGear = null;
             bool discardFinished = false;
 
             DiscardUI ui = (DiscardUI)UIManager.Instance.GetScreen("Discard");
-            ui.InitializeDisplayPanel(gearLoots);
+            ui.Initialize(gearLoots);
 
             UIManager.Instance.OpenScreen("Discard");
-            ui.OpenDiscardWindow(playerID, overflow, tier, () => { discardFinished = true; });
+            ui.OpenDiscardWindow(playerID, tier, (result) =>
+            {
+                remainingGear = result;
+                discardFinished = true;
+            });
 
             yield return new WaitUntil(() => discardFinished);
-        }
-        else
-        {
-            foreach (Item item in loot)
-            {
-                switch (item)
-                {
-                    case Gear gear:
-                        PlayerManager.Instance.ApplyGearToPlayer(gear, playerID, tier);
-                        break;
-                    case Weapon weapon:
-                        PlayerManager.Instance.SwitchWeaponOfPlayer(weapon, playerID, tier);
-                        break;
-                    case Heal heal:
-                        PlayerManager.Instance.ApplyHealToPlayer(heal, playerID, tier);
-                        break;
-                }
 
-                RemoveItemFromLoot(item);
+            lootCopy.RemoveAll(item =>
+                item is Gear gear && !remainingGear.Contains(gear));
+
+
+        }
+
+
+        foreach (Item item in lootCopy)
+        {
+            switch (item)
+            {
+                case Gear gear:
+                    PlayerManager.Instance.ApplyGearToPlayer(gear, playerID, tier);
+                    break;
+                case Weapon weapon:
+                    PlayerManager.Instance.SwitchWeaponOfPlayer(weapon, playerID, tier);
+                    break;
+                case Heal heal:
+                    PlayerManager.Instance.ApplyHealToPlayer(heal, playerID, tier);
+                    break;
             }
         }
 
-        lootDrops.Clear();
+        lootCopy.Clear();
         gearLoots.Clear();
 
-        RoundManager.Instance.NextRound();
+
+        toDistribute--;
+        Debug.Log("to distribute: " + toDistribute);
+
+        if (toDistribute == 0) {
+            lootDrops.Clear();
+            RoundManager.Instance.NextRound();
+        }
     }
 }

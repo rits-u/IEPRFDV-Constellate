@@ -42,6 +42,17 @@ public class Stats : MonoBehaviour
         set => shield = value;
     }
 
+    public void ValidateStats()
+    {
+        if(HP > MaxHP) HP = MaxHP;  //unequipping
+
+        if(HP < 0) HP = 0;  //damage
+            
+        if(SP < 0) SP = 0;  //damage
+
+        if(ATK <= 0) ATK = 1;   //unequipping
+    }
+
     private void Start()
     {
         health = maxHealth;
@@ -51,6 +62,8 @@ public class Stats : MonoBehaviour
 
     public bool TakeDamage(int damage)
     {
+       // ValidateStats();
+
         if (SP > 0)
         {
             SP -= damage;
@@ -68,7 +81,7 @@ public class Stats : MonoBehaviour
 
             }
         }
-
+        ValidateStats();
         OnDamaged?.Invoke();
 
         //if (healthBar != null)
@@ -101,7 +114,7 @@ public class Stats : MonoBehaviour
     {
         if (healthBar != null)
         {
-            healthBar.SetMaxHealth(HP);
+            healthBar.SetMaxHealth(MaxHP);
             healthBar.SetMaxShield(SP);
         }
     }

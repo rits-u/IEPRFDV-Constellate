@@ -15,7 +15,7 @@ public class StatsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI atkTextbox;
     [SerializeField] private TextMeshProUGUI spTextbox;
 
-    private GameObject player;
+    private Player player;
 
     private void Start()
     {

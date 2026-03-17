@@ -16,11 +16,10 @@ public class DiscardUI : ScreenUI
     [SerializeField] private Button skipButton;
     [SerializeField] private Button closeButton;
 
-   // [SerializeField] private GameObject displayPrefab;
-
     private List<ItemDisplay> itemDisplays = new();
-    private List<Gear> copyLoots = new();
-    private System.Action discardCallback;
+    private List<Gear> copyLoots;
+
+    private System.Action<List<Gear>> discardCallback;
 
     private int playerID;
 
@@ -48,46 +47,46 @@ public class DiscardUI : ScreenUI
         closeButton.gameObject.SetActive(false);
     }
 
-
-    public void InitializeDisplayPanel(List<Gear> gears) 
+    public void Initialize(List<Gear> gears)
     {
         InitializeWindow();
-        copyLoots.Clear();
-        copyLoots = gears;
+       // Debug.Log("gear COUNT: " + gears.Count);
+        copyLoots = new List<Gear>(gears);
         ResetDisplays();
+    }
 
-        foreach (var gear in gears)
+    public void InitializeDisplayPanel(int tier) 
+    {
+        foreach (var gear in copyLoots)
         {
             ItemDisplay display = UIManager.Instance.CreateItemDisplay(displayPanel, 0.45f);
-            display.DisplayEquippedGear(gear);
+            display.DisplayGearByTier(gear, tier);
             itemDisplays.Add(display);
         }
     }
 
 
-    public void OpenDiscardWindow(int ID, int toDiscard, int tier, System.Action onFinished)
+    public void OpenDiscardWindow(int ID, int tier, System.Action<List<Gear>> onFinished)
     {
         playerID = ID;
         tierLoot = tier;
         discardCallback = onFinished;
 
         Debug.Log("Opened Discard Window");
+        InitializeDisplayPanel(tier);
+        PlayerManager.Instance.DisableAllPlayerMovement();
         EnableAllDiscardButtons();
         UpdateMiniInventory(ID);
         
         itemDisplays[0].SelectDisplay();
     }
 
-    public void OnSkipButtonPressed()
-    {
-        SelectNextLoot();
-    }
-
+ 
     public void CloseDiscardWindow()
     {
         HideScreenUI();
         UIManager.Instance.RemoveDim();
-        discardCallback?.Invoke();
+        discardCallback?.Invoke(copyLoots);
     }
 
     public void SelectGearToDiscard(int buttonID)
@@ -104,18 +103,31 @@ public class DiscardUI : ScreenUI
         statement.text = $"Discard [ {equippedGear} ] for [ {lootGear} ] ?";
     }
 
+    public void SkipAttempt()
+    {
+        SwitchToConfirmSkipPanel();
+        skipButton.gameObject.SetActive(false);
+    }
+
+    public void ConfirmedSkipGear()
+    {
+        SwitchBackToGearPanel();
+        skipButton.gameObject.SetActive(true);
+        SelectNextLoot();
+    }
+
+
     public void CancelGearDiscard()
     {
         SwitchBackToGearPanel();
+        skipButton.gameObject.SetActive(true);
     }
 
     //activated by yes button at confirmation panel
     public void DiscardAndReplaceGear()
     {
         PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(playerID);
-        inventory.UnequipGearByIndex(attemptIndex);
-
-        inventory.EquipGear(copyLoots[0], tierLoot);    //replacement
+        inventory.ReplaceGear(copyLoots[0], tierLoot, attemptIndex);
 
         SelectNextLoot();
         SwitchBackToGearPanel();
@@ -144,6 +156,11 @@ public class DiscardUI : ScreenUI
 
             //disable all discard buttons
             DisableAllDiscardButtons();
+            SwitchBackToGearPanel() ;
+        }
+        else
+        {
+            itemDisplays[0].SelectDisplay();
         }
     }
 
@@ -176,22 +193,29 @@ public class DiscardUI : ScreenUI
     
     private void UpdateProfilePanel(int ID)
     {
-        Stats player = PlayerManager.Instance.GetPlayerByID(ID).GetComponent<Stats>();
+        Player player = PlayerManager.Instance.GetPlayerByID(ID);
+        Stats playerStats = player.GetComponent<Stats>();
 
         Transform profile = miniInventory.GetChild(0);
-        Image charIcon = profile.GetChild(0).GetComponent<Image>();
+        TextMeshProUGUI idNum = profile.GetChild(0).GetComponent<TextMeshProUGUI>();
+        idNum.text = player.ID == 1 ? $"<color=red>P{player.ID}</color>" : $"<color=blue>P{player.ID}</color>";
+
+        Image charIcon = profile.GetChild(1).GetComponent<Image>();
         // charIcon.sprite = change sprite
 
-        Transform statsGroup = profile.GetChild(1);
+        TextMeshProUGUI name = profile.GetChild(2).GetComponent<TextMeshProUGUI>();
+        name.text = player.Name;
+
+        Transform statsGroup = profile.GetChild(3);
         List<TextMeshProUGUI> stats = new();
         for (int i = 0; i < statsGroup.childCount; i++)
         {
             stats.Add(statsGroup.GetChild(i).GetComponent<TextMeshProUGUI>());
         }
 
-        stats[0].text = $"HP: {player.HP}/{player.MaxHP}";
-        stats[1].text = $"SP: {player.SP}";
-        stats[2].text = $"ATK: {player.ATK}";
+        stats[0].text = $"HP: {playerStats.HP}/{playerStats.MaxHP}";
+        stats[1].text = $"SP: {playerStats.SP}";
+        stats[2].text = $"ATK: {playerStats.ATK}";
     }
 
     private void UpdateGearPanel(int ID)
@@ -239,11 +263,18 @@ public class DiscardUI : ScreenUI
         miniInventory.GetChild(2).gameObject.SetActive(true);
     }
 
+    private void SwitchToConfirmSkipPanel()
+    {
+        miniInventory.GetChild(1).gameObject.SetActive(false);
+        miniInventory.GetChild(3).gameObject.SetActive(true);
+    }
+
     private void SwitchBackToGearPanel()
     {
         UpdateMiniInventory(playerID);
         miniInventory.GetChild(1).gameObject.SetActive(true);
         miniInventory.GetChild(2).gameObject.SetActive(false);
+        miniInventory.GetChild(3).gameObject.SetActive(false);
     }
 
     private void ResetDisplays()

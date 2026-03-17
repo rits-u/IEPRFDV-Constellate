@@ -134,6 +134,7 @@ public class RoundManager : MonoBehaviour
 
     public void NextRound()
     {
+        PlayerManager.Instance.EnableAllPlayerMovement();
         DeactivateRewardTrigger();
         StartCoroutine(PrepareTrigger());
         //ExecuteRound();

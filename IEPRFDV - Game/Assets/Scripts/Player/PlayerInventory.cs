@@ -8,9 +8,6 @@ public class PlayerInventory : MonoBehaviour
     [Header("Weapon")]
     [SerializeField] private Weapon weapon;
     [SerializeField] private WeaponObject weaponObj;
-    //[SerializeField] private Gun gun;
-    //[SerializeField] private Melee melee;
-  //  [SerializeField] pri
 
     [Header("Gear")]
     [SerializeField] private int maxSlots;
@@ -58,16 +55,6 @@ public class PlayerInventory : MonoBehaviour
         
     }
 
-    //public Gun GetPlayerGunWeapon()
-    //{
-    //    return gun;
-    //}
-
-    //public Melee GetPlayerMeleeWeapon()
-    //{
-    //    return melee;
-    //}
-
     public Weapon GetPlayerWeapon()
     {
         return weapon;
@@ -88,8 +75,10 @@ public class PlayerInventory : MonoBehaviour
         Gear copy = Instantiate(gear);
         copy.CurrentTier = tier;
         playerStats.MaxHP += copy.GetStatsByType(InfoType.HP);
+        playerStats.HP -= copy.GetStatsByType(InfoType.HP);     //adjust hp
         playerStats.ATK += copy.GetStatsByType(InfoType.ATK);
         playerStats.SP += copy.GetStatsByType(InfoType.SP);
+//        playerStats.ValidateStats();
         playerStats.UpdateHealthBar();
         
         gearList.Add(new GearInfo(copy, tier));
@@ -97,27 +86,13 @@ public class PlayerInventory : MonoBehaviour
     }
 
 
-    ////fix, discard
-    //public void UnequipGear(Gear gear)
-    //{
-    //    int index = 0;
-    //    foreach (var g in gearList)
-    //    {
-    //        if (g.gear == gear) break;
-    //        index++;
-    //    }
-
-    //    gearList.RemoveAt(index);
-
-
-    //}
-
     public void UnequipGearByIndex(int index)
     {
         Gear copy = gearList[index].gear;
         playerStats.MaxHP -= copy.GetStatsByType(InfoType.HP);
         playerStats.SP -= copy.GetStatsByType(InfoType.SP);
         playerStats.ATK -= copy.GetStatsByType(InfoType.ATK);
+        playerStats.ValidateStats();
         playerStats.UpdateHealthBar();
 
         gearList.RemoveAt(index);
@@ -125,12 +100,38 @@ public class PlayerInventory : MonoBehaviour
         Debug.Log($"{gameObject.name} has unequipped {copy.itemName}");
     }
 
-    //public void EquipGun(Gun gunToEquip, int tier)
+    //public void ReplaceGear(Gear gear, int tier, int replaceIndex)
     //{
-    //    Gun copy = Instantiate(gunToEquip);
-    //    copy.CurrentTier = tier;
-    //    gun = copy;
+    //    EquipGear(gear, tier);
+    //    UnequipGearByIndex(replaceIndex);
     //}
+
+    public void ReplaceGear(Gear newGear, int tier, int replaceIndex)
+    {
+        Gear oldGear = gearList[replaceIndex].gear;
+
+        Gear newCopy = Instantiate(newGear);
+        newCopy.CurrentTier = tier;
+
+        //difference
+        int hpDiff = newCopy.GetStatsByType(InfoType.HP) - oldGear.GetStatsByType(InfoType.HP);
+        int atkDiff = newCopy.GetStatsByType(InfoType.ATK) - oldGear.GetStatsByType(InfoType.ATK);
+        int spDiff = newCopy.GetStatsByType(InfoType.SP) - oldGear.GetStatsByType(InfoType.SP);
+
+        playerStats.MaxHP += hpDiff;
+        playerStats.ATK += atkDiff;
+        playerStats.SP += spDiff;
+
+        //adjust
+        playerStats.HP += hpDiff;
+        playerStats.HP = Mathf.Clamp(playerStats.HP, 1, playerStats.MaxHP); //clamp
+
+        gearList[replaceIndex] = new GearInfo(newCopy, tier);
+
+        playerStats.UpdateHealthBar();
+        Debug.Log($"{gameObject.name} replaced {oldGear.itemName} with {newGear.itemName}");
+    }
+
 
     public void EquipWeapon(Weapon weaponToEquip, int tier)
     {

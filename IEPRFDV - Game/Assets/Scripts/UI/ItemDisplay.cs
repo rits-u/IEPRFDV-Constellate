@@ -1,9 +1,10 @@
 ﻿using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Xml;
 using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.UI;
-using System;
 
 public class ItemDisplay : MonoBehaviour
 {
@@ -58,12 +59,7 @@ public class ItemDisplay : MonoBehaviour
         selectPanel.gameObject.SetActive(false);
     }
 
-    private void EditStatByIndex(string text, int index)
-    {
-        slotStats[index].text = text;
-        slotStats[index].gameObject.SetActive(true);
-        if (text == "0") slotStats[index].text = "";
-    }
+
 
     private void EditNameTextBox(string name) { 
         nameTextBox.text = name;
@@ -79,10 +75,24 @@ public class ItemDisplay : MonoBehaviour
         tierTextBox.text = tier;
     }
 
+    private void SetupHeader(string name, string type, Sprite icon)
+    {   
+        EditNameTextBox(name);
+        EditTypeTextBox(type);
+        SetIconItem(icon);
+    }
+
     //public void EditDescTextBox(string desc)
     //{
     //    descTextBox.text = desc;
     //}
+
+    private void EditStatByIndex(string text, int index)
+    {
+        slotStats[index].text = text;
+        slotStats[index].gameObject.SetActive(true);
+        if (text == "0") slotStats[index].text = "";
+    }
 
     private void SetIconInfoByIndex(InfoType type, int index)
     {
@@ -93,11 +103,33 @@ public class ItemDisplay : MonoBehaviour
         }
     }
 
+    private void WriteStat(InfoType type, string text, int index)
+    {
+        EditStatByIndex(text, index);
+        SetIconInfoByIndex(type, index);
+    }
+
     private void HideUnusedSlots()
     {
-        foreach(var icon in icons)
+        foreach (var icon in icons)
         {
-            if(icon.sprite == null) icon.gameObject.SetActive(false);
+            if (icon.sprite == null) icon.gameObject.SetActive(false);
+        }
+    }
+
+    //private void HideUnusedSlots(int usedCount)
+    //{
+    //    for (int i = usedCount; i < slotStats.Count; i++)
+    //    {
+    //        slotStats[i].gameObject.SetActive(false);
+    //    }
+    //}
+
+    private void ResetStatSlots()
+    {
+        for (int i = 0; i < slotStats.Count; i++)
+        {
+            slotStats[i].gameObject.SetActive(false);
         }
     }
 
@@ -106,6 +138,17 @@ public class ItemDisplay : MonoBehaviour
         iconItem.sprite = sprite;
     }
 
+    private string FormatTierValue(int t1, int t2)
+    {
+        return t1 != t2 ? $"{t1} <color=green>→{t2}</color>" : $"{t1}";
+    }
+
+    private IEnumerable<InfoType> GetGearStats(Gear gear)
+    {
+        if (gear.hasHPStat) yield return InfoType.HP;
+        if (gear.hasATKStat) yield return InfoType.ATK;
+        if (gear.hasSPStat) yield return InfoType.SP;
+    }
 
     public void Setup(Item item)
     {
@@ -129,78 +172,69 @@ public class ItemDisplay : MonoBehaviour
         }
     }
 
-    public void DisplayEquippedGear(Gear gear)
+    public void DisplayGearByTier(Gear gear, int tier)
     {
-        EditNameTextBox(gear.itemName);
-        EditTypeTextBox("Gear");
-        SetIconItem(gear.sprite);
-        EditTierTextBox($"Tier {gear.CurrentTier}");
+        SetupHeader(gear.itemName, "Gear", gear.sprite);
+        EditTierTextBox($"Tier {tier}");
+        tierTextBox.gameObject.SetActive(true);
 
-        Dictionary<InfoType, bool> stats = new();
-        if (gear.hasHPStat) stats.Add(InfoType.HP, gear.hasHPStat);
-        if (gear.hasATKStat) stats.Add(InfoType.ATK, gear.hasATKStat);
-        if (gear.hasSPStat) stats.Add(InfoType.SP, gear.hasSPStat);
-
+        ResetStatSlots();
         int index = 0;
-        foreach (var stat in stats)
+
+        foreach(var stat in GetGearStats(gear))
         {
-            string text = gear.GetStatsByType(stat.Key).ToString();
-            EditStatByIndex(text, index);
-            SetIconInfoByIndex(stat.Key, index);
-            index++;
+            string text = gear.GetStats(stat, tier).ToString();
+            WriteStat(stat, text, index++);
         }
 
-        EditStatByIndex(gear.Expiration.ToString(), index);
-        SetIconInfoByIndex(InfoType.EXPIRATION, index);
+        WriteStat(InfoType.EXPIRATION, gear.Expiration.ToString(), index);
         HideUnusedSlots();
+    } 
+
+    public void DisplayEquippedGear(Gear gear)
+    {
+        DisplayGearByTier(gear, gear.CurrentTier);
     }
 
     private void DisplayRangeItem(Range range)
     {
-        EditNameTextBox(range.itemName);
-        EditTypeTextBox("Weapon");
-        SetIconItem(range.sprite);
+        SetupHeader(range.itemName, "Weapon", range.sprite);
+        InfoType[] stats = 
+        { 
+            InfoType.DAMAGE,
+            InfoType.PROJECTILES,
+            InfoType.FIRE_RATE
+        };
 
         int index = 0;
-        foreach (InfoType type in Enum.GetValues(typeof(InfoType)))
+        foreach( var type in stats)
         {
-            if (type != InfoType.DAMAGE && type != InfoType.PROJECTILES &&
-                type != InfoType.FIRE_RATE) continue;
-
             int T1 = (int)range.GetProperty(type, 1);
             int T2 = (int)range.GetProperty(type, 2);
-            string text;
-            if (T1 != T2) text = $"{T1} <color=green>→{T2}</color>";
-            else text = $"{T1}";
-            EditStatByIndex(text, index);
-            SetIconInfoByIndex(type, index);
-            index++;
+
+            WriteStat(type, FormatTierValue(T1, T2), index++);
         }
 
         HideUnusedSlots();
     }
 
-
-
     private void DisplayMeleeItem(Melee melee)
     {
-        EditNameTextBox(melee.itemName);
-        EditTypeTextBox("Weapon");
-        SetIconItem(melee.sprite);
+        SetupHeader(melee.itemName, "Weapon", melee.sprite);
+
+        InfoType[] stats =
+        {
+            InfoType.DAMAGE,
+            InfoType.SLASH_INTERVAL,
+        };
 
         int index = 0;
-        foreach (InfoType type in Enum.GetValues(typeof(InfoType)))
+        foreach (var type in stats)
         {
-            if (type != InfoType.DAMAGE && type != InfoType.SLASH_INTERVAL) continue;
-
             int T1 = (int)melee.GetProperty(type, 1);
             int T2 = (int)melee.GetProperty(type, 2);
-            string text;
-            if (T1 != T2) text = $"{T1} <color=green>→{T2}</color>";
-            else text = $"{T1}";
-            EditStatByIndex(text, index);
-            SetIconInfoByIndex(type, index);
-            index++;
+
+            WriteStat(type, FormatTierValue(T1, T2), index++);
         }
 
         HideUnusedSlots();
@@ -208,32 +242,20 @@ public class ItemDisplay : MonoBehaviour
 
     private void DisplayGearItem(Gear gear)
     {
-        EditNameTextBox(gear.itemName);
-        EditTypeTextBox("Gear");
-        SetIconItem(gear.sprite);
-
-        Dictionary<InfoType, bool> stats = new();
-        if (gear.hasHPStat) stats.Add(InfoType.HP, gear.hasHPStat);
-        if (gear.hasATKStat) stats.Add(InfoType.ATK, gear.hasATKStat);
-        if (gear.hasSPStat) stats.Add(InfoType.SP, gear.hasSPStat);
+        SetupHeader(gear.itemName, "Gear", gear.sprite);
 
         int index = 0;
-        foreach (var stat in stats)
+
+        foreach (var stat in GetGearStats(gear))
         {
-            string text;
-            int T1 = gear.GetStats(stat.Key, 1);
-            int T2 = gear.GetStats(stat.Key, 2);
+            int t1 = gear.GetStats(stat, 1);
+            int t2 = gear.GetStats(stat, 2);
 
-            if (T1 != T2) text = $"{T1} <color=green>→{T2}</color>";
-            else text = $"{T1}";
-
-            EditStatByIndex(text, index);
-            SetIconInfoByIndex(stat.Key, index);
-            index++;
+            WriteStat(stat, FormatTierValue(t1, t2), index++);
         }
 
-        EditStatByIndex(gear.Expiration.ToString(), index);
-        SetIconInfoByIndex(InfoType.EXPIRATION, index);
+        WriteStat(InfoType.EXPIRATION, gear.Expiration.ToString(), index);
+
         HideUnusedSlots();
     }
 
@@ -245,5 +267,4 @@ public class ItemDisplay : MonoBehaviour
         SetIconInfoByIndex(InfoType.HEAL, 0);
         HideUnusedSlots();
     }
-
 }

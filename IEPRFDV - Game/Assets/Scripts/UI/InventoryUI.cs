@@ -233,17 +233,4 @@ public class InventoryUI : ScreenUI
 
 
     }
-
-    public void OpenDiscardWindow(int playerID, int amountToDiscard, System.Action onFinished)
-    {
-        discardCallback = onFinished;
-        Debug.Log("galing tangina");
-    }
-
-    public void ConfirmDiscard()
-    {
-       // discardUI.SetActive(false);
-
-        discardCallback?.Invoke();
-    }
 }

@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Instance;
 
     //[Header("")]
-    [SerializeField] private List<GameObject> playerList = new();
+    [SerializeField] private List<Player> playerList = new();
     [SerializeField] private List<Transform> offsets = new();
 
     private int playersAlive;
@@ -69,18 +69,24 @@ public class PlayerManager : MonoBehaviour
         playerList.RemoveAt(index);
     }
 
-    public GameObject GetPlayerByID(int ID)
+    public Player GetPlayerByID(int ID)
     {
-        return playerList[ID-1];
+        foreach (var player in playerList)
+        {
+            if(player.ID == ID ) return player;
+        }
+
+        return null;
+       // return playerList[ID-1];
     }
 
-    public void DisablePlayerMovement(GameObject player)
+    public void DisablePlayerMovement(Player player)
     {
         if (player == null) return;
         player.GetComponent<PlayerMovement>().DisableMovement();
     }
 
-    public void EnablePlayerMovement(GameObject player)
+    public void EnablePlayerMovement(Player player)
     {
         if (player == null) return;
         player.GetComponent<PlayerMovement>().EnableMovement();
@@ -108,7 +114,7 @@ public class PlayerManager : MonoBehaviour
     {
         foreach(var p in playerList)
         {
-            if(player == p)
+            if(player == p.gameObject)
             {
                 PlayerScore ps = p.GetComponent<PlayerScore>();
                 if (ps != null)
@@ -127,18 +133,10 @@ public class PlayerManager : MonoBehaviour
 
     public void ApplyGearToPlayer(Gear gear, int playerID, int tier)
     {
-        PlayerInventory inventory = playerList[playerID - 1].GetComponent<PlayerInventory>();
+        PlayerInventory inventory = GetPlayerByID(playerID).GetComponent<PlayerInventory>();
         if (inventory.GetEquippedGearCount() < inventory.GetMaxSlots())
         {
             inventory.EquipGear(gear, tier);
-        }
-        else
-        {
-            //let it discard// 
-           // InventoryUI ui = (InventoryUI)UIManager.Instance.GetScreen("Inventory");
-           // ui.DiscardWindow();
-            //  UIManager.Instance.
-           // Debug.Log($"LM: {gameObject.name}'s inventory is already FULL");
         }
     }
 
@@ -172,5 +170,5 @@ public class PlayerManager : MonoBehaviour
         return inventory;
     }
 
- //   public List<Gear>
+
 }
