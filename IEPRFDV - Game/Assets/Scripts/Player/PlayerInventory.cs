@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 public class PlayerInventory : MonoBehaviour
@@ -12,6 +13,9 @@ public class PlayerInventory : MonoBehaviour
     [Header("Gear")]
     [SerializeField] private int maxSlots;
     [SerializeField] private List<GearInfo> gearList = new();
+
+    public event Action OnInventoryChanged;
+    //gear bar listens
 
     //[Header("UI Elements")]
     private Stats playerStats;
@@ -82,6 +86,7 @@ public class PlayerInventory : MonoBehaviour
         playerStats.UpdateHealthBar();
         
         gearList.Add(new GearInfo(copy, tier));
+        OnInventoryChanged?.Invoke();
         Debug.Log($"{gameObject.name} equipped {gear.itemName}");
     }
 
@@ -96,7 +101,7 @@ public class PlayerInventory : MonoBehaviour
         playerStats.UpdateHealthBar();
 
         gearList.RemoveAt(index);
-
+        OnInventoryChanged?.Invoke();
         Debug.Log($"{gameObject.name} has unequipped {copy.itemName}");
     }
 
@@ -128,10 +133,11 @@ public class PlayerInventory : MonoBehaviour
 
         gearList[replaceIndex] = new GearInfo(newCopy, tier);
 
+        playerStats.ValidateStats();
         playerStats.UpdateHealthBar();
+        OnInventoryChanged?.Invoke();
         Debug.Log($"{gameObject.name} replaced {oldGear.itemName} with {newGear.itemName}");
 
-        playerStats.ValidateStats();
     }
 
 
