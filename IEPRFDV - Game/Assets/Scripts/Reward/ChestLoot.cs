@@ -61,7 +61,7 @@ public class ChestLoot : MonoBehaviour
 
     private void ResetDisplay()
     {
-        Debug.Log("Displays: " + itemDisplays.Count);
+//        Debug.Log("Displays: " + itemDisplays.Count);
         foreach(var display in itemDisplays)
         {
             Destroy(display.gameObject);

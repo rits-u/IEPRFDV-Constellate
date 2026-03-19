@@ -44,16 +44,9 @@ public class BasicMeleeBehavior : MonoBehaviour
 
         if (slashUpdate >= fireRate)
         {
-            //if (!isBursting)
-            //{
-            //    StartCoroutine(FireBurstWrapper());
-            //    fireUpdate = 0f;
-            //}
             Slash();
             slashUpdate = 0f;
         }
-
-
         //Debug.Log(enemiesInRange);
 
     }

@@ -1,18 +1,20 @@
+using NUnit.Framework;
 using System.Collections.Generic;
+using System.Drawing;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class DiscardUI : ScreenUI
+public class OLDDiscardUI : ScreenUI
 {
+    [Header("Main Panels")]
+    [SerializeField] private Transform displayPanel;
+    [SerializeField] private Transform miniInventory;
+
     [Header("Buttons")]
     [SerializeField] private Button skipButton;
     [SerializeField] private Button closeButton;
-
-    [Header("UI Elements")]
-    [SerializeField] private Transform displayPanel;
-    [SerializeField] private MiniInventory inventory;
 
     private List<ItemDisplay> itemDisplays = new();
     private List<Gear> copyLoots;
@@ -23,40 +25,6 @@ public class DiscardUI : ScreenUI
 
     private int attemptIndex; //index for gear to discard
     private int tierLoot;
-
-    [System.Serializable]
-    public class MiniInventory
-    {
-        public ProfileUI profileUI;
-        public GearUI gearUI;
-        public GameObject confirmPanel;
-        public GameObject skipPanel;
-    }
-
-    [System.Serializable]
-    public class ProfileUI
-    {
-        public TextMeshProUGUI IDText;
-        public GameObject iconSlot;
-        public TextMeshProUGUI name;
-        public TextMeshProUGUI[] stats;
-    }
-
-    [System.Serializable]
-    public class GearUI
-    {
-        public GameObject group;
-        public GearSlots[] gears;
-    }
-
-    [System.Serializable]
-    public class GearSlots
-    {
-        public TextMeshProUGUI expire;
-        public TextMeshProUGUI tier;
-        public GameObject iconSlot;
-        public TextMeshProUGUI name;
-    }
 
     private void Start()
     {
@@ -98,16 +66,6 @@ public class DiscardUI : ScreenUI
     }
 
 
-    private void ResetDisplays()
-    {
-        foreach (var display in itemDisplays)
-        {
-            Destroy(display.gameObject);
-        }
-
-        itemDisplays.Clear();
-    }
-
     public void OpenDiscardWindow(int ID, int tier, System.Action<List<Gear>> onFinished)
     {
         playerID = ID;
@@ -133,27 +91,16 @@ public class DiscardUI : ScreenUI
 
     public void SelectGearToDiscard(int buttonID)
     {
-        //attemptIndex = buttonID - 1;
-        //SwitchToConfirmationPanel();
-        //Transform panel = miniInventory.GetChild(2);
-        //PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(playerID);
-        //Gear selected = inventory.GetEquippedGearByIndex(attemptIndex).gear;
-
-        //TextMeshProUGUI statement = panel.GetChild(0).GetComponent<TextMeshProUGUI>();
-        //string equippedGear = $"<b><color=red>{selected.itemName}</color></b>";
-        //string lootGear = $"<b><color=blue>{copyLoots[0].itemName}</color></b>";
-        //statement.text = $"Discard [ {equippedGear} ] for [ {lootGear} ] ?";
-
         attemptIndex = buttonID - 1;
         SwitchToConfirmationPanel();
-        Transform panel = inventory.confirmPanel.transform;
-        PlayerInventory playerInv = PlayerManager.Instance.AccessPlayerInventory(playerID);
-        Gear selected = playerInv.GetEquippedGearByIndex(attemptIndex).gear;
+        Transform panel = miniInventory.GetChild(2);
+        PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(playerID);
+        Gear selected = inventory.GetEquippedGearByIndex(attemptIndex).gear;
 
         TextMeshProUGUI statement = panel.GetChild(0).GetComponent<TextMeshProUGUI>();
         string equippedGear = $"<b><color=red>{selected.itemName}</color></b>";
         string lootGear = $"<b><color=blue>{copyLoots[0].itemName}</color></b>";
-        statement.text = $"Replace [ {equippedGear} ] for [ {lootGear} ] ?";
+        statement.text = $"Discard [ {equippedGear} ] for [ {lootGear} ] ?";
     }
 
     public void SkipAttempt()
@@ -219,10 +166,7 @@ public class DiscardUI : ScreenUI
 
     private void DisableAllDiscardButtons()
     {
-        Transform gearPanel = inventory.gearUI.group.transform;
-        // Debug.Log("Child count: " + gearPanel.childCount    );
-
-
+        Transform gearPanel = miniInventory.GetChild(1);
         for (int i = 0; i < gearPanel.childCount; i++)
         {
             Button discardBtn = gearPanel.GetChild(i).GetComponentInChildren<Button>();
@@ -232,34 +176,14 @@ public class DiscardUI : ScreenUI
 
     private void EnableAllDiscardButtons()
     {
-        Transform gearPanel = inventory.gearUI.group.transform;
-        for(int i = 0; i < gearPanel.childCount; i++)
+        Transform gearPanel = miniInventory.GetChild(1);
+        for (int i = 0; i < gearPanel.childCount; i++)
         {
             Button discardBtn = gearPanel.GetChild(i).GetComponentInChildren<Button>(true);
             discardBtn.gameObject.SetActive(true);
         }
     }
 
-    private void SwitchToConfirmationPanel()
-    {
-
-        inventory.gearUI.group.gameObject.SetActive(false);
-        inventory.confirmPanel.gameObject.SetActive(true);
-    }
-
-    private void SwitchToConfirmSkipPanel()
-    {
-        inventory.gearUI.group.gameObject.SetActive(false);
-        inventory.skipPanel.gameObject.SetActive(true);
-    }
-
-    private void SwitchBackToGearPanel()
-    {
-        UpdateMiniInventory(playerID);
-        inventory.gearUI.group.gameObject.SetActive(true);
-        inventory.confirmPanel.gameObject.SetActive(false);
-        inventory.skipPanel.gameObject.SetActive(false);
-    }
 
     private void UpdateMiniInventory(int ID)
     {
@@ -271,46 +195,95 @@ public class DiscardUI : ScreenUI
     {
         Player player = PlayerManager.Instance.GetPlayerByID(ID);
         Stats playerStats = player.GetComponent<Stats>();
-        ProfileUI ui = inventory.profileUI;
 
-        ui.IDText.text = ID == 1 ? $"<color=red>P{ID}</color>" : $"<color=blue>P{ID}</color>";
+        Transform profile = miniInventory.GetChild(0);
+        TextMeshProUGUI idNum = profile.GetChild(0).GetComponent<TextMeshProUGUI>();
+        idNum.text = player.ID == 1 ? $"<color=red>P{player.ID}</color>" : $"<color=blue>P{player.ID}</color>";
 
-        //Image icon = ui.iconSlot.transform.GetChild(0).GetComponent<Image>();
-        //icon.sprite = player.icon
+        Image charIcon = profile.GetChild(1).GetComponent<Image>();
+        // charIcon.sprite = change sprite
 
-        ui.name.text = $"{player.Name}";
+        TextMeshProUGUI name = profile.GetChild(2).GetComponent<TextMeshProUGUI>();
+        name.text = player.Name;
 
-        ui.stats[0].text = $"HP: {playerStats.HP}/{playerStats.MaxHP}";
-        ui.stats[1].text = $"SP: {playerStats.SP}";
-        ui.stats[2].text = $"ATK: {playerStats.ATK}";
+        Transform statsGroup = profile.GetChild(3);
+        List<TextMeshProUGUI> stats = new();
+        for (int i = 0; i < statsGroup.childCount; i++)
+        {
+            stats.Add(statsGroup.GetChild(i).GetComponent<TextMeshProUGUI>());
+        }
+
+        stats[0].text = $"HP: {playerStats.HP}/{playerStats.MaxHP}";
+        stats[1].text = $"SP: {playerStats.SP}";
+        stats[2].text = $"ATK: {playerStats.ATK}";
     }
 
     private void UpdateGearPanel(int ID)
     {
-        PlayerInventory playerInv = PlayerManager.Instance.AccessPlayerInventory(ID);
-        int equipped = playerInv.GetEquippedGearCount();
-        
+        PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(ID);
+        int equipped = inventory.GetEquippedGearCount();
+
+
+        Transform gearPanel = miniInventory.GetChild(1);
+        List<Transform> gearSlots = new();
+        for (int i = 0; i < gearPanel.childCount; i++)
+        {
+            gearSlots.Add(gearPanel.GetChild(i).GetComponent<Transform>());
+        }
+
 
         for (int i = 0; i < equipped; i++)
         {
-            GearSlots slot = inventory.gearUI.gears[i];
-            Gear gear = playerInv.GetEquippedGearByIndex(i).gear;
+            Gear gear = inventory.GetEquippedGearByIndex(i).gear;
+            Transform slot = gearPanel.GetChild(i);
+            TextMeshProUGUI expire = slot.GetChild(0).GetComponent<TextMeshProUGUI>();
+            expire.text = $"{gear.Expiration}";
 
-            slot.expire.text = $"{gear.Expiration}";
+            TextMeshProUGUI tier = slot.GetChild(1).GetComponent<TextMeshProUGUI>();
+            tier.text = $"Tier {gear.CurrentTier}";
 
-            slot.tier.text = $"Tier {gear.CurrentTier}";
-
-            Image icon = slot.iconSlot.transform.GetChild(0).GetComponent<Image>();
+            Image icon = slot.GetChild(2).GetComponent<Image>();
             icon.sprite = gear.sprite;
             icon.GetComponent<ItemHover>().Initialize(ID, i);
 
-            slot.name.text = $"{gear.itemName}";
+            TextMeshProUGUI name = slot.GetChild(3).GetComponent<TextMeshProUGUI>();
+            name.text = gear.itemName;
         }
 
-        for (int i = equipped; i < inventory.gearUI.gears.Length; i++)
+        for (int i = equipped; i < gearSlots.Count; i++)
         {
-            Transform slot = inventory.gearUI.group.transform.GetChild(i);
+            Transform slot = gearPanel.GetChild(i);
             slot.gameObject.SetActive(false);
         }
+    }
+
+    private void SwitchToConfirmationPanel()
+    {
+        miniInventory.GetChild(1).gameObject.SetActive(false);
+        miniInventory.GetChild(2).gameObject.SetActive(true);
+    }
+
+    private void SwitchToConfirmSkipPanel()
+    {
+        miniInventory.GetChild(1).gameObject.SetActive(false);
+        miniInventory.GetChild(3).gameObject.SetActive(true);
+    }
+
+    private void SwitchBackToGearPanel()
+    {
+        UpdateMiniInventory(playerID);
+        miniInventory.GetChild(1).gameObject.SetActive(true);
+        miniInventory.GetChild(2).gameObject.SetActive(false);
+        miniInventory.GetChild(3).gameObject.SetActive(false);
+    }
+
+    private void ResetDisplays()
+    {
+        foreach (var display in itemDisplays)
+        {
+            Destroy(display.gameObject);
+        }
+
+        itemDisplays.Clear();
     }
 }

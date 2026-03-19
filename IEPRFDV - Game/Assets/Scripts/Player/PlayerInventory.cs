@@ -130,6 +130,8 @@ public class PlayerInventory : MonoBehaviour
 
         playerStats.UpdateHealthBar();
         Debug.Log($"{gameObject.name} replaced {oldGear.itemName} with {newGear.itemName}");
+
+        playerStats.ValidateStats();
     }
 
 
