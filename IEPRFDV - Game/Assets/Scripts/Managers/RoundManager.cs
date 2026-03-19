@@ -18,6 +18,8 @@ public class RoundManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private TextMeshProUGUI roundDurationText;
+    [SerializeField] private GameObject startGamePrompt;
+    [SerializeField] private GameObject startButton;
 
     [Header("References")]
     [SerializeField] private GameObject UICanvas;
@@ -25,12 +27,14 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private GameObject player2;
     [SerializeField] private GameObject QTEPrefab;
 
-
+    [SerializeField] private KeyCode startKey;
     
-    //private float countdown;
+    private UICanvas canvas;
 
+
+    //private float countdown;
+    private bool hasStarted = false;
     private bool roundEnded = false;
-    private Vector3 lastPos;
 
     private void Awake()
     {
@@ -42,8 +46,25 @@ public class RoundManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        if (startKey == KeyCode.None)
+        {
+            startKey = KeyCode.Space;
+        }
+        canvas = UICanvas.GetComponent<UICanvas>();
     }
 
+    private void Update()
+    {
+        if (!hasStarted && Input.GetKeyDown(startKey))
+        {
+            hasStarted = true;
+            CountdownToStart();
+            startButton.SetActive(false);
+            startGamePrompt.SetActive(false);
+        }
+        if (canvas.GetIsPaused()) PauseGame();
+        else ResumeGame();
+    }
     private void Start()
     {
         //CountdownToStart();
@@ -189,6 +210,14 @@ public class RoundManager : MonoBehaviour
     {
         
         return true;
+    }
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+    private void ResumeGame()
+    {
+        Time.timeScale = 1f;
     }
 
     //(fix) make sure qte destroy itself after

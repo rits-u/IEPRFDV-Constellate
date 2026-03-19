@@ -108,4 +108,9 @@ void Start()
         Application.targetFrameRate = frameRates[index];
         PlayerPrefs.SetInt("FramerateIndex", index);
     }
+
+    public void SetSettings(bool value)
+    {
+        this.gameObject.SetActive(value);
+    }
 }
