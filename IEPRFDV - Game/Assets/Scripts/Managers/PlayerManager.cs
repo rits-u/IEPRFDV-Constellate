@@ -56,17 +56,18 @@ public class PlayerManager : MonoBehaviour
         int index = 0;
         foreach(var player in playerList)
         {
-            if(player == playerStats.gameObject)
+            if(player.gameObject == playerStats.gameObject)
             {
-                Debug.Log($"PM: {player.name} was defeated!");
+              //  Debug.Log($"PM: {player.name} was defeated!");
                 //DAWG //spawn resurrect circle stuff here hhkhsgkh
                 //playersAlive--;
+             //   player.GetComponentInChildren<Resurrect>
                 break;
             }
             index++;
         }
 
-        playerList.RemoveAt(index);
+        //playerList.RemoveAt(index);
     }
 
     public Player GetPlayerByID(int ID)
@@ -170,5 +171,24 @@ public class PlayerManager : MonoBehaviour
         return inventory;
     }
 
+    public void PutPlayerToDownState(Player player)
+    {
+        DisablePlayerMovement(player);
+        AccessPlayerInventory(player.ID).DisableWeapon();
+
+        player.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+        player.GetComponentInChildren<DamageFlash>().enabled = false;
+        player.GetComponent<Stats>().isDown = true;
+    }
+
+    public void PutPlayerToActiveState(Player player)
+    {
+        EnablePlayerMovement(player);
+        AccessPlayerInventory(player.ID).EnableWeapon();
+
+        player.gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
+        player.GetComponentInChildren<DamageFlash>().enabled = true;
+        player.GetComponent<Stats>().isDown = false;
+    }
 
 }

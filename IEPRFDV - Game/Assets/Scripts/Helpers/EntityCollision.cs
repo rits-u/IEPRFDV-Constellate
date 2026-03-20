@@ -13,7 +13,7 @@ public class EntityCollision : MonoBehaviour
     {
         DamageDealer damageDealer = other.GetComponent<DamageDealer>();
 
-        if(damageDealer != null )
+        if(damageDealer != null && !stats.isDown)
         {
             stats.TakeDamage(damageDealer.Damage);
         }

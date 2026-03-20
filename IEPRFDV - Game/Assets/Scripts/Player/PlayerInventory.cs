@@ -83,7 +83,7 @@ public class PlayerInventory : MonoBehaviour
         playerStats.ATK += copy.GetStatsByType(InfoType.ATK);
         playerStats.SP += copy.GetStatsByType(InfoType.SP);
 //        playerStats.ValidateStats();
-        playerStats.UpdateHealthBar();
+        playerStats.UpdateBar();
         
         gearList.Add(new GearInfo(copy, tier));
         OnInventoryChanged?.Invoke();
@@ -98,18 +98,13 @@ public class PlayerInventory : MonoBehaviour
         playerStats.SP -= copy.GetStatsByType(InfoType.SP);
         playerStats.ATK -= copy.GetStatsByType(InfoType.ATK);
         playerStats.ValidateStats();
-        playerStats.UpdateHealthBar();
+        playerStats.UpdateBar();
 
         gearList.RemoveAt(index);
         OnInventoryChanged?.Invoke();
         Debug.Log($"{gameObject.name} has unequipped {copy.itemName}");
     }
 
-    //public void ReplaceGear(Gear gear, int tier, int replaceIndex)
-    //{
-    //    EquipGear(gear, tier);
-    //    UnequipGearByIndex(replaceIndex);
-    //}
 
     public void ReplaceGear(Gear newGear, int tier, int replaceIndex)
     {
@@ -134,7 +129,7 @@ public class PlayerInventory : MonoBehaviour
         gearList[replaceIndex] = new GearInfo(newCopy, tier);
 
         playerStats.ValidateStats();
-        playerStats.UpdateHealthBar();
+        playerStats.UpdateBar();
         OnInventoryChanged?.Invoke();
         Debug.Log($"{gameObject.name} replaced {oldGear.itemName} with {newGear.itemName}");
 
@@ -166,5 +161,31 @@ public class PlayerInventory : MonoBehaviour
     public int GetMaxSlots()
     {
         return maxSlots;
+    }
+
+    public void DisableWeapon()
+    {
+        if(weapon is Range)
+        {
+            weaponObj.GetComponent<BasicRangeBehavior>().enabled = false;
+            weaponObj.GetComponent<BasicRangeBehavior>().StopAllCoroutines();
+        }
+        else
+        {
+            weaponObj.GetComponent<BasicMeleeBehavior>().enabled = false;
+            weaponObj.GetComponent<BasicMeleeBehavior>().StopAllCoroutines();
+        }
+    }
+
+    public void EnableWeapon()
+    {
+        if (weapon is Range)
+        {
+            weaponObj.GetComponent<BasicRangeBehavior>().enabled = true;
+        }
+        else
+        {
+            weaponObj.GetComponent<BasicMeleeBehavior>().enabled = true;
+        }
     }
 }

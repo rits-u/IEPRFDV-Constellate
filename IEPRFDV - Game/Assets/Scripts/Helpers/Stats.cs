@@ -19,6 +19,8 @@ public class Stats : MonoBehaviour
     public event Action OnDamaged;
     public event Action<Stats> OnDeath;
 
+    public bool isDown;
+
     public int MaxHP
     {
         get => maxHealth;
@@ -55,9 +57,9 @@ public class Stats : MonoBehaviour
 
     private void Start()
     {
-        health = maxHealth;
-
-        UpdateHealthBar();
+        // health = maxHealth;
+        isDown = false;
+        UpdateMaximumValues();
     }
 
     public bool TakeDamage(int damage)
@@ -67,34 +69,21 @@ public class Stats : MonoBehaviour
         if (SP > 0)
         {
             SP -= damage;
-            if(healthBar != null)
-            {
-                healthBar.SetShield(SP);
-            }
+            UpdateSP();
         }
         else
         {
             HP -= damage;
-            if (healthBar != null)
-            {
-                healthBar.SetHealth(HP);
-
-            }
+            UpdateHP();
         }
         ValidateStats();
         OnDamaged?.Invoke();
 
-        //if (healthBar != null)
-        //{
-        //    healthBar.SetHealth(HP);
-            
-        //}
 
         if(HP <= 0)
         {
-            //Debug.Log("enemy dead");
             OnDeath?.Invoke(this);
-            Destroy(this.gameObject);
+     //       Destroy(this.gameObject);
             return true;
         }
 
@@ -110,12 +99,39 @@ public class Stats : MonoBehaviour
         }
     }
 
-    public void UpdateHealthBar()
+    public void UpdateMaximumValues()
     {
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(MaxHP);
             healthBar.SetMaxShield(SP);
+        }
+    }
+
+    public void UpdateBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.SetShield(SP);
+            healthBar.SetHealth(HP);
+        }
+    }
+
+    public void UpdateHP()
+    {
+        if (healthBar != null)
+        {
+
+            healthBar.SetHealth(HP);
+        }
+    }
+
+    public void UpdateSP()
+    {
+        if (healthBar != null)
+        {
+
+            healthBar.SetShield(SP);
         }
     }
 }

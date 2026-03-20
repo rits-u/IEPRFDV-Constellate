@@ -20,6 +20,7 @@ public class EnemyStats : Stats
         {
             if (PlayerManager.Instance != null)
             {
+                Destroy(this.gameObject);
                 PlayerManager.Instance.AddPointToPlayer(source, pointValue);
             }
             else

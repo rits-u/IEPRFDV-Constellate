@@ -133,17 +133,6 @@ public class DiscardUI : ScreenUI
 
     public void SelectGearToDiscard(int buttonID)
     {
-        //attemptIndex = buttonID - 1;
-        //SwitchToConfirmationPanel();
-        //Transform panel = miniInventory.GetChild(2);
-        //PlayerInventory inventory = PlayerManager.Instance.AccessPlayerInventory(playerID);
-        //Gear selected = inventory.GetEquippedGearByIndex(attemptIndex).gear;
-
-        //TextMeshProUGUI statement = panel.GetChild(0).GetComponent<TextMeshProUGUI>();
-        //string equippedGear = $"<b><color=red>{selected.itemName}</color></b>";
-        //string lootGear = $"<b><color=blue>{copyLoots[0].itemName}</color></b>";
-        //statement.text = $"Discard [ {equippedGear} ] for [ {lootGear} ] ?";
-
         attemptIndex = buttonID - 1;
         SwitchToConfirmationPanel();
         Transform panel = inventory.confirmPanel.transform;
@@ -153,7 +142,7 @@ public class DiscardUI : ScreenUI
         TextMeshProUGUI statement = panel.GetChild(0).GetComponent<TextMeshProUGUI>();
         string equippedGear = $"<b><color=red>{selected.itemName}</color></b>";
         string lootGear = $"<b><color=blue>{copyLoots[0].itemName}</color></b>";
-        statement.text = $"Replace [ {equippedGear} ] for [ {lootGear} ] ?";
+        statement.text = $"Replace [ {equippedGear} ] with [ {lootGear} ] ?";
     }
 
     public void SkipAttempt()
@@ -220,9 +209,6 @@ public class DiscardUI : ScreenUI
     private void DisableAllDiscardButtons()
     {
         Transform gearPanel = inventory.gearUI.group.transform;
-        // Debug.Log("Child count: " + gearPanel.childCount    );
-
-
         for (int i = 0; i < gearPanel.childCount; i++)
         {
             Button discardBtn = gearPanel.GetChild(i).GetComponentInChildren<Button>();

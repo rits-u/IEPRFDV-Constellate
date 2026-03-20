@@ -232,9 +232,8 @@ GameObject:
   - component: {fileID: 3249375128923728270}
   - component: {fileID: 2975150873309783138}
   - component: {fileID: 4078287370622076540}
-  - component: {fileID: 6842891517884846396}
-  - component: {fileID: 8188350944221004721}
   - component: {fileID: 4502540517380833894}
+  - component: {fileID: 6625938056316165563}
   m_Layer: 7
   m_Name: Ranged Dash
   m_TagString: Enemy
@@ -457,7 +456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b8c08b37737db40a2b611725e35ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
-  damage: 1
 --- !u!114 &4078287370622076540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,35 +468,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99b0fb7dc175144ab9ce567b5dd62f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
-  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColor: {r: 1, g: 0, b: 0.71531105, a: 1}
   flashDuration: 0.3
---- !u!114 &6842891517884846396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7727712613359759040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77512bac316ed6e468b163454dab8724, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Stats
-  health: 2
-  attack: 1
-  healthBar: {fileID: 0}
---- !u!114 &8188350944221004721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7727712613359759040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6db51d5b4e87e364a909adc68b7fa3c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityCollision
 --- !u!95 &4502540517380833894
 Animator:
   serializedVersion: 7
@@ -521,6 +492,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6625938056316165563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7727712613359759040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2b047bc84fb264e98842e02763198b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  maxHealth: 10
+  health: 10
+  attack: 3
+  shield: 0
+  healthBar: {fileID: 0}
+  pointValue: 3
 --- !u!1 &8264816899410446821
 GameObject:
   m_ObjectHideFlags: 0
