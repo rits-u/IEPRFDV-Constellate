@@ -30,9 +30,9 @@ public class RoundManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject UICanvas;
-    [SerializeField] private GameObject player1;
-    [SerializeField] private GameObject player2;
-    [SerializeField] private GameObject QTEPrefab;
+    //[SerializeField] private GameObject player1;
+    //[SerializeField] private GameObject player2;
+    //[SerializeField] private GameObject QTEPrefab;
 
     [SerializeField] private KeyCode startKey;
     
@@ -67,13 +67,13 @@ public class RoundManager : MonoBehaviour
 
     private void Update()
     {
-        if (!hasStarted && Input.GetKeyDown(startKey))
-        {
-            hasStarted = true;
-            CountdownToStart();
-            startButton.SetActive(false);
-            startGamePrompt.SetActive(false);
-        }
+        //if (!hasStarted && Input.GetKeyDown(startKey))
+        //{
+        //    hasStarted = true;
+        // //   CountdownToStart();
+        //    startButton.SetActive(false);
+        //    startGamePrompt.SetActive(false);
+        //}
         if (canvas.GetIsPaused()) PauseGame();
         else ResumeGame();
     }
@@ -249,11 +249,11 @@ public class RoundManager : MonoBehaviour
     }
 
     //(fix) make sure qte destroy itself after
-    private IEnumerator RunQTE(GameObject player)
-    {
-        GameObject qte = Instantiate(QTEPrefab, UICanvas.transform, false);
-        yield return StartCoroutine(qte.GetComponent<QuickTimeEvent>().PlayQTE(player));
-    }
+    //private IEnumerator RunQTE(GameObject player)
+    //{
+    //    GameObject qte = Instantiate(QTEPrefab, UICanvas.transform, false);
+    //    yield return StartCoroutine(qte.GetComponent<QuickTimeEvent>().PlayQTE(player));
+    //}
 
 
     //list

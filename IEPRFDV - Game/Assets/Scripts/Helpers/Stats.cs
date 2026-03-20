@@ -57,9 +57,10 @@ public class Stats : MonoBehaviour
 
     private void Start()
     {
-        // health = maxHealth;
+        health = maxHealth;
         isDown = false;
         UpdateMaximumValues();
+        UpdateBar();
     }
 
     public bool TakeDamage(int damage)
@@ -121,7 +122,6 @@ public class Stats : MonoBehaviour
     {
         if (healthBar != null)
         {
-
             healthBar.SetHealth(HP);
         }
     }
@@ -130,7 +130,6 @@ public class Stats : MonoBehaviour
     {
         if (healthBar != null)
         {
-
             healthBar.SetShield(SP);
         }
     }

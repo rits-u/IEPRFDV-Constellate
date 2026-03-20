@@ -176,7 +176,7 @@ public class PlayerManager : MonoBehaviour
         DisablePlayerMovement(player);
         AccessPlayerInventory(player.ID).DisableWeapon();
 
-        player.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
+      //  player.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
         player.GetComponentInChildren<DamageFlash>().enabled = false;
         player.GetComponent<Stats>().isDown = true;
     }
@@ -186,7 +186,7 @@ public class PlayerManager : MonoBehaviour
         EnablePlayerMovement(player);
         AccessPlayerInventory(player.ID).EnableWeapon();
 
-        player.gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
+      //  player.gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
         player.GetComponentInChildren<DamageFlash>().enabled = true;
         player.GetComponent<Stats>().isDown = false;
     }
