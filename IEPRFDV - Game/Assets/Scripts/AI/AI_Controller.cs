@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class AI_Controller : MonoBehaviour
 {

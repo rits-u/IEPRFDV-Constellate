@@ -1,12 +1,7 @@
-using JetBrains.Annotations;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using System;
-using NUnit.Framework;
 using System.Collections.Generic;
-using UnityEngine.AdaptivePerformance;
+
 
 public class Settings : MonoBehaviour
 {

@@ -15,6 +15,6 @@ public class TitleUI : ScreenUI
     private void Start()
     {
         screenName = "Title";
-        UIManager.Instance.HideAllHUDs();
+    //    UIManager.Instance.HideAllHUDs();
     }
 }
