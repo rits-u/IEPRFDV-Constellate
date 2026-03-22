@@ -59,7 +59,7 @@ public class Stats : MonoBehaviour
     {
         health = maxHealth;
         isDown = false;
-        UpdateMaximumValues();
+        //UpdateMaximumValues();
         UpdateBar();
     }
 
@@ -113,6 +113,9 @@ public class Stats : MonoBehaviour
     {
         if (healthBar != null)
         {
+            healthBar.SetMaxHealth(MaxHP);
+            healthBar.SetMaxShield(SP);
+
             healthBar.SetShield(SP);
             healthBar.SetHealth(HP);
         }

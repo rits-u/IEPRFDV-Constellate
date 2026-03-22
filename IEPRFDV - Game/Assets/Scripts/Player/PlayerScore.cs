@@ -40,7 +40,8 @@ public class PlayerScore : MonoBehaviour
     public void CalculateScore(int enemyPoints)
     {
         int round = RoundManager.Instance.RoundNumber;
-        int calc = enemyPoints * round * roundStreak;
+        //int calc = enemyPoints * round * roundStreak;
+        int calc = enemyPoints * round;
         score += calc;
         //Debug.Log($"{gameObject.name} gained {calc}. Total points: {score}");
 

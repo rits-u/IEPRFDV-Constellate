@@ -79,7 +79,7 @@ public class PlayerInventory : MonoBehaviour
         Gear copy = Instantiate(gear);
         copy.CurrentTier = tier;
         playerStats.MaxHP += copy.GetStatsByType(InfoType.HP);
-        playerStats.HP -= copy.GetStatsByType(InfoType.HP);     //adjust hp
+        playerStats.HP += copy.GetStatsByType(InfoType.HP);     //adjust hp
         playerStats.ATK += copy.GetStatsByType(InfoType.ATK);
         playerStats.SP += copy.GetStatsByType(InfoType.SP);
 //        playerStats.ValidateStats();

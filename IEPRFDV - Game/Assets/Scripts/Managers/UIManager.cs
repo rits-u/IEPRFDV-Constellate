@@ -6,7 +6,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    [Header("HUD")]
     [SerializeField] private Transform gameCanvas;
+    [SerializeField] private GameObject menuBar;
 
     [Header("UI Screens")]
     [SerializeField] private List<ScreenUI> screens = new();
@@ -98,14 +100,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public ItemDisplay CreateItemDisplay(Transform parentPanel, float scaleOffset)
+    public void ShowMenuBar()
     {
-        GameObject display = Instantiate(itemDisplay);
-        display.transform.localScale = new Vector3(scaleOffset, scaleOffset, scaleOffset);
-        display.transform.SetParent(parentPanel, false);
-        display.SetActive(true);
+        menuBar.SetActive(true);
+    }
 
-        return display.GetComponent<ItemDisplay>();
+    public void HideMenuBar()
+    {
+        menuBar.SetActive(false);
     }
 
     public void DisableGameCanvas()
@@ -122,5 +124,17 @@ public class UIManager : MonoBehaviour
             gameCanvas.GetChild(i).gameObject.SetActive(true);
         }
     }
+
+    public ItemDisplay CreateItemDisplay(Transform parentPanel, float scaleOffset)
+    {
+        GameObject display = Instantiate(itemDisplay);
+        display.transform.localScale = new Vector3(scaleOffset, scaleOffset, scaleOffset);
+        display.transform.SetParent(parentPanel, false);
+        display.SetActive(true);
+
+        return display.GetComponent<ItemDisplay>();
+    }
+
+   
 
 }

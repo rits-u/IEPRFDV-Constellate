@@ -147,6 +147,7 @@ public class RoundManager : MonoBehaviour
     private IEnumerator RoundProper()
     {
         //while(true) {
+        UIManager.Instance.HideMenuBar();
         roundNumberText.text = $"Round: {round}";
 
         PlayerManager.Instance.EnableAllPlayerMovement();
@@ -157,7 +158,7 @@ public class RoundManager : MonoBehaviour
         //reward qte phase
         ActivateRewardTrigger();
         PlayerManager.Instance.IncrementRoundStreak();
-
+        UIManager.Instance.ShowMenuBar();
         round++;
        // }
     }
@@ -219,7 +220,7 @@ public class RoundManager : MonoBehaviour
         UIManager.Instance.OpenScreen("Results");
 
 
-        Debug.Log("game end");
+       // Debug.Log("game end");
     }
 
 
