@@ -18,8 +18,8 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         targetGroupHelper = GetComponent<TargetGroupHelper>();
-        // ChangeToIntermissionView();
-        ChangeToPlayerView();
+       //  ChangeToIntermissionView();
+        //ChangeToPlayerView();
     }
 
     public void ChangeToIntermissionView()

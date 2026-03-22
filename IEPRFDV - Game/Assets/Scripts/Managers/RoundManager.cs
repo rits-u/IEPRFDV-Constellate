@@ -130,10 +130,18 @@ public class RoundManager : MonoBehaviour
 
     public void ExecuteRound()
     {
+        if (round == 1) FirstRoundPrep();
+
         Debug.Log($"RM: Start ExecuteRound");
         StartCoroutine(RoundProper());
         DeactivateRoundTrigger();
+        UIManager.Instance.CloseScreen("Title");
+    }
 
+    private void FirstRoundPrep()
+    {
+        CameraManager.Instance.ChangeToPlayerView();
+        UIManager.Instance.ShowAllHUDs();
     }
 
     private IEnumerator RoundProper()
@@ -209,6 +217,7 @@ public class RoundManager : MonoBehaviour
 
       //  yield return new WaitForSeconds(1f);
         UIManager.Instance.OpenScreen("Results");
+
 
         Debug.Log("game end");
     }

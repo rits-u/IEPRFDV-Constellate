@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject dimPanel;
     [SerializeField] private GameObject itemDisplay;
 
+    [SerializeField] private List<GameObject> playerInfoHUDs;
+
     private void Awake()
     {
         if(Instance == null) Instance = this;
@@ -29,7 +31,7 @@ public class UIManager : MonoBehaviour
             if(screen == s.screenName)
             {
                 Dim();
-                HideHUDs();
+                HideAllHUDs();
                 s.ShowScreenUI();
             }
         }
@@ -42,7 +44,7 @@ public class UIManager : MonoBehaviour
             if(screen == s.screenName)
             {
                 RemoveDim();
-                ShowHUDs();
+                ShowAllHUDs();
                 s.HideScreenUI();
             }
         }
@@ -70,14 +72,30 @@ public class UIManager : MonoBehaviour
         dimPanel.SetActive(false);
     }
 
-    public void ShowHUDs()
+    public void ShowAllHUDs()
     {
         gameCanvas.gameObject.SetActive(true);
     }
 
-    public void HideHUDs()
+    public void HideAllHUDs()
     {
         gameCanvas.gameObject.SetActive(false);
+    }
+
+    public void ShowPlayerInfoHUDs()
+    {
+        foreach(var s in playerInfoHUDs)
+        {
+            s.gameObject.SetActive(true);
+        }
+    }
+
+    public void HidePlayerInfoHUDs()
+    {
+        foreach (var s in playerInfoHUDs)
+        {
+            s.gameObject.SetActive(false);
+        }
     }
 
     public ItemDisplay CreateItemDisplay(Transform parentPanel, float scaleOffset)

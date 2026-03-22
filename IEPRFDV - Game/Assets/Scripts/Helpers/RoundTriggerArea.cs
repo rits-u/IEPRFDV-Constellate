@@ -7,6 +7,7 @@ public class RoundTriggerArea : MonoBehaviour
 {
     [Tooltip("Get panel from UI object")]
     [SerializeField] Countdown countdown;
+    [SerializeField] Countdown titleCountdown;
 
     [SerializeField] private float countdownDuration;
     [SerializeField] private int playersDetected;
@@ -21,11 +22,13 @@ public class RoundTriggerArea : MonoBehaviour
     private void OnEnable()
     {
         countdown.OnCountdownFinished += PrepareRound;
+        titleCountdown.OnCountdownFinished += PrepareRound;
     }
 
     private void OnDisable()
     {
         countdown.OnCountdownFinished -= PrepareRound;
+        titleCountdown.OnCountdownFinished -= PrepareRound;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -39,7 +42,10 @@ public class RoundTriggerArea : MonoBehaviour
         {
             isCountingDown = true;
             // StartCoroutine(countdown.CountdownTo(5f));
-            countdown.StartCountdown(countdownDuration, "Starting in... ");
+            if(RoundManager.Instance.RoundNumber == 1) 
+                titleCountdown.StartCountdown(countdownDuration, "Starting in... ");
+            else 
+                countdown.StartCountdown(countdownDuration, "Starting in... ");
         }
     }
 
@@ -53,7 +59,11 @@ public class RoundTriggerArea : MonoBehaviour
         if (playersDetected <= 1 && isCountingDown)
         {
             isCountingDown = false;
-            countdown.StopCountdown();
+
+            if (RoundManager.Instance.RoundNumber == 1)
+                titleCountdown.StopCountdown();
+            else 
+                countdown.StopCountdown();
             //countdown.StopCountdown();
         }
     }
@@ -66,8 +76,16 @@ public class RoundTriggerArea : MonoBehaviour
     IEnumerator StartRoundProper()
     {
         if (PlayerManager.Instance != null) PlayerManager.Instance.DisableAllPlayerMovement();
-        yield return StartCoroutine(countdown.OnCountdownEnd("Starting Round...", 1f));
-        countdown.StopCountdown();
+        if (RoundManager.Instance.RoundNumber == 1)
+        {
+            yield return StartCoroutine(titleCountdown.OnCountdownEnd("Starting Round...", 1f));
+            titleCountdown.StopCountdown();
+        }
+        else
+        {
+            yield return StartCoroutine(countdown.OnCountdownEnd("Starting Round...", 1f));
+            countdown.StopCountdown();
+        }
 
         RoundManager.Instance.ExecuteRound();
     }

@@ -5,7 +5,7 @@ using System.Collections;
 public class TargetGroupHelper : MonoBehaviour
 {
     [SerializeField] private CinemachineTargetGroup group;
-    [SerializeField] private float transitionDuration = 0.5f;
+    [SerializeField] private float transitionDuration = 1.5f;
 
 
     public void AddTargetSmooth(Transform target)

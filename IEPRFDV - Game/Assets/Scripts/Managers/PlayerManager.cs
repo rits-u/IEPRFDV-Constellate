@@ -48,6 +48,7 @@ public class PlayerManager : MonoBehaviour
             playerStats.OnDeath += OnPlayerDown;
             playersAlive++;
         }
+        playerList[1].GetComponentInChildren<PlayerSprite>().SwitchToLeft();
     }
 
     private void OnDisable()
