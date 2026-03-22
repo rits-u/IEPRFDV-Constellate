@@ -148,6 +148,7 @@ public class RoundManager : MonoBehaviour
 
         //reward qte phase
         ActivateRewardTrigger();
+        PlayerManager.Instance.IncrementRoundStreak();
 
         round++;
        // }
@@ -190,6 +191,26 @@ public class RoundManager : MonoBehaviour
     private void CheckPlayersCondition()
     {
         
+    }
+
+    public void StopRound()
+    {
+        StartCoroutine(StopRoundRoutine());
+    }
+
+    private IEnumerator StopRoundRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+
+        StopAllCoroutines();
+        SpawnManager.Instance.StopSpawning();
+        EnemyManager.Instance.DestroyAllEnemies();
+        UIManager.Instance.DisableGameCanvas();
+
+      //  yield return new WaitForSeconds(1f);
+        UIManager.Instance.OpenScreen("Results");
+
+        Debug.Log("game end");
     }
 
 

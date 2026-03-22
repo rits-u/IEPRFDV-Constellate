@@ -129,7 +129,7 @@ public class ResurrectCircle : MonoBehaviour
 
         DownState();
         PlayerManager.Instance.PutPlayerToDownState(player);
-        Debug.Log($"{player.Name}'s res circle was activated");
+       // Debug.Log($"{player.Name}'s res circle was activated");
     }
 
     private void DeactivateCircle()

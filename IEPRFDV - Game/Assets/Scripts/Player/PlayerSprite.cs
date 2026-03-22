@@ -85,6 +85,12 @@ public class PlayerSprite : MonoBehaviour
         visualWeapon.localPosition = new Vector3(0.2f, -0.2f, 0f);
     }
 
+    public void DeathEffect()
+    {
+        LeanTween.cancel(gameObject);
+        LeanTween.rotateY(gameObject, 90f, 0.5f);
+    }
+
     //public void DashLean(float input)
     //{
     //    float leanAmount = 30f;

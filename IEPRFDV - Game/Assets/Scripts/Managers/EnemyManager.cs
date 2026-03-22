@@ -38,9 +38,9 @@ public class EnemyManager : MonoBehaviour
         //enemyStats.OnDeath += UnRegisterEnemy;
     }
 
-    private void UnRegisterEnemy(Stats enemyStats)
+    private void UnregisterEnemy(Stats enemyStats)
     {
-        enemyStats.OnDeath -= UnRegisterEnemy;
+        enemyStats.OnDeath -= UnregisterEnemy;
         aliveEnemies -= 1;
 
         int index = 0;
@@ -66,7 +66,7 @@ public class EnemyManager : MonoBehaviour
             Stats enemyStats = enemyObj.GetComponent<Stats>();
 
             if (enemyStats != null)
-                enemyStats.OnDeath -= UnRegisterEnemy;
+                enemyStats.OnDeath -= UnregisterEnemy;
         }
 
         listEnemy.Clear();
@@ -86,7 +86,7 @@ public class EnemyManager : MonoBehaviour
 
             Stats enemyStats = enemy.GetComponent<Stats>();
             if (enemyStats != null)
-                enemyStats.OnDeath -= UnRegisterEnemy;
+                enemyStats.OnDeath -= UnregisterEnemy;
 
            // Destroy(enemy);
             enemy.SetActive(false);
@@ -101,7 +101,7 @@ public class EnemyManager : MonoBehaviour
     private void InitializeEnemy(GameObject enemy)
     {
         Stats enemyStats = enemy.GetComponent<Stats>();
-        enemyStats.OnDeath += UnRegisterEnemy;
+        enemyStats.OnDeath += UnregisterEnemy;
 
         enemyStartingHP = enemyStats.HP;
 

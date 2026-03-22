@@ -4,8 +4,9 @@ using UnityEngine.UIElements;
 
 public class PlayerScore : MonoBehaviour
 {
-    [Header("PlayerScore")]
+    [Header("Properties")]
     [SerializeField] private int score;
+    [SerializeField] private int roundStreak;
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -16,16 +17,35 @@ public class PlayerScore : MonoBehaviour
         set => score = value;
     }
 
+    public int RoundStreak
+    {
+        get => roundStreak;
+        set => roundStreak = value;
+    }
+
     private void Start()
     {
         score = 0;
+        roundStreak = 1;
     }
 
-    public void UpdateScoreUI()
+    private void UpdateScoreUI()
     {
         if (scoreText != null)
         {
             scoreText.text = score.ToString();
         }
     }
+
+    public void CalculateScore(int enemyPoints)
+    {
+        int round = RoundManager.Instance.RoundNumber;
+        int calc = enemyPoints * round * roundStreak;
+        score += calc;
+        //Debug.Log($"{gameObject.name} gained {calc}. Total points: {score}");
+
+        UpdateScoreUI();
+    }
+
+    //will be based on round * streak surviving
 }

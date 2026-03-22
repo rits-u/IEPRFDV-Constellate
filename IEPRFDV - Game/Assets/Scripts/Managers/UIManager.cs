@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    [SerializeField] private Transform gameCanvas;
 
     [Header("UI Screens")]
     [SerializeField] private List<ScreenUI> screens = new();
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
             if(screen == s.screenName)
             {
                 Dim();
+                HideHUDs();
                 s.ShowScreenUI();
             }
         }
@@ -40,6 +42,7 @@ public class UIManager : MonoBehaviour
             if(screen == s.screenName)
             {
                 RemoveDim();
+                ShowHUDs();
                 s.HideScreenUI();
             }
         }
@@ -67,6 +70,16 @@ public class UIManager : MonoBehaviour
         dimPanel.SetActive(false);
     }
 
+    public void ShowHUDs()
+    {
+        gameCanvas.gameObject.SetActive(true);
+    }
+
+    public void HideHUDs()
+    {
+        gameCanvas.gameObject.SetActive(false);
+    }
+
     public ItemDisplay CreateItemDisplay(Transform parentPanel, float scaleOffset)
     {
         GameObject display = Instantiate(itemDisplay);
@@ -75,6 +88,21 @@ public class UIManager : MonoBehaviour
         display.SetActive(true);
 
         return display.GetComponent<ItemDisplay>();
+    }
+
+    public void DisableGameCanvas()
+    {
+        for(int i = 0; i < gameCanvas.childCount; i++)
+        {
+            gameCanvas.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+    public void EnableGameCanvas()
+    {
+        for (int i = 0; i < gameCanvas.childCount; i++)
+        {
+            gameCanvas.GetChild(i).gameObject.SetActive(true);
+        }
     }
 
 }

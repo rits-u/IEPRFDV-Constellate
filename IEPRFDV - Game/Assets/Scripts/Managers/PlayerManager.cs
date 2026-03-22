@@ -6,9 +6,9 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
 
-    //[Header("")]
     [SerializeField] private List<Player> playerList = new();
     [SerializeField] private List<Transform> offsets = new();
+
 
     private int playersAlive;
 
@@ -45,29 +45,55 @@ public class PlayerManager : MonoBehaviour
         foreach (var player in playerList)
         {
             Stats playerStats = player.GetComponent<Stats>();
-            playerStats.OnDeath += UnregisterPlayer;
+            playerStats.OnDeath += OnPlayerDown;
             playersAlive++;
         }
     }
 
-    private void UnregisterPlayer(Stats playerStats)
+    private void OnDisable()
     {
-        playerStats.OnDeath -= UnregisterPlayer;
-        int index = 0;
+        //foreach(var player in playerList)
+        //{
+        //    Stats playerStats = player.GetComponent<Stats>();
+        //    playerStats.OnDeath -= OnPlayerDown;
+        //    playersAlive--;
+        //}
+    }
+
+    private void OnPlayerDown(Stats playerStats)
+    {
+        PlayerScore pScore = playerStats.GetComponent<PlayerScore>();
+        pScore.RoundStreak = 1;     //resets
+        playersAlive--;
+        CheckPlayersCondition();
+    }
+
+    private void CheckPlayersCondition()
+    {
+        if(playersAlive == 0)
+        {
+            //stop the car, show results screen
+            DisableAllPlayerMovement();
+            foreach (var player in playerList)
+            {
+                player.GetComponentInChildren<ResurrectCircle>().
+                    GetComponent<SpriteRenderer>().enabled = false;
+                var ps = player.GetComponentInChildren<PlayerSprite>();
+                if (ps != null) ps.DeathEffect();
+
+
+            }
+
+            RoundManager.Instance.StopRound();
+        }
+    }
+
+    public void IncrementRoundStreak()
+    {
         foreach(var player in playerList)
         {
-            if(player.gameObject == playerStats.gameObject)
-            {
-              //  Debug.Log($"PM: {player.name} was defeated!");
-                //DAWG //spawn resurrect circle stuff here hhkhsgkh
-                //playersAlive--;
-             //   player.GetComponentInChildren<Resurrect>
-                break;
-            }
-            index++;
+            player.GetComponent<PlayerScore>().RoundStreak += 1;
         }
-
-        //playerList.RemoveAt(index);
     }
 
     public Player GetPlayerByID(int ID)
@@ -78,7 +104,6 @@ public class PlayerManager : MonoBehaviour
         }
 
         return null;
-       // return playerList[ID-1];
     }
 
     public void DisablePlayerMovement(Player player)
@@ -120,8 +145,8 @@ public class PlayerManager : MonoBehaviour
                 PlayerScore ps = p.GetComponent<PlayerScore>();
                 if (ps != null)
                 {
-                    ps.Score += points;
-                    ps.UpdateScoreUI();
+                    ps.CalculateScore(points);
+
                     // Debug.Log($"player score: {ps.Score}");
                     break;
                 }
@@ -176,7 +201,6 @@ public class PlayerManager : MonoBehaviour
         DisablePlayerMovement(player);
         AccessPlayerInventory(player.ID).DisableWeapon();
 
-      //  player.gameObject.GetComponent<CapsuleCollider2D>().enabled = false;
         player.GetComponentInChildren<DamageFlash>().enabled = false;
         player.GetComponent<Stats>().isDown = true;
     }
@@ -186,9 +210,23 @@ public class PlayerManager : MonoBehaviour
         EnablePlayerMovement(player);
         AccessPlayerInventory(player.ID).EnableWeapon();
 
-      //  player.gameObject.GetComponent<CapsuleCollider2D>().enabled = true;
+        playersAlive++;
         player.GetComponentInChildren<DamageFlash>().enabled = true;
         player.GetComponent<Stats>().isDown = false;
     }
 
+    public Player DetermineWinner()
+    {
+        PlayerScore p1Score = playerList[0].GetComponent<PlayerScore>();
+        PlayerScore p2Score = playerList[1].GetComponent<PlayerScore>();
+
+        if (p1Score.Score == p2Score.Score) return null;
+
+        return p1Score.Score > p2Score.Score ? playerList[0] : playerList[1];
+    }
+
+    public int GetPlayerScoreByID(int ID)
+    {
+        return playerList[ID - 1].GetComponent<PlayerScore>().Score;
+    }
 }
