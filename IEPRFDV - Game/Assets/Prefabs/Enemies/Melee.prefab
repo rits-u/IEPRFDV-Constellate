@@ -647,7 +647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AI_Controller
   meleeHitbox: {fileID: 8264816899410446821}
   damageDealer: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 5285362467199177411}
   hasMelee: 1
   meleeDamage: 2
   meleeInterval: 0.6
@@ -669,8 +669,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_FollowPlayer
   players: []
-  healthBar: {fileID: 0}
-  animator: {fileID: 0}
+  healthBar: {fileID: 3945209588123568081}
+  animator: {fileID: 5285362467199177411}
   hasDash: 0
   dashRandomInterval: 0
   dashDuration: 0.2
@@ -785,7 +785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Stats
   health: 6
   attack: 3
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 5931097565303996885}
 --- !u!114 &8188350944221004721
 MonoBehaviour:
   m_ObjectHideFlags: 0
