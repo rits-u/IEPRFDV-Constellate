@@ -12,7 +12,8 @@ public class TempBullet : MonoBehaviour
     void Start()
     {
         transform.Rotate(rotationOffset);
-        bullet = transform.Find("Bullet").GetComponent<GameObject>();
+        bullet = transform.Find("Bullet").gameObject;
+        if (!bullet) Debug.Log($"{transform.name} cant find bullet");
         //trail = transform.Find("Trail").GetComponent<GameObject>();
     }
 

@@ -149,7 +149,6 @@ MonoBehaviour:
   meleeHitbox: {fileID: 8264816899410446821}
   damageDealer: {fileID: 0}
   hasMelee: 0
-  meleeAttackOnProximity: 0
   meleeDamage: 2
   meleeInterval: 0.6
   meleeDuration: 0.2
@@ -180,10 +179,8 @@ MonoBehaviour:
   dashAccelerationMult: 3.2
   dashStopMovement: 0
   hasTeleport: 0
-  TPRandomInterval: 0
   TPInterval: 2.2
   TPDist: 3
-  TPHasDash: 0
   TPStopMovement: 0
   stopOnAttack: 0
 --- !u!195 &3473504130444254772
@@ -222,7 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AI_Pool
   pools:
   - tag: Bullet
-    prefab: {fileID: 7345770759835007499, guid: cad241e9c0c4483468090144074d14e9, type: 3}
+    prefab: {fileID: 7345770759835007499, guid: 574eb7d3612803f44a3cead1141a6bb0, type: 3}
     size: 6
     parent: {fileID: 3172665908765356769}
 --- !u!212 &9162503853860110794
