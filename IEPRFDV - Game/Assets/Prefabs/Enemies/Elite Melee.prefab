@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 8188350944221004721}
   - component: {fileID: 7456069161542734814}
   m_Layer: 7
-  m_Name: Melee Dash
+  m_Name: Elite Melee
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   damageDealer: {fileID: 0}
   hasMelee: 1
   meleeAttackOnProximity: 0
-  meleeDamage: 2
+  meleeDamage: 4
   meleeInterval: 0.6
   meleeDuration: 0.2
   stoppingRange: 1.4
@@ -320,7 +320,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
-  m_Speed: 1
+  m_Speed: 1.2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -456,7 +456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b8c08b37737db40a2b611725e35ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
-  damage: 1
 --- !u!114 &4078287370622076540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,9 +482,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77512bac316ed6e468b163454dab8724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stats
-  health: 10
+  maxHealth: 10
+  health: 9
   attack: 3
+  shield: 0
   healthBar: {fileID: 0}
+  isDown: 0
 --- !u!114 &8188350944221004721
 MonoBehaviour:
   m_ObjectHideFlags: 0

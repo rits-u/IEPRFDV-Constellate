@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 8188350944221004721}
   - component: {fileID: 259275119300395097}
   m_Layer: 7
-  m_Name: Ranged TP
+  m_Name: Ranged (D)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -371,7 +371,7 @@ MonoBehaviour:
   meleeDuration: 0.2
   stoppingRange: 1.4
   hasRanged: 1
-  rangedDamage: 1
+  rangedDamage: 3
   rangedInterval: 2.6
 --- !u!114 &4258615396906989230
 MonoBehaviour:
@@ -388,7 +388,7 @@ MonoBehaviour:
   players: []
   hasDash: 1
   dashRandomInterval: 0
-  dashDuration: 0.2
+  dashDuration: 2.1
   dashIntervalSeconds: 2.5
   dashRandomMaxSeconds: 2
   dashRandomMinSeconds: 2
@@ -412,7 +412,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
-  m_Speed: 0.4
+  m_Speed: 1.8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -438,8 +438,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AI_Pool
   pools:
   - tag: Bullet
-    prefab: {fileID: 7345770759835007499, guid: cad241e9c0c4483468090144074d14e9, type: 3}
-    size: 6
+    prefab: {fileID: 7345770759835007499, guid: b9d65191f36fad049980d3c4d321ba19, type: 3}
+    size: 7
     parent: {fileID: 3172665908765356769}
 --- !u!212 &9162503853860110794
 SpriteRenderer:
@@ -575,7 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77512bac316ed6e468b163454dab8724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stats
-  health: 2
+  health: 4
   attack: 3
   healthBar: {fileID: 0}
 --- !u!114 &8188350944221004721

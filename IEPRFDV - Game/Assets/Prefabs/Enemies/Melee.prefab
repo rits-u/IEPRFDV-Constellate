@@ -456,7 +456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b8c08b37737db40a2b611725e35ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
-  damage: 1
 --- !u!114 &4078287370622076540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,9 +482,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77512bac316ed6e468b163454dab8724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stats
-  health: 10
+  maxHealth: 10
+  health: 6
   attack: 3
+  shield: 0
   healthBar: {fileID: 0}
+  isDown: 0
 --- !u!114 &8188350944221004721
 MonoBehaviour:
   m_ObjectHideFlags: 0
