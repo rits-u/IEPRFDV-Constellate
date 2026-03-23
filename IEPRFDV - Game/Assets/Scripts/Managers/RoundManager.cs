@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEngine.InputSystem;
 
 public class RoundManager : MonoBehaviour
 {
@@ -51,16 +52,15 @@ public class RoundManager : MonoBehaviour
             startKey = KeyCode.Space;
         }
         canvas = UICanvas.GetComponent<UICanvas>();
+
+        SetKeyboardInput(false);
     }
 
     private void Update()
     {
         if (!hasStarted && Input.GetKeyDown(startKey))
         {
-            hasStarted = true;
-            CountdownToStart();
-            startButton.SetActive(false);
-            startGamePrompt.SetActive(false);
+            StartGame();
         }
         if (canvas.GetIsPaused()) PauseGame();
         else ResumeGame();
@@ -69,7 +69,13 @@ public class RoundManager : MonoBehaviour
     {
         //CountdownToStart();
     }
-
+    public void StartGame()
+    {
+        hasStarted = true;
+        CountdownToStart();
+        startButton.SetActive(false);
+        startGamePrompt.SetActive(false);
+    }
 
     public void CountdownToStart()
     {
@@ -79,6 +85,11 @@ public class RoundManager : MonoBehaviour
 
     }
 
+    void SetKeyboardInput(bool value)
+    {
+        player1.GetComponent<PlayerInput>().enabled = value;
+        player2.GetComponent<PlayerInput>().enabled = value;
+    }
     IEnumerator Countdown()
     {
         float countdown = countdownDuration;
@@ -186,6 +197,8 @@ public class RoundManager : MonoBehaviour
         {
             //yield return StartCoroutine(Countdown());
             yield return StartCoroutine(Countdown(countdownDuration, countdownText));
+
+            SetKeyboardInput(true);
 
             yield return StartCoroutine(RoundTime());
 

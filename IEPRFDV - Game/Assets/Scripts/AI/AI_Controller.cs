@@ -131,7 +131,7 @@ public class AI_Controller : MonoBehaviour
         
         followPlayer = GetComponent<AI_FollowPlayer>();
 
-        if (!animator) animator = transform.GetComponent<Animator>();
+        //if (!animator) animator = transform.GetComponent<Animator>();
         if (!hasMelee)
         {
             Transform child = transform.Find("Melee Hitbox");
