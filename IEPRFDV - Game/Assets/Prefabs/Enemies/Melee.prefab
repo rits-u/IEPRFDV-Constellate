@@ -703,6 +703,7 @@ MonoBehaviour:
   players: []
   healthBar: {fileID: 3945209588123568081}
   animator: {fileID: 5285362467199177411}
+  moveSpeed: 3.5
   hasDash: 0
   dashRandomInterval: 0
   dashDuration: 0.2

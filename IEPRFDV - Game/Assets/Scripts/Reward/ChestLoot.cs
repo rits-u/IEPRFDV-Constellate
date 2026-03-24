@@ -40,7 +40,7 @@ public class ChestLoot : MonoBehaviour
             {
                 case ItemType.WEAPON:
                     lootWeaponAmount++;
-                    lootTable.Remove(item); //remove from the drops
+                   // lootTable.Remove(item); //remove from the drops
                     break;
                 
                 case ItemType.GEAR:
