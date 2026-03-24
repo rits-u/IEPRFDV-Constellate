@@ -48,7 +48,7 @@ public class AI_Controller : MonoBehaviour
     void Start()
     {
         projectilePool = AI_Pool.instance;
-        stats = GetComponent<Stats>();
+
         if (hasRanged) projectilePool = AI_Pool.instance;
 
 
@@ -76,6 +76,7 @@ public class AI_Controller : MonoBehaviour
         //use meleehitbox to check if any collision
         if (meleeTimer <= 0f)
         {
+            damageDealer.Damage = stats.ATK;
             StartCoroutine(MeleeAttack());
             meleeTimer = meleeInterval;
         }
@@ -90,8 +91,6 @@ public class AI_Controller : MonoBehaviour
                 Debug.Log($"{transform.name} projectile fail");
             }
 
-
-           // GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, GetTargetRotation());
             projectile.GetComponent<DamageDealer>().Damage = stats.ATK;
             rangedTimer = rangedInterval;
         }
@@ -120,7 +119,7 @@ public class AI_Controller : MonoBehaviour
 
     private void InitializeValues()
     {
-
+        stats = GetComponent<Stats>();
         meleeTimer = meleeInterval;
         rangedTimer = 0.4f;
         if (hasMelee && hasRanged)
@@ -129,10 +128,12 @@ public class AI_Controller : MonoBehaviour
         }
         if (hasMelee)
         {
-            damageDealer.Damage = meleeDamage;
+            // damageDealer.Damage = meleeDamage;
+            damageDealer.Damage = stats.ATK;
+         //   Debug.Log("ENEMY ATK: " + stats.ATK);
             navAgent.stoppingDistance = stoppingRange;
         }
-        if (hasRanged) damageDealer.Damage = rangedDamage;
+      //  if (hasRanged) damageDealer.Damage = rangedDamage;
     }
 
     private void InitializeReferences()

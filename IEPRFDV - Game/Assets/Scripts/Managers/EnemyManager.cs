@@ -14,6 +14,11 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private int updateHealthEvery;
     [SerializeField] private int healthIncrement;
 
+    [Header("ATK")]
+    [SerializeField] private int enemyStartingATK;
+    [SerializeField] private int updateAttackEvery;
+    [SerializeField] private int attackIncrement;
+
 
     private void Awake()
     {
@@ -103,16 +108,25 @@ public class EnemyManager : MonoBehaviour
         Stats enemyStats = enemy.GetComponent<Stats>();
         enemyStats.OnDeath += UnregisterEnemy;
 
-        enemyStartingHP = enemyStats.HP;
-
         int round = RoundManager.Instance.RoundNumber;
 
+        //hp
+        enemyStartingHP = enemyStats.HP;
         if (round % updateHealthEvery == 0)
         {
             enemyStartingHP += healthIncrement;
         }
-
         enemyStats.HP = enemyStartingHP;
+        enemyStats.UpdateMaxAndHP();
+        //Debug.Log("ENEMY HP: " + enemyStats.HP);
+
+        //atk
+        enemyStartingATK = enemyStats.ATK;
+        if (round % updateAttackEvery == 0)
+        {
+            enemyStartingATK += attackIncrement;
+        }
+        enemyStats.ATK = enemyStartingATK;
 
         //  int round = 
     }

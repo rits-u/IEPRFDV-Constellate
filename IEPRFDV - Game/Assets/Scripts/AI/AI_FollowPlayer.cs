@@ -21,7 +21,7 @@ public class AI_FollowPlayer : MonoBehaviour
     //[ShowIf("hasLimitedVisibility")][SerializeField] private float detectionRadius = 5.0f;
     //[ShowIf("randomMovement")][SerializeField] private float randomMovementRange = 5.0f;
     [SerializeField] private const float pathRefreshTime = 3.0f;
-    [SerializeField] private const float moveSpeed = 2.6f;
+    [SerializeField] private float moveSpeed = 2.6f;
     [SerializeField] private const float acceleration = 8f;
 
     [Header("Dash")]

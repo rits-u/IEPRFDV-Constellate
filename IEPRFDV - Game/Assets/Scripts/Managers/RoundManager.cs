@@ -167,8 +167,9 @@ public class RoundManager : MonoBehaviour
 
         //reward qte phase
         PlayerManager.Instance.CheckAllPlayersGears();
-        ActivateRewardTrigger();
         PlayerManager.Instance.IncrementRoundStreak();
+        ActivateRewardTrigger();
+       // PlayerManager.Instance.IncrementRoundStreak();
         UIManager.Instance.ShowMenuBar();
 
 

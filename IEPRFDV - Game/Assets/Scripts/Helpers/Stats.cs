@@ -128,6 +128,15 @@ public class Stats : MonoBehaviour
             healthBar.SetHealth(HP);
         }
     }
+    public void UpdateMaxAndHP()
+    {
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(MaxHP);
+            healthBar.SetHealth(HP);
+        }
+    }
+
 
     public void UpdateSP()
     {
