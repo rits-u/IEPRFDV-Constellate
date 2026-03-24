@@ -156,9 +156,12 @@ public class RoundManager : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         //reward qte phase
+        PlayerManager.Instance.CheckAllPlayersGears();
         ActivateRewardTrigger();
         PlayerManager.Instance.IncrementRoundStreak();
         UIManager.Instance.ShowMenuBar();
+
+
         round++;
        // }
     }

@@ -135,6 +135,26 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
+    public void UpdateGearExpirations()
+    {
+        int index = 0;
+        List<int> expired = new();
+        foreach (GearInfo info in gearList)
+        {
+            info.gear.Expiration--;
+            if(info.gear.Expiration <= 0 )
+            {
+                expired.Add(index);
+            }
+            index++;
+        }
+    //    expired.Sort((a, b) => b.CompareTo(a));
+        for(int i = expired.Count -1; i >= 0; i--)
+        {
+            UnequipGearByIndex(expired[i]);
+        }
+    }
+
 
     public void EquipWeapon(Weapon weaponToEquip, int tier)
     {

@@ -9566,7 +9566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
   round: 1
-  roundDuration: 30
+  roundDuration: 2
   roundNumberText: {fileID: 411472122}
   roundDurationText: {fileID: 725409058}
   startGamePrompt: {fileID: 0}

@@ -230,4 +230,13 @@ public class PlayerManager : MonoBehaviour
     {
         return playerList[ID - 1].GetComponent<PlayerScore>().Score;
     }
+
+    public void CheckAllPlayersGears()
+    {
+        foreach (Player player in playerList)
+        {
+            player.GetComponent<PlayerInventory>().UpdateGearExpirations();
+        }
+
+    }
 }
