@@ -1666,7 +1666,7 @@ GameObject:
   - component: {fileID: 103789357}
   - component: {fileID: 103789356}
   - component: {fileID: 103789355}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Resurrect Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37370,11 +37370,14 @@ MonoBehaviour:
       weight: 1
       type: 0
     - item: {fileID: 11400000, guid: a6e016e64e8f0424c8dbde4c28440c33, type: 2}
-      weight: 6
+      weight: 1
       type: 0
     - item: {fileID: 11400000, guid: e838298ce5363294aadd771ab251641c, type: 2}
-      weight: 5
+      weight: 1
       type: 1
+    - item: {fileID: 11400000, guid: b5c12c65e95cf2f45929c6a422cd5328, type: 2}
+      weight: 100
+      type: 0
   upperPanel: {fileID: 2059577792713619369}
 --- !u!1001 &6184700666378063000
 PrefabInstance:
