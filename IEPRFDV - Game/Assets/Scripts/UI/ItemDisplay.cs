@@ -140,7 +140,7 @@ public class ItemDisplay : MonoBehaviour
 
     private string FormatTierValue(int t1, int t2)
     {
-        return t1 != t2 ? $"{t1} <color=green>→{t2}</color>" : $"{t1}";
+        return t1 != t2 ? $"{t1}<color=green>→{t2}</color>" : $"{t1}";
     }
 
     private IEnumerable<InfoType> GetGearStats(Gear gear)

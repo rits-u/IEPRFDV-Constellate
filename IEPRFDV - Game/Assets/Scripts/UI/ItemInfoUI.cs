@@ -18,13 +18,13 @@ public class ItemInfoUI : ScreenUI
 
     private void Awake()
     {
-        display = UIManager.Instance.CreateItemDisplay(this.transform, 0.5f);
+        display = UIManager.Instance.CreateItemDisplay(this.transform, 0.62f);
     }
 
     public void DisplayItemInfo(int index, int ID)
     {
         ShowScreenUI();
-        transform.position = Input.mousePosition + new Vector3(-225, 0, 0);
+        transform.position = Input.mousePosition + new Vector3(-350, 0, 0);
         Gear gear = PlayerManager.Instance.AccessPlayerInventory(ID).GetEquippedGearByIndex(index).gear;
         display.DisplayEquippedGear(gear);
 

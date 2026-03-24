@@ -120,26 +120,41 @@ public class QTEManager : MonoBehaviour
                 p1QTE.ShowFeedbackUI("Steal");
                 p2QTE.ShowFeedbackUI("Share");
                 resultText.text = "Player 1 has stolen and got Tier 2 rewards! Player 2 gets none.";
+                StartCoroutine(ShowResult(1, true));
                 break;
             case QTEResult.P2Steals:
                 p1QTE.ShowFeedbackUI("Share");
                 p2QTE.ShowFeedbackUI("Steal");
                 resultText.text = "Player 2 has stolen and got Tier 2 rewards! Player 1 gets none.";
+                StartCoroutine(ShowResult(1, false));
                 break;
             case QTEResult.None:
                 p1QTE.ShowFeedbackUI("Steal");
                 p2QTE.ShowFeedbackUI("Steal");
                 resultText.text = "Both attempted to steal, no rewards will be given for this round.";
-                StartCoroutine(NoneResult());
+                StartCoroutine(ShowResult(2, false));
                 break;
         }
     }
 
-    private IEnumerator NoneResult()
+    private IEnumerator ShowResult(int steals, bool isP1Thief)
     {
         yield return new WaitForSeconds(2);
-        p1QTE.ShowFeedbackUI("None");
-        p2QTE.ShowFeedbackUI("None");
+        switch(steals)
+        {
+            case 2:
+                p1QTE.ShowFeedbackUI("None");
+                p2QTE.ShowFeedbackUI("None");
+                break;
+            case 1:
+                if (!isP1Thief) p1QTE.ShowFeedbackUI("None");
+                else p2QTE.ShowFeedbackUI("None");
+                    break;
+            case 0:
+                break;
+        }
+
+      
     }
 
     private IEnumerator EnableContinueButton()
