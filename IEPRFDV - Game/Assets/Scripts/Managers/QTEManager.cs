@@ -29,6 +29,7 @@ public class QTEManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI resultText;
     [SerializeField] private Button continueBtn;
+    [SerializeField] private Image chestImage;
 
 
     public void PlayerPressed(int playerID, float value, bool valid)
@@ -109,6 +110,7 @@ public class QTEManager : MonoBehaviour
 
     void SetResultSprites(QTEResult result)
     {
+        chestImage.gameObject.SetActive(false);
         switch (result)
         {
             case QTEResult.Share:

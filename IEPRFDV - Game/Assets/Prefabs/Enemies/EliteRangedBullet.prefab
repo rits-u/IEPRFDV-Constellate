@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3ce15ca15f1cb4f93acc7fcaab134e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TempBullet
-  bulletSpeed: 10
+  bulletSpeed: 7
   rotationOffset: {x: 0, y: 0, z: 0}
   rotationSpeed: 2
   hasRotate: 1
@@ -288,4 +288,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b8c08b37737db40a2b611725e35ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
-  damage: 1

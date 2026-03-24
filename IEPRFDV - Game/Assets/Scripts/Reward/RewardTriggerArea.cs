@@ -15,6 +15,7 @@ public class RewardTriggerArea : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private GameObject rewardPanel;
     [SerializeField] private Button startBtn;
+    [SerializeField] private Image chestImage;
 
     private bool rewardDisplayed = false;
     private CircleCollider2D col;
@@ -89,6 +90,7 @@ public class RewardTriggerArea : MonoBehaviour
         ResetRewardPanel();
         rewardPanel.LeanMoveY(540, leanDuration);
         startBtn.gameObject.SetActive(true);
+        chestImage.gameObject.SetActive(true);
      }
 
     public void HideRewardsScreen()
