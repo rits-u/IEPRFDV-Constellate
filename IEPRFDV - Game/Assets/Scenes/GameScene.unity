@@ -6915,11 +6915,11 @@ PrefabInstance:
     - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: 'enemyPrefabs.Array.data[0]'
       value: 
-      objectReference: {fileID: 7727712613359759040, guid: 2e0fb83dde4219844800ec2c75089c7d, type: 3}
+      objectReference: {fileID: 7727712613359759040, guid: 75e78a77f30a77b4299364998100c884, type: 3}
     - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: 'enemyPrefabs.Array.data[1]'
       value: 
-      objectReference: {fileID: 7727712613359759040, guid: f8bb25b052d0b8a468987432c7ba464d, type: 3}
+      objectReference: {fileID: 7727712613359759040, guid: 4537e84a59681aa40b613090d46919ed, type: 3}
     - target: {fileID: 2184296179283041318, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
       propertyPath: 'enemyPrefabs.Array.data[2]'
       value: 
@@ -7114,9 +7114,29 @@ PrefabInstance:
       value: 2.0679474
       objectReference: {fileID: 0}
     - target: {fileID: 2341229277820513679, guid: b07f6b668275b264cbdb248c06fe1dd3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2341229277820513679, guid: b07f6b668275b264cbdb248c06fe1dd3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2341229277820513679, guid: b07f6b668275b264cbdb248c06fe1dd3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 543935909}
+    - target: {fileID: 2341229277820513679, guid: b07f6b668275b264cbdb248c06fe1dd3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 543935907}
+    - target: {fileID: 2341229277820513679, guid: b07f6b668275b264cbdb248c06fe1dd3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2341229277820513679, guid: b07f6b668275b264cbdb248c06fe1dd3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2411863478928420552, guid: b07f6b668275b264cbdb248c06fe1dd3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

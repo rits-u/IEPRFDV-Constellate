@@ -27,11 +27,13 @@ public class AI_Controller : MonoBehaviour
 
     [Header("Ranged")]
     [SerializeField] private bool hasRanged = false;
+    [SerializeField][ShowIf("hasRanged")] private GameObject bullet;
     [SerializeField][ShowIf("hasRanged")] private int rangedDamage = 1;
     [SerializeField][ShowIf("hasRanged")] private float rangedInterval = 2f;
 
     private float meleeTimer = 0f;
     private float rangedTimer = 0f;
+    private string bulletName;
 
     private void Awake()
     {
@@ -77,7 +79,7 @@ public class AI_Controller : MonoBehaviour
         if (rangedTimer <= 0f)
         {
             GameObject projectile;
-            if (!(projectile = projectilePool.SpawnFromPool("Bullet", transform.position, GetTargetRotation())))
+            if (!(projectile = projectilePool.SpawnFromPool(bulletName, transform.position, GetTargetRotation())))
             {
                 Debug.Log($"{transform.name} projectile fail");
             }
@@ -135,21 +137,20 @@ public class AI_Controller : MonoBehaviour
         if (!hasMelee)
         {
             Transform child = transform.Find("Melee Hitbox");
-            if (child != null)
-            {
-                meleeHitbox = child.gameObject;
-            }
-            else
-            {
-                Debug.LogError($"{gameObject} has no gameobject Melee Hitbox");
-            }
+            if (child != null)  meleeHitbox = child.gameObject;
+            else Debug.LogError($"{gameObject} has no gameobject Melee Hitbox");
         }
 
-        if (!damageDealer)
+        if (!damageDealer) damageDealer = GetComponent<DamageDealer>();
+
+        if (hasRanged)
         {
-            damageDealer = GetComponent<DamageDealer>();
+            if (!bullet) Debug.LogError($"{transform.name} no bullet reference");
+            bulletName = bullet.name;
+            if (bulletName == null) Debug.LogError($"{transform.name} bullet name is empty");
+            else Debug.Log($"{transform.name} bullet {bulletName}");
         }
-
+        
     }
 
 }

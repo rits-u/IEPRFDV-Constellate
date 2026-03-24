@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 281684225809704329}
   - component: {fileID: 2644415626003936515}
   m_Layer: 9
-  m_Name: Elite Ranged Bullet
+  m_Name: EliteRangedBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3ce15ca15f1cb4f93acc7fcaab134e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TempBullet
-  bulletSpeed: 9
+  bulletSpeed: 10
   rotationOffset: {x: 0, y: 0, z: 0}
   rotationSpeed: 2
   hasRotate: 1
@@ -288,3 +288,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b8c08b37737db40a2b611725e35ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
+  damage: 1

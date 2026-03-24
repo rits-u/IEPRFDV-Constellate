@@ -40,7 +40,8 @@ public class AI_FollowPlayer : MonoBehaviour
     [Header("Teleport")]
     [SerializeField] private bool hasTeleport = false;
     //[ShowIf("hasTeleport")][SerializeField] private bool TPRandomInterval = false;
-    [ShowIf("hasTeleport")][SerializeField] private float TPInterval = 4f;
+    [ShowIf("hasTeleport")][SerializeField] private float TPInterval = 3.5f;
+    [ShowIf("hasTeleport")][SerializeField] private float TPDuration = 0.2f;
     [ShowIf("hasTeleport")][SerializeField] private float TPDist = 0.5f;
     //[ShowIf("hasDash")][SerializeField] private bool TPHasDash = false;
     [ShowIf("hasTeleport")][SerializeField] private bool TPStopMovement = false;
@@ -124,9 +125,13 @@ public class AI_FollowPlayer : MonoBehaviour
         }
         else if (hasTeleport && !TPStopMovement)
         {
-            //navAgent.SetDestination(target.transform.position);
+            navAgent.SetDestination(target.transform.position);
         }
 
+        if (!hasDash && !hasTeleport)
+        {
+            navAgent.SetDestination(target.transform.position);
+        }
         
 
 
@@ -246,8 +251,8 @@ public class AI_FollowPlayer : MonoBehaviour
         navAgent.speed = Mathf.Clamp(dashSpeedMult * moveSpeed, 0f, 100000f);
         navAgent.acceleration = Mathf.Clamp(dashAccelerationMult * acceleration, 0f, 100000f);
 
-        if (hasAnimation) animator.SetBool("isDashing", true);
         float time = 0f;
+        if (hasAnimation) animator.SetBool("isDashing", true);
         while (time < dashDuration)
         {
             time += Time.deltaTime;
@@ -279,7 +284,8 @@ public class AI_FollowPlayer : MonoBehaviour
             direction = transform.forward;
 
         float time = 0f;
-        while (time < TPInterval)
+        if (hasAnimation) animator.SetBool("isDashing", true);
+        while (time < TPDuration)
         {
             time += Time.deltaTime;
 
@@ -291,12 +297,14 @@ public class AI_FollowPlayer : MonoBehaviour
 
             yield return null;
         }
+        if (hasAnimation) animator.SetBool("isDashing", false);
 
         Vector3 teleportPos = transform.position + direction * TPDist;
         NavMeshHit hit;
         if (NavMesh.SamplePosition(teleportPos, out hit, 3f, NavMesh.AllAreas))
             navAgent.Warp(hit.position);
 
+        yield return new WaitForSeconds(TPInterval);
         canTeleport = true;
     }
     private void LimitedVisibiility()
