@@ -603,7 +603,6 @@ GameObject:
   - component: {fileID: 8044434971022750645}
   - component: {fileID: 4258615396906989230}
   - component: {fileID: 3473504130444254772}
-  - component: {fileID: 6120332864679170620}
   - component: {fileID: 3249375128923728270}
   - component: {fileID: 2975150873309783138}
   - component: {fileID: 4078287370622076540}
@@ -712,23 +711,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 1
---- !u!114 &6120332864679170620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7727712613359759040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c40c838049ab999439de70e0037a1f11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AI_Pool
-  pools:
-  - tag: EliteRangedBullet
-    prefab: {fileID: 7345770759835007499, guid: b9d65191f36fad049980d3c4d321ba19, type: 3}
-    size: 4
-    parent: {fileID: 3172665908765356769}
 --- !u!58 &3249375128923728270
 CircleCollider2D:
   m_ObjectHideFlags: 0

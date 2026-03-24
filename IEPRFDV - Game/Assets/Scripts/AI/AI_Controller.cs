@@ -148,7 +148,6 @@ public class AI_Controller : MonoBehaviour
             if (!bullet) Debug.LogError($"{transform.name} no bullet reference");
             bulletName = bullet.name;
             if (bulletName == null) Debug.LogError($"{transform.name} bullet name is empty");
-            else Debug.Log($"{transform.name} bullet {bulletName}");
         }
         
     }

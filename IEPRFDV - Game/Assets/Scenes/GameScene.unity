@@ -6983,7 +6983,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7513005486087321327, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2076942936}
   m_SourcePrefab: {fileID: 100100000, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
 --- !u!1001 &1494282813
 PrefabInstance:
@@ -34116,6 +34119,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6590979738894004422, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
   m_PrefabInstance: {fileID: 1405608466}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2076942934 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7513005486087321327, guid: 35cdcb40448d38540b87feb2520a5b70, type: 3}
+  m_PrefabInstance: {fileID: 1405608466}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2076942936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076942934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c40c838049ab999439de70e0037a1f11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AI_Pool
+  pools:
+  - tag: RangedBullet
+    prefab: {fileID: 7345770759835007499, guid: 574eb7d3612803f44a3cead1141a6bb0, type: 3}
+    size: 15
+    parent: {fileID: 3172665908765356769, guid: 4537e84a59681aa40b613090d46919ed, type: 3}
+  - tag: EliteRangedBullet
+    prefab: {fileID: 7345770759835007499, guid: b9d65191f36fad049980d3c4d321ba19, type: 3}
+    size: 15
+    parent: {fileID: 3172665908765356769, guid: 75e78a77f30a77b4299364998100c884, type: 3}
 --- !u!1 &2117548967
 GameObject:
   m_ObjectHideFlags: 0
