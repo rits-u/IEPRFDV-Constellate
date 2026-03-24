@@ -1,3 +1,5 @@
+using NaughtyAttributes;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,25 +11,27 @@ public class AI_Controller : MonoBehaviour
     private AI_Pool projectilePool;
     [SerializeField] private GameObject meleeHitbox;
     [SerializeField] private DamageDealer damageDealer;
+    [SerializeField] private Animator animator;
     private NavMeshAgent navAgent;
-    private Animator animator;
     private AI_FollowPlayer followPlayer;
 
     [Header("Melee")]
     [SerializeField] private bool hasMelee = false;
-    [SerializeField] private bool meleeAttackOnProximity = false;
-    [SerializeField] private int meleeDamage = 2;
-    [SerializeField] private float meleeInterval = 1f;
-    [SerializeField] private float meleeDuration = 1f;
-    [SerializeField] private float stoppingRange = 0.4f;
+    //[SerializeField][ShowIf("hasMelee")] private bool meleeAttackOnProximity = false;
+    [SerializeField][ShowIf("hasMelee")] private int meleeDamage = 2;
+    [SerializeField][ShowIf("hasMelee")] private float meleeInterval = 1f;
+    [SerializeField][ShowIf("hasMelee")] private float meleeDuration = 1f;
+    [SerializeField][ShowIf("hasMelee")] private float stoppingRange = 0.4f;
 
     [Header("Ranged")]
     [SerializeField] private bool hasRanged = false;
-    [SerializeField] private int rangedDamage = 1;
-    [SerializeField] private float rangedInterval = 2f;
+    [SerializeField][ShowIf("hasRanged")] private GameObject bullet;
+    [SerializeField][ShowIf("hasRanged")] private int rangedDamage = 1;
+    [SerializeField][ShowIf("hasRanged")] private float rangedInterval = 2f;
 
     private float meleeTimer = 0f;
     private float rangedTimer = 0f;
+    private string bulletName;
 
     private void Awake()
     {
@@ -45,6 +49,9 @@ public class AI_Controller : MonoBehaviour
     {
         projectilePool = AI_Pool.instance;
         stats = GetComponent<Stats>();
+        if (hasRanged) projectilePool = AI_Pool.instance;
+
+
     }
 
     // Update is called once per frame
@@ -77,6 +84,13 @@ public class AI_Controller : MonoBehaviour
     {
         if (rangedTimer <= 0f)
         {
+            GameObject projectile;
+            if (!(projectile = projectilePool.SpawnFromPool(bulletName, transform.position, GetTargetRotation())))
+            {
+                Debug.Log($"{transform.name} projectile fail");
+            }
+            
+            
             GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, GetTargetRotation());
             projectile.GetComponent<DamageDealer>().Damage = stats.ATK;
             rangedTimer = rangedInterval;
@@ -124,33 +138,26 @@ public class AI_Controller : MonoBehaviour
     private void InitializeReferences()
     {
         navAgent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
+        
         followPlayer = GetComponent<AI_FollowPlayer>();
 
+        //if (!animator) animator = transform.GetComponent<Animator>();
         if (!hasMelee)
         {
             Transform child = transform.Find("Melee Hitbox");
-            if (child != null)
-            {
-                meleeHitbox = child.gameObject;
-            }
-            else
-            {
-                Debug.LogError($"{gameObject} has no gameobject Melee Hitbox");
-            }
+            if (child != null)  meleeHitbox = child.gameObject;
+            else Debug.LogError($"{gameObject} has no gameobject Melee Hitbox");
         }
 
-        if (!damageDealer)
-        //{
-        //    GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, transform.rotation);
+        if (!damageDealer) damageDealer = GetComponent<DamageDealer>();
 
-        //    initialize bullet dmg
-        //    projectile.GetComponent<DamageDealer>().Damage = stats.ATK;
-
-        //    nextProjectileTime = Time.time + projectileInterval;
-            damageDealer = GetComponent<DamageDealer>();
+        if (hasRanged)
+        {
+            if (!bullet) Debug.LogError($"{transform.name} no bullet reference");
+            bulletName = bullet.name;
+            if (bulletName == null) Debug.LogError($"{transform.name} bullet name is empty");
         }
-
+        
     }
 
 

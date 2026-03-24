@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class AI_Pool : MonoBehaviour
@@ -36,10 +37,11 @@ public class AI_Pool : MonoBehaviour
         foreach (Pool pool in pools)
         {
             Queue<GameObject> objectPool = new Queue<GameObject>();
+                
             poolLookup.Add(pool.tag, pool);
-
             for (int i = 0; i < pool.size; i++)
             {
+                
                 GameObject obj = null;
                 //if (transform) obj = Instantiate(pool.prefab, transform, true);
                 //else obj = Instantiate(pool.prefab);
@@ -48,7 +50,7 @@ public class AI_Pool : MonoBehaviour
                 obj.SetActive(false);
                 objectPool.Enqueue(obj);
             }
-            poolDictionary.Add(pool.tag, objectPool);
+            poolDictionary.Add(pool.prefab.name, objectPool);
         }
     }
 
