@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.ComponentModel;
 using NaughtyAttributes;
+using TMPro;
 
 
 public class UserInterfaceQTE : MonoBehaviour
@@ -26,6 +27,7 @@ public class UserInterfaceQTE : MonoBehaviour
         public string name;
         public Sprite sprite;
         public Image container;
+        public Color hitColor;
     }
 
 
@@ -35,6 +37,7 @@ public class UserInterfaceQTE : MonoBehaviour
         Color temp = resultImage.color;
         temp.a = 0f;
         resultImage.color = temp;
+        resultImage.GetComponentInChildren<TextMeshProUGUI>().text = "";
     }
 
     public void HideHitResult()
@@ -43,6 +46,7 @@ public class UserInterfaceQTE : MonoBehaviour
         Color temp = pressContainer.color;
         temp.a = 0f;
         pressContainer.color = temp;
+        pressContainer.GetComponentInChildren<TextMeshProUGUI>().text = "";
     }
 
     public SpriteData GetSpriteDataByName(string name)
@@ -97,6 +101,10 @@ public class UserInterfaceQTE : MonoBehaviour
         temp.a = 1f;
         spriteData.container.color = temp;
         spriteData.container.sprite = spriteData.sprite;
+
+        TextMeshProUGUI feedbackText = spriteData.container.GetComponentInChildren<TextMeshProUGUI>();
+        feedbackText.text = name + "!";
+        feedbackText.color = spriteData.hitColor;
     }
 }
 

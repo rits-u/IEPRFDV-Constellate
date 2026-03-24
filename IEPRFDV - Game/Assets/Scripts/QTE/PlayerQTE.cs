@@ -143,7 +143,7 @@ public class PlayerQTE : MonoBehaviour
 
         float value = ctx.ReadValue<float>();
        // UI.PressFeedback(value);
-        StartCoroutine(ResetKey(value));
+    //    StartCoroutine(ResetKey(value));
 
         bool valid = IsAOverlapB(movingCircle, targetCircle);
         if (valid) UI.ShowFeedbackUI("Hit"); 

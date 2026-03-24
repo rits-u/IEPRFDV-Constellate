@@ -130,8 +130,16 @@ public class QTEManager : MonoBehaviour
                 p1QTE.ShowFeedbackUI("Steal");
                 p2QTE.ShowFeedbackUI("Steal");
                 resultText.text = "Both attempted to steal, no rewards will be given for this round.";
+                StartCoroutine(NoneResult());
                 break;
         }
+    }
+
+    private IEnumerator NoneResult()
+    {
+        yield return new WaitForSeconds(2);
+        p1QTE.ShowFeedbackUI("None");
+        p2QTE.ShowFeedbackUI("None");
     }
 
     private IEnumerator EnableContinueButton()

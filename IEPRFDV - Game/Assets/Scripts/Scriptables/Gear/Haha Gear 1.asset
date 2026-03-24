@@ -16,7 +16,7 @@ MonoBehaviour:
   type: 1
   sprite: {fileID: 21300000, guid: 5e8e2b8d57a144941b6ec94b5a60b0b6, type: 3}
   currentTier: 1
-  expiration: 2
+  expiration: 3
   gearStats:
   - health: 0
     attack: 5

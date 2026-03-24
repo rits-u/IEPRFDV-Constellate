@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour
             {
                 Dim();
                 HideAllHUDs();
+              //  DisableGameCanvas();
                 s.ShowScreenUI();
             }
         }
@@ -47,6 +48,7 @@ public class UIManager : MonoBehaviour
             {
                 RemoveDim();
                 ShowAllHUDs();
+                //EnableGameCanvas();
                 s.HideScreenUI();
             }
         }
@@ -76,12 +78,18 @@ public class UIManager : MonoBehaviour
 
     public void ShowAllHUDs()
     {
-        gameCanvas.gameObject.SetActive(true);
+        for (int i = 0; i < gameCanvas.childCount; i++)
+        {
+            gameCanvas.GetChild(i).gameObject.SetActive(true);
+        }
     }
 
     public void HideAllHUDs()
     {
-        gameCanvas.gameObject.SetActive(false);
+        for (int i = 0; i < gameCanvas.childCount; i++)
+        {
+            gameCanvas.GetChild(i).gameObject.SetActive(false);
+        }
     }
 
     public void ShowPlayerInfoHUDs()
@@ -112,17 +120,12 @@ public class UIManager : MonoBehaviour
 
     public void DisableGameCanvas()
     {
-        for(int i = 0; i < gameCanvas.childCount; i++)
-        {
-            gameCanvas.GetChild(i).gameObject.SetActive(false);
-        }
+        gameCanvas.gameObject.SetActive(false);
     }
+
     public void EnableGameCanvas()
     {
-        for (int i = 0; i < gameCanvas.childCount; i++)
-        {
-            gameCanvas.GetChild(i).gameObject.SetActive(true);
-        }
+        gameCanvas.gameObject.SetActive(true);
     }
 
     public ItemDisplay CreateItemDisplay(Transform parentPanel, float scaleOffset)

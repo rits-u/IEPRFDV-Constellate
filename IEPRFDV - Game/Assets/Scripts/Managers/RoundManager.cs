@@ -141,7 +141,7 @@ public class RoundManager : MonoBehaviour
     private void FirstRoundPrep()
     {
         CameraManager.Instance.ChangeToPlayerView();
-        UIManager.Instance.ShowAllHUDs();
+        UIManager.Instance.EnableGameCanvas();
     }
 
     private IEnumerator RoundProper()
@@ -168,6 +168,7 @@ public class RoundManager : MonoBehaviour
 
     public void NextRound()
     {
+        UIManager.Instance.ShowAllHUDs();
         PlayerManager.Instance.EnableAllPlayerMovement();
         DeactivateRewardTrigger();
         StartCoroutine(PrepareTrigger());
