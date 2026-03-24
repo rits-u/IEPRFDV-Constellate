@@ -65,7 +65,7 @@ public class RoundManager : MonoBehaviour
         }
         canvas = UICanvas.GetComponent<UICanvas>();
 
-        SetKeyboardInput(false);
+       // SetKeyboardInput(false);
     }
 
     private void Update()
@@ -87,7 +87,7 @@ public class RoundManager : MonoBehaviour
     public void StartGame()
     {
         hasStarted = true;
-        CountdownToStart();
+    //    CountdownToStart();
         startButton.SetActive(false);
         startGamePrompt.SetActive(false);
     }

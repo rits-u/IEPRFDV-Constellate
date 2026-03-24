@@ -22,9 +22,12 @@ public class HealthBar : MonoBehaviour
 
     public void SetMaxShield(float shield)
     {
-        shieldSlider.maxValue = shield;
-        shieldSlider.value = shield;
-        shieldFill.color = shieldGradient.Evaluate(1f);
+        if (shieldSlider != null)
+        {
+            shieldSlider.maxValue = shield;
+            shieldSlider.value = shield;
+            shieldFill.color = shieldGradient.Evaluate(1f);
+        }
     }
 
     public void SetHealth(float health)
@@ -35,8 +38,11 @@ public class HealthBar : MonoBehaviour
 
     public void SetShield(float shield)
     {
-        shieldSlider.value = shield;
-        shieldFill.color = shieldGradient.Evaluate(shieldSlider.normalizedValue);
+        if (shieldSlider != null)
+        {
+            shieldSlider.value = shield;
+            shieldFill.color = shieldGradient.Evaluate(shieldSlider.normalizedValue);
+        }
     }
 
 }

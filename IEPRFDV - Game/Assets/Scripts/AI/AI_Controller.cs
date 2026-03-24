@@ -39,7 +39,7 @@ public class AI_Controller : MonoBehaviour
         InitializeValues();
     }
 
- //   private AI_Pool projectilePool;
+    //   private AI_Pool projectilePool;
     private float nextProjectileTime = 0f;
 
     private Stats stats;
@@ -68,7 +68,7 @@ public class AI_Controller : MonoBehaviour
             rangedTimer -= Time.deltaTime;
             Ranged();
         }
-        
+
     }
 
     void Melee()
@@ -89,9 +89,9 @@ public class AI_Controller : MonoBehaviour
             {
                 Debug.Log($"{transform.name} projectile fail");
             }
-            
-            
-            GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, GetTargetRotation());
+
+
+           // GameObject projectile = projectilePool.SpawnFromPool("Bullet", transform.position, GetTargetRotation());
             projectile.GetComponent<DamageDealer>().Damage = stats.ATK;
             rangedTimer = rangedInterval;
         }
@@ -120,7 +120,7 @@ public class AI_Controller : MonoBehaviour
 
     private void InitializeValues()
     {
-        
+
         meleeTimer = meleeInterval;
         rangedTimer = 0.4f;
         if (hasMelee && hasRanged)
@@ -138,14 +138,14 @@ public class AI_Controller : MonoBehaviour
     private void InitializeReferences()
     {
         navAgent = GetComponent<NavMeshAgent>();
-        
+
         followPlayer = GetComponent<AI_FollowPlayer>();
 
         //if (!animator) animator = transform.GetComponent<Animator>();
         if (!hasMelee)
         {
             Transform child = transform.Find("Melee Hitbox");
-            if (child != null)  meleeHitbox = child.gameObject;
+            if (child != null) meleeHitbox = child.gameObject;
             else Debug.LogError($"{gameObject} has no gameobject Melee Hitbox");
         }
 
@@ -157,7 +157,9 @@ public class AI_Controller : MonoBehaviour
             bulletName = bullet.name;
             if (bulletName == null) Debug.LogError($"{transform.name} bullet name is empty");
         }
-        
+
     }
+
+}
 
 

@@ -559,25 +559,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa8dd3e33d1f174a99f656bed2cb9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthBar
-  slider: {fileID: 629891961299432233}
-  gradient:
+  healthSlider: {fileID: 629891961299432233}
+  healthGradient:
     serializedVersion: 2
-    key0: {r: 0.8113208, g: 0.15767173, b: 0.19017759, a: 1}
-    key1: {r: 0.84068686, g: 0.9169811, b: 0.18512635, a: 1}
-    key2: {r: 0.29797915, g: 0.8867924, b: 0.2191883, a: 0}
-    key3: {r: 0.29797915, g: 0.8867924, b: 0.2191883, a: 0}
-    key4: {r: 0.7333511, g: 0.59344244, b: 0.9169811, a: 0}
-    key5: {r: 0.690566, g: 0.2344296, b: 0.17589882, a: 0}
-    key6: {r: 0.58230877, g: 0.3138127, b: 0.7735849, a: 0}
-    key7: {r: 0.41952968, g: 0.21306515, b: 0.6603774, a: 0}
-    ctime0: 19661
-    ctime1: 42598
-    ctime2: 65535
-    ctime3: 65535
-    ctime4: 35389
-    ctime5: 54510
-    ctime6: 62528
-    ctime7: 65535
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 0.23103833, g: 1, b: 0, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
     atime0: 0
     atime1: 65535
     atime2: 0
@@ -588,9 +588,41 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 1
     m_ColorSpace: 0
-    m_NumColorKeys: 3
+    m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  fill: {fileID: 3274879411521710992}
+  healthFill: {fileID: 3274879411521710992}
+  shieldSlider: {fileID: 0}
+  shieldGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  shieldFill: {fileID: 0}
 --- !u!1 &7727712613359759040
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,8 +639,7 @@ GameObject:
   - component: {fileID: 3249375128923728270}
   - component: {fileID: 2975150873309783138}
   - component: {fileID: 4078287370622076540}
-  - component: {fileID: 6842891517884846396}
-  - component: {fileID: 8188350944221004721}
+  - component: {fileID: 8744205013006638557}
   m_Layer: 7
   m_Name: Ranged (D)
   m_TagString: Enemy
@@ -818,7 +849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b8c08b37737db40a2b611725e35ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageDealer
-  damage: 1
 --- !u!114 &4078287370622076540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -831,9 +861,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99b0fb7dc175144ab9ce567b5dd62f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
-  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColor: {r: 1, g: 0, b: 0.7514806, a: 1}
   flashDuration: 0.3
---- !u!114 &6842891517884846396
+--- !u!114 &8744205013006638557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -842,24 +872,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7727712613359759040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77512bac316ed6e468b163454dab8724, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b2b047bc84fb264e98842e02763198b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Stats
-  health: 4
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  maxHealth: 10
+  health: 10
   attack: 3
+  shield: 0
   healthBar: {fileID: 334301800433448089}
---- !u!114 &8188350944221004721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7727712613359759040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6db51d5b4e87e364a909adc68b7fa3c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityCollision
+  isDown: 0
+  pointValue: 3
 --- !u!1 &8264816899410446821
 GameObject:
   m_ObjectHideFlags: 0
