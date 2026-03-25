@@ -42,7 +42,7 @@ public class RoundManager : MonoBehaviour
 
     //private float countdown;
     private bool hasStarted = false;
-    private bool roundEnded = false;
+    public bool roundEnded = false;
 
     public int RoundNumber
     {
@@ -156,25 +156,26 @@ public class RoundManager : MonoBehaviour
 
     private IEnumerator RoundProper()
     {
-        //while(true) {
+        roundEnded = false;
         UIManager.Instance.HideMenuBar();
         roundNumberText.text = $"Round: {round}";
 
+        //battle
         PlayerManager.Instance.EnableAllPlayerMovement();
         yield return StartCoroutine(RoundTime());
         EnemyManager.Instance.DestroyAllEnemies();
         yield return new WaitForSeconds(1);
 
+        PlayerManager.Instance.CheckPlayersCondition();
+
         //reward qte phase
         PlayerManager.Instance.CheckAllPlayersGears();
         PlayerManager.Instance.IncrementRoundStreak();
         ActivateRewardTrigger();
-       // PlayerManager.Instance.IncrementRoundStreak();
+
         UIManager.Instance.ShowMenuBar();
 
-
         round++;
-       // }
     }
 
     public void NextRound()
@@ -214,7 +215,7 @@ public class RoundManager : MonoBehaviour
 
     private void CheckPlayersCondition()
     {
-        
+        //PlayerManager
     }
 
     public void StopRound()
@@ -230,7 +231,7 @@ public class RoundManager : MonoBehaviour
         SpawnManager.Instance.StopSpawning();
         EnemyManager.Instance.DestroyAllEnemies();
         UIManager.Instance.DisableGameCanvas();
-
+        PlayerManager.Instance.DisableAllPlayerMovement();
       //  yield return new WaitForSeconds(1f);
         UIManager.Instance.OpenScreen("Results");
 

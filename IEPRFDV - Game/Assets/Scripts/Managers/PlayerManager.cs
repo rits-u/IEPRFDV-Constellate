@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
     //singleton
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -69,24 +69,33 @@ public class PlayerManager : MonoBehaviour
         CheckPlayersCondition();
     }
 
-    private void CheckPlayersCondition()
+    public void CheckPlayersCondition()
     {
-        if(playersAlive == 0)
+        if (playersAlive == 0)
         {
-            //stop the car, show results screen
-            DisableAllPlayerMovement();
-            foreach (var player in playerList)
-            {
-                player.GetComponentInChildren<ResurrectCircle>().
-                    GetComponent<SpriteRenderer>().enabled = false;
-                var ps = player.GetComponentInChildren<PlayerSprite>();
-                if (ps != null) ps.DeathEffect();
-
-
-            }
-
-            RoundManager.Instance.StopRound();
+            EliminatePlayers();
         }
+        else if (playersAlive == 1 && RoundManager.Instance.roundEnded)
+        {
+            EliminatePlayers();
+        }
+    }
+
+    private void EliminatePlayers()
+    {
+        //stop the car, show results screen
+        DisableAllPlayerMovement();
+        foreach (var player in playerList)
+        {
+            player.GetComponentInChildren<ResurrectCircle>().
+                GetComponent<SpriteRenderer>().enabled = false;
+            var ps = player.GetComponentInChildren<PlayerSprite>();
+            if (ps != null) ps.DeathEffect();
+
+
+        }
+
+        RoundManager.Instance.StopRound();
     }
 
     public void IncrementRoundStreak()

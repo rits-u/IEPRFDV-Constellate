@@ -19,11 +19,11 @@ MonoBehaviour:
   rangeRadius: 15
   isMelee: 0
   rangeProperties:
-  - damage: 2
-    numProjectiles: 3
+  - damage: 3
+    numProjectiles: 4
     burstInterval: 0.4
     fireRate: 2
-  - damage: 3
+  - damage: 4
     numProjectiles: 4
     burstInterval: 0.4
     fireRate: 2

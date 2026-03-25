@@ -704,6 +704,7 @@ MonoBehaviour:
   players: []
   healthBar: {fileID: 1590554076301663958}
   animator: {fileID: 3026202852289328827}
+  moveSpeed: 2.6
   hasDash: 0
   dashRandomInterval: 0
   dashDuration: 0.2
@@ -877,7 +878,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   maxHealth: 20
   health: 20
-  attack: 5
+  attack: 4
   shield: 0
   healthBar: {fileID: 523710585334140038}
   isDown: 0

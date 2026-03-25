@@ -818,7 +818,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   maxHealth: 10
   health: 10
-  attack: 3
+  attack: 2
   shield: 0
   healthBar: {fileID: 5931097565303996885}
   isDown: 0

@@ -21,6 +21,6 @@ MonoBehaviour:
   meleeProperties:
   - damage: 4
     slashInterval: 2
-  - damage: 10
+  - damage: 7
     slashInterval: 1.5
   slashPrefab: {fileID: 7876972341716238688, guid: a4c866182499854448c896942028750c, type: 3}
