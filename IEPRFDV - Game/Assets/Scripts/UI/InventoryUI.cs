@@ -87,6 +87,7 @@ public class InventoryUI : ScreenUI
         Stats playerStats = player.GetComponent<Stats>();
 
         Image icon = panel.profileUI.iconSlot.transform.GetChild(0).GetComponent<Image>();
+        icon.sprite = player.avatar;
         //icon.sprite = charIcon;
 
         panel.profileUI.name.text = player.Name;

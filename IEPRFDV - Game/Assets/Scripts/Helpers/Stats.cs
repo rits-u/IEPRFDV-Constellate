@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Drawing;
 using UnityEngine;
 
 public class Stats : MonoBehaviour 
@@ -11,6 +13,7 @@ public class Stats : MonoBehaviour
 
    // [Header("Bound")]
    // [SerializeField] private int maxHealth = 10;
+  
 
     [Header("UI Elements")]
     [SerializeField] private HealthBar healthBar;
@@ -144,5 +147,19 @@ public class Stats : MonoBehaviour
         {
             healthBar.SetShield(SP);
         }
+    }
+
+    public void MakePlayerInvulnerable(float duration)
+    {
+        GetComponent<DamageFlash>().enabled = true;
+        GetComponent<DamageFlash>().InvulnerableState();
+        StartCoroutine(PlayerInvulnerable(duration));
+    }
+
+    private IEnumerator PlayerInvulnerable(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isDown = false;
+        GetComponent<DamageFlash>().ResetSpritesColor();
     }
 }

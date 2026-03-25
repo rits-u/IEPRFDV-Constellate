@@ -52,6 +52,21 @@ public class DamageFlash : MonoBehaviour
 
         if (animator != null) animator.enabled = true;
 
+        ResetSpritesColor();
+    }
+
+    public void InvulnerableState()
+    {
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            Color color = originalColors[i];
+            color.a = 67f/255f;
+            renderers[i].color = color;
+        }
+    }
+
+    public void ResetSpritesColor()
+    {
         for (int i = 0; i < renderers.Length; i++)
             renderers[i].color = originalColors[i];
     }

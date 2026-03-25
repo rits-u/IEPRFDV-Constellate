@@ -5,12 +5,14 @@ using System.Collections;
 public class BasicMeleeBehavior : MonoBehaviour
 {
     [SerializeField] private Melee melee;
+    [SerializeField] private List<GameObject> enemiesInRange = new List<GameObject>();
 
     private float slashUpdate;
     private CircleCollider2D col;
 
     private int numEnemies = 0;
-    [SerializeField] private List<GameObject> enemiesInRange = new List<GameObject>();
+    public bool isEnabled;
+
 
     private void Start()
     {
@@ -19,6 +21,7 @@ public class BasicMeleeBehavior : MonoBehaviour
 
     private void OnEnable()
     {
+        isEnabled = true;
         melee = (Melee)GetComponent<WeaponObject>().weapon;
         
     }
@@ -26,6 +29,7 @@ public class BasicMeleeBehavior : MonoBehaviour
     private void OnDisable()
     {
         melee = null;
+        isEnabled = false;
       //  col.radius = 0;
     }
 
@@ -33,7 +37,10 @@ public class BasicMeleeBehavior : MonoBehaviour
     {
         //   melee = (Melee)GetComponentInParent<PlayerInventory>().GetPlayerWeapon(); //(??)
         melee = (Melee)GetComponent<WeaponObject>().weapon;
-        col.radius = melee.RangeRadius;
+        if(isEnabled)
+            col.radius = melee.RangeRadius;
+        else 
+            col.radius = 0;
 
         if (numEnemies <= 0)
             return;

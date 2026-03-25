@@ -187,13 +187,15 @@ public class PlayerInventory : MonoBehaviour
     {
         if(weapon is Range)
         {
-            weaponObj.GetComponent<BasicRangeBehavior>().enabled = false;
-            weaponObj.GetComponent<BasicRangeBehavior>().StopAllCoroutines();
+         //   weaponObj.GetComponent<BasicRangeBehavior>().enabled = false;
+            weaponObj.GetComponent<BasicRangeBehavior>().isEnabled = false;
+          //  weaponObj.GetComponent<BasicRangeBehavior>().StopAllCoroutines();
         }
         else
         {
-            weaponObj.GetComponent<BasicMeleeBehavior>().enabled = false;
-            weaponObj.GetComponent<BasicMeleeBehavior>().StopAllCoroutines();
+           // weaponObj.GetComponent<BasicMeleeBehavior>().enabled = false;
+            weaponObj.GetComponent<BasicMeleeBehavior>().isEnabled = false;
+         //   weaponObj.GetComponent<BasicMeleeBehavior>().StopAllCoroutines();
         }
     }
 
@@ -201,11 +203,13 @@ public class PlayerInventory : MonoBehaviour
     {
         if (weapon is Range)
         {
-            weaponObj.GetComponent<BasicRangeBehavior>().enabled = true;
+           // weaponObj.GetComponent<BasicRangeBehavior>().enabled = true;
+            weaponObj.GetComponent<BasicRangeBehavior>().isEnabled = true;
         }
         else
         {
-            weaponObj.GetComponent<BasicMeleeBehavior>().enabled = true;
+           // weaponObj.GetComponent<BasicMeleeBehavior>().enabled = true;
+            weaponObj.GetComponent<BasicMeleeBehavior>().isEnabled = true;
         }
     }
 }

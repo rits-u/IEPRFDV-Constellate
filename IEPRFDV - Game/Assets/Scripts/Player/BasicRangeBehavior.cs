@@ -14,15 +14,18 @@ public class BasicRangeBehavior : MonoBehaviour
     private int numEnemies = 0;
     [SerializeField] private List<GameObject> enemiesInRange = new List<GameObject>();
 
+    public bool isEnabled;
+
     private void Start()
     {
         col = GetComponent<CircleCollider2D>();
+
     }
 
     private void OnEnable()
     {
+        isEnabled = true;
         gun = (Range)GetComponent<WeaponObject>().weapon;
-       
     }
 
     private void OnDisable()
@@ -34,7 +37,11 @@ public class BasicRangeBehavior : MonoBehaviour
     private void Update()
     {
         gun = (Range)GetComponent<WeaponObject>().weapon;
-        col.radius = gun.RangeRadius;
+
+        if(isEnabled)
+            col.radius = gun.RangeRadius;
+        else 
+            col.radius = 0;
 
         if (numEnemies <= 0)
             return;

@@ -212,8 +212,7 @@ public class PlayerManager : MonoBehaviour
         AccessPlayerInventory(player.ID).EnableWeapon();
 
         playersAlive++;
-        player.GetComponentInChildren<DamageFlash>().enabled = true;
-        player.GetComponent<Stats>().isDown = false;
+        player.GetComponent<Stats>().MakePlayerInvulnerable(3f);
     }
 
     public Player DetermineWinner()
@@ -237,6 +236,5 @@ public class PlayerManager : MonoBehaviour
         {
             player.GetComponent<PlayerInventory>().UpdateGearExpirations();
         }
-
     }
 }
