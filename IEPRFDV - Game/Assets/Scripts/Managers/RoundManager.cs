@@ -38,11 +38,11 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private KeyCode startKey;
     
     private UICanvas canvas;
-
+    [SerializeField]
 
     //private float countdown;
     private bool hasStarted = false;
-    public bool roundEnded = false;
+    [HideInInspector] public bool roundEnded = false;
 
     public int RoundNumber
     {
@@ -142,7 +142,7 @@ public class RoundManager : MonoBehaviour
     {
         if (round == 1) FirstRoundPrep();
 
-        Debug.Log($"RM: Start ExecuteRound");
+        //Debug.Log($"RM: Start ExecuteRound");
         StartCoroutine(RoundProper());
         DeactivateRoundTrigger();
         UIManager.Instance.CloseScreen("Title");
@@ -157,8 +157,9 @@ public class RoundManager : MonoBehaviour
     private IEnumerator RoundProper()
     {
         roundEnded = false;
-        UIManager.Instance.HideMenuBar();
+        
         roundNumberText.text = $"Round: {round}";
+        UIManager.Instance.HideObjectiveArrow();
 
         //battle
         PlayerManager.Instance.EnableAllPlayerMovement();
@@ -167,6 +168,7 @@ public class RoundManager : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         PlayerManager.Instance.CheckPlayersCondition();
+        UIManager.Instance.ShowObjectiveArrow();
 
         //reward qte phase
         PlayerManager.Instance.CheckAllPlayersGears();

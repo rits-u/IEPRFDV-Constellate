@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private GameObject dimPanel;
     [SerializeField] private GameObject itemDisplay;
+    [SerializeField] private ObjectiveArrow objectiveArrow;
 
     [SerializeField] private List<GameObject> playerInfoHUDs;
 
@@ -138,6 +139,13 @@ public class UIManager : MonoBehaviour
         return display.GetComponent<ItemDisplay>();
     }
 
-   
+   public void ShowObjectiveArrow()
+    {
+        objectiveArrow.ToggleShowArrow(true);
+    }
+    public void HideObjectiveArrow()
+    {
+        objectiveArrow.ToggleShowArrow(false);
+    }
 
 }

@@ -82,7 +82,7 @@ public class EnemyManager : MonoBehaviour
 
     public void DestroyAllEnemies()
     {
-        Debug.Log($"EM: Start Destroy all enemies");
+        //Debug.Log($"EM: Start Destroy all enemies");
         for (int i = listEnemy.Count - 1; i >= 0; i--)
         {
             GameObject enemy = listEnemy[i];

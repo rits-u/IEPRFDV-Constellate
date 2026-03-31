@@ -14,6 +14,7 @@ public class RewardTriggerArea : MonoBehaviour
 
     [Header("UI Elements")]
     [SerializeField] private GameObject rewardPanel;
+    [SerializeField] private ObjectiveArrow objectiveArrow;
     [SerializeField] private Button startBtn;
     [SerializeField] private Image chestImage;
 
@@ -60,6 +61,7 @@ public class RewardTriggerArea : MonoBehaviour
         if (timeSinceLast >= timeCheck && !rewardDisplayed)
         {
             chestLoot.RandomizeLoot();
+            objectiveArrow.ToggleShowArrow(false);
             ShowRewardsScreen();
             PlayerManager.Instance.DisableAllPlayerMovement();
 
