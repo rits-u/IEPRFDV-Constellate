@@ -15387,7 +15387,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 80}
+  m_AnchoredPosition: {x: 0, y: 94.4}
   m_SizeDelta: {x: 257, y: 57.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &890444606
@@ -17406,8 +17406,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.12
-  m_fontSizeBase: 29.12
+  m_fontSize: 27
+  m_fontSizeBase: 27
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -37527,8 +37527,8 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 3
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.8415094, g: 0.40487713, b: 0.40487713, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 74dfaf39d74d472419e1ef6875c215cf, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -38134,7 +38134,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 74dfaf39d74d472419e1ef6875c215cf, type: 3}
-  m_Color: {r: 0.4641509, g: 0.44050547, b: 0.44050547, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -38399,6 +38399,7 @@ GameObject:
   - component: {fileID: 633531091341735815}
   - component: {fileID: 8294279019084759639}
   - component: {fileID: 3732294053820881523}
+  - component: {fileID: 8294279019084759640}
   m_Layer: 0
   m_Name: Reward Trigger
   m_TagString: Untagged
@@ -38755,7 +38756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RewardTriggerArea
   playersDetected: 0
-  timeCheck: 1
+  timeCheck: 0.5
   timeSinceLast: 0
   startCount: 0
   leanDuration: 1
@@ -38882,7 +38883,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.16, y: 0.18, z: 0}
-  m_LocalScale: {x: 1.66, y: 1.66, z: 1.66}
+  m_LocalScale: {x: 1.62, y: 1.62, z: 1.62}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6387775204652678587}
@@ -40426,6 +40427,7 @@ GameObject:
   - component: {fileID: 2504440150090883363}
   - component: {fileID: 2438184137740083262}
   - component: {fileID: 8260276063568197800}
+  - component: {fileID: 8260276063568197801}
   m_Layer: 0
   m_Name: Round Trigger Area
   m_TagString: Untagged
@@ -40447,9 +40449,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoundTriggerArea
   countdown: {fileID: 890444608}
   titleCountdown: {fileID: 116656690}
-  countdownDuration: 1
+  countdownDuration: 3
   playersDetected: 0
   isCountingDown: 0
+--- !u!114 &8260276063568197801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260276063568197799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2e95fb922e1d844b5b8a5d0eb4bd87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GatheringCircle
+  defaultSprite: {fileID: 21300000, guid: 74dfaf39d74d472419e1ef6875c215cf, type: 3}
+  player1: {fileID: 21300000, guid: 9958abf6f432522498ce0360a8766a4e, type: 3}
+  player2: {fileID: 21300000, guid: 221c74ba3e222334ab5939dcadc9384d, type: 3}
+  complete: {fileID: 21300000, guid: 6ad2f5674648dd340af4422cc35c0fa6, type: 3}
 --- !u!58 &8294279019084759639
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -40486,6 +40504,22 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &8294279019084759640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3026413870766170325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2e95fb922e1d844b5b8a5d0eb4bd87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GatheringCircle
+  defaultSprite: {fileID: 21300000, guid: 74dfaf39d74d472419e1ef6875c215cf, type: 3}
+  player1: {fileID: 21300000, guid: 9958abf6f432522498ce0360a8766a4e, type: 3}
+  player2: {fileID: 21300000, guid: 221c74ba3e222334ab5939dcadc9384d, type: 3}
+  complete: {fileID: 21300000, guid: 6ad2f5674648dd340af4422cc35c0fa6, type: 3}
 --- !u!1 &8354505016920335126
 GameObject:
   m_ObjectHideFlags: 0
