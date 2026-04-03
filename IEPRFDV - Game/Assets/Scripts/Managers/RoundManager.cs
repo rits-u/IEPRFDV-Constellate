@@ -160,6 +160,7 @@ public class RoundManager : MonoBehaviour
         
         roundNumberText.text = $"Round: {round}";
         UIManager.Instance.HideObjectiveArrow();
+        UIManager.Instance.HideMenuBar();
 
         //battle
         PlayerManager.Instance.EnableAllPlayerMovement();

@@ -6,8 +6,8 @@ using UnityEngine;
 public class Stats : MonoBehaviour 
 {
     [Header("Stats")]
-    [SerializeField] private int maxHealth = 10;
-    [SerializeField] private int health = 10;
+    [SerializeField] private float maxHealth = 10;
+    [SerializeField] private float health = 10;
     [SerializeField] private int attack = 3;
     [SerializeField] private int shield;
 
@@ -24,13 +24,13 @@ public class Stats : MonoBehaviour
 
     public bool isDown;
 
-    public int MaxHP
+    public float MaxHP
     {
         get => maxHealth;
         set => maxHealth = value;
     }
 
-    public int HP
+    public float HP
     {
         get => health;
         set => health = value;

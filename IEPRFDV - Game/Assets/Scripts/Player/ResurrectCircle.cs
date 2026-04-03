@@ -100,9 +100,9 @@ public class ResurrectCircle : MonoBehaviour
 
             if(healTimeUpdate >= healInterval) 
             {
-                float increment = playerStats.MaxHP * 0.15f;
+                float increment = playerStats.MaxHP * hpHealPercent;
 
-                playerStats.HP += (int)increment;
+                playerStats.HP += increment;
                 playerStats.ValidateStats();
                 playerStats.UpdateHP();
 

@@ -10,7 +10,7 @@ public class EnemyManager : MonoBehaviour
 
     [Header("Enemy Stats Initialization")]
     [Header("HP")]
-    [SerializeField] private int enemyStartingHP;
+    [SerializeField] private float enemyStartingHP;
     [SerializeField] private int updateHealthEvery;
     [SerializeField] private int healthIncrement;
 
