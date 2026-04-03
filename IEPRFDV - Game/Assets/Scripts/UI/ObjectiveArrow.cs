@@ -33,15 +33,17 @@ public class ObjectiveArrow : MonoBehaviour
             {
                 coroutine = StartCoroutine(ShowArrow());
             }
-            else
+        }
+        else
+        {
+            if (coroutine != null)
             {
-                if (coroutine != null)
-                {
-                    StopCoroutine(coroutine);
-                    coroutine = null;
-                }
+                StopCoroutine(coroutine);
+                coroutine = null;
             }
         }
+        
+        Debug.Log("Value: " + value);
     }
 
     IEnumerator ShowArrow()

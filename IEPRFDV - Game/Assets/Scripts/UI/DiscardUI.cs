@@ -261,8 +261,8 @@ public class DiscardUI : ScreenUI
 
         ui.IDText.text = ID == 1 ? $"<color=red>P{ID}</color>" : $"<color=blue>P{ID}</color>";
 
-        //Image icon = ui.iconSlot.transform.GetChild(0).GetComponent<Image>();
-        //icon.sprite = player.icon
+        Image icon = ui.iconSlot.transform.GetChild(0).GetComponent<Image>();
+        icon.sprite = player.avatar;
 
         ui.name.text = $"{player.Name}";
 

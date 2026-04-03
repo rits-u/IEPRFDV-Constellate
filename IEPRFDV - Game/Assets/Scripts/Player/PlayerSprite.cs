@@ -24,12 +24,13 @@ public class PlayerSprite : MonoBehaviour
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        
         startPosition = transform.localPosition;
     }
 
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         LeanTween.init(800);
     }
 
