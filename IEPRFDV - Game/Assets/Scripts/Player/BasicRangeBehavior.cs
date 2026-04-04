@@ -147,6 +147,8 @@ public class BasicRangeBehavior : MonoBehaviour
             bullet.SetDirection(direction);
             bullet.SetDamageInfo(playerStats.ATK + damage, playerStats.gameObject);
 
+            AudioManager.Instance.PlaySFX(gun.SFX(), 0.3f);
+
             yield return new WaitForSeconds(burstInterval); //small burst gap
         }
 
