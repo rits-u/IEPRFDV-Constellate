@@ -18,6 +18,8 @@ MonoBehaviour:
   currentTier: 1
   rangeRadius: 15
   isMelee: 0
+  listSFX:
+  - {fileID: 8300000, guid: ffe4d01a95a4b1542af6dc18dfd02c60, type: 3}
   rangeProperties:
   - damage: 3
     numProjectiles: 4

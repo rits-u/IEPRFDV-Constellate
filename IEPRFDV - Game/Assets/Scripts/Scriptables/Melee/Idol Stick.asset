@@ -18,6 +18,10 @@ MonoBehaviour:
   currentTier: 1
   rangeRadius: 8
   isMelee: 1
+  listSFX:
+  - {fileID: 8300000, guid: d02540ac5cc1c344b93a4425dae8da9e, type: 3}
+  - {fileID: 8300000, guid: 314c2fa8d1935d241b860405523d78e9, type: 3}
+  - {fileID: 8300000, guid: 8378bee4539be174baf39320d5739895, type: 3}
   meleeProperties:
   - damage: 4
     slashInterval: 2

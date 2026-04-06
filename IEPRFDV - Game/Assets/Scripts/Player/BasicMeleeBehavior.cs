@@ -126,6 +126,9 @@ public class BasicMeleeBehavior : MonoBehaviour
             slash.SetDirection(direction, transform);
 
             slash.PlaySlash();
+
+            //sfx
+            AudioManager.Instance.PlaySFX(melee.SFX(), 0.25f);
         }
     }
 

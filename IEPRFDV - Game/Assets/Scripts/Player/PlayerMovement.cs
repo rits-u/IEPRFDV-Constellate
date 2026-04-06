@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private LayerMask blockingLayer;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip dashSFX;
+
     private Rigidbody2D rb;
     private Collider2D col;
     private ContactFilter2D contactFilter;
@@ -53,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
         contactFilter.SetLayerMask(blockingLayer);
         contactFilter.useLayerMask = true;
         contactFilter.useTriggers = false;
+
+        isDashing = false;
     }
 
     public void EnableMovement()
@@ -213,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isDashing = true;
         nextDashTime = Time.time + dashCooldown;
-
+        AudioManager.Instance.PlaySFX(dashSFX, 0.25f);
         //Debug.Log(nextDashTime);
 
         float timer = 0f;
@@ -229,6 +234,8 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         isDashing = false;
         dashState = DashState.Idle;
+
+        
     }
 
     private bool IsHittingWall(Vector2 dir)
