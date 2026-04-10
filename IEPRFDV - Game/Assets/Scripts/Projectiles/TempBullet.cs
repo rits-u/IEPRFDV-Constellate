@@ -20,6 +20,8 @@ public class TempBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UIManager.Instance.isPaused) return;
+
         Move();
         if (hasRotate) Rotate();
     }

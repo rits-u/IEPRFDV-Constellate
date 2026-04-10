@@ -114,6 +114,12 @@ public class RoundManager : MonoBehaviour
 
         while(timer > 0)
         {
+            if(UIManager.Instance.isPaused)
+            {
+                yield return null;
+                continue;
+            }
+
             secondsCount = timer - minutesCount * 60;
             minutes = minutesCount.ToString();
             seconds = secondsCount.ToString();

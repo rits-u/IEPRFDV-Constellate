@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour 
@@ -16,11 +17,31 @@ public class PlayerBullet : MonoBehaviour
 
     void OnEnable()
     {
-        Invoke(nameof(DestroySelf), lifeTime);
+   //     Invoke(nameof(DestroySelf), lifeTime);
+        StartCoroutine(DestroySelf());
+    }
+
+    IEnumerator DestroySelf()
+    {
+        float timer = lifeTime;
+
+        while (timer > 0f)
+        {
+            if (!UIManager.Instance.isPaused)
+            {
+                timer -= Time.deltaTime;
+            }
+
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 
     void Update()
     {
+        if (UIManager.Instance.isPaused) return;
+
         transform.position += direction * speed * Time.deltaTime;
     }
 
@@ -37,10 +58,10 @@ public class PlayerBullet : MonoBehaviour
         transform.right = direction;
     }
 
-    void DestroySelf()
-    {
-        Destroy(gameObject);
-    }
+    //void DestroySelf()
+    //{
+    //    Destroy(gameObject);
+    //}
 
     private void OnTriggerEnter2D(Collider2D other)
     {

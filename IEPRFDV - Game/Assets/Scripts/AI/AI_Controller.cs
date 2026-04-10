@@ -57,6 +57,7 @@ public class AI_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UIManager.Instance.isPaused) return;
 
         if (hasMelee)
         {
@@ -74,6 +75,8 @@ public class AI_Controller : MonoBehaviour
     void Melee()
     {
         //use meleehitbox to check if any collision
+
+        if (UIManager.Instance.isPaused) return;
         if (meleeTimer <= 0f)
         {
             damageDealer.Damage = stats.ATK;
@@ -159,6 +162,18 @@ public class AI_Controller : MonoBehaviour
             if (bulletName == null) Debug.LogError($"{transform.name} bullet name is empty");
         }
 
+    }
+
+    public void SetPaused(bool paused)
+    {
+        if (navAgent != null)
+            navAgent.isStopped = paused;
+
+        if (UIManager.Instance.isPaused)
+        {
+            StopAllCoroutines();
+            meleeHitbox.SetActive(false);
+        }
     }
 
 }

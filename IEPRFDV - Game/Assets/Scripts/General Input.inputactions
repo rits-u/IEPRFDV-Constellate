@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "General Input",
+    "maps": [
+        {
+            "name": "General",
+            "id": "d1d000a7-e412-4ca5-99a3-049221aa5782",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "7d83095f-c1f4-423a-96a9-278185cc4899",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9ce11d9a-06d0-4e69-a1f6-0ce67c0cc2a2",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

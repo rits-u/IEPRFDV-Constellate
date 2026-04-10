@@ -72,6 +72,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (UIManager.Instance.isPaused) 
+        {
+            direction = Vector2.zero;
+            return;
+        }
+
         Vector2 input = move.action.ReadValue<Vector2>();
         playerSprite.UpdateVisual(input.x);
 

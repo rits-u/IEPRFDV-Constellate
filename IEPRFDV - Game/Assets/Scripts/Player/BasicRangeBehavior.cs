@@ -126,32 +126,46 @@ public class BasicRangeBehavior : MonoBehaviour
 
     private IEnumerator FireBullets()
     {
-        GameObject target = FindNearestEnemy();
-        if (target == null) yield break;
-
-
-        int numBullets = (int)gun.GetPropertyByType(InfoType.PROJECTILES);
-        int damage = (int)gun.GetPropertyByType(InfoType.DAMAGE);
-        float burstInterval = gun.GetPropertyByType(InfoType.BURST_INTERVAL);
-
-        for (int i = 0; i < numBullets; i++)
+        while (true)
         {
+            
+
+            GameObject target = FindNearestEnemy();
             if (target == null) yield break;
 
-            GameObject obj = Instantiate(gun.BulletPrefab, transform.position, Quaternion.identity);
 
-            Vector3 direction = (target.transform.position - transform.position).normalized;
+            int numBullets = (int)gun.GetPropertyByType(InfoType.PROJECTILES);
+            int damage = (int)gun.GetPropertyByType(InfoType.DAMAGE);
+            float burstInterval = gun.GetPropertyByType(InfoType.BURST_INTERVAL);
 
-            PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
-            Stats playerStats = GetComponentInParent<Stats>();
-            bullet.SetDirection(direction);
-            bullet.SetDamageInfo(playerStats.ATK + damage, playerStats.gameObject);
+            for (int i = 0; i < numBullets; i++)
+            {
+                if (UIManager.Instance.isPaused)
+                {
+                    // AudioManager.Instance.SetPaused(true);
+                    yield return null;
+                    i--;
+                    continue;
+                }
 
-            AudioManager.Instance.PlaySFX(gun.SFX(), 0.3f);
+                if (target == null) yield break;
 
-            yield return new WaitForSeconds(burstInterval); //small burst gap
+                GameObject obj = Instantiate(gun.BulletPrefab, transform.position, Quaternion.identity);
+
+                Vector3 direction = (target.transform.position - transform.position).normalized;
+
+                PlayerBullet bullet = obj.GetComponent<PlayerBullet>();
+                Stats playerStats = GetComponentInParent<Stats>();
+                bullet.SetDirection(direction);
+                bullet.SetDamageInfo(playerStats.ATK + damage, playerStats.gameObject);
+
+                AudioManager.Instance.PlaySFX(gun.SFX(), 0.3f);
+              
+
+                yield return new WaitForSeconds(burstInterval); //small burst gap
+            }
+
+            yield return null;
         }
-
-        yield return null;
     }
 }

@@ -95,6 +95,12 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
+            if(UIManager.Instance.isPaused)
+            {
+                yield return null;
+                continue;
+            }
+
             if (currentSpawns < maxSpawns)  //threshold
             {
                 SpawnEnemy();

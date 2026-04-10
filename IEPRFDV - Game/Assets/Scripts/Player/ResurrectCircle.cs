@@ -93,6 +93,8 @@ public class ResurrectCircle : MonoBehaviour
 
     private void Update()
     {
+        if (UIManager.Instance.isPaused) return;
+
         if(isBeingResurrected)
         {
             HealingState();

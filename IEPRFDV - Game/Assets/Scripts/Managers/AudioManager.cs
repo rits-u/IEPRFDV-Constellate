@@ -39,4 +39,22 @@ public class AudioManager : MonoBehaviour
             sfxSource.PlayOneShot(clip, volume);
         }
     }
+
+    public void SetPaused(bool paused)
+    {
+        if(paused)
+            sfxSource.Pause();
+        else 
+            sfxSource.UnPause();
+    }
+
+    public AudioSource GetBGMSource()
+    {
+        return bgmSource;
+    }
+
+    public AudioSource GetSFXSource()
+    {
+        return sfxSource;
+    }
 }

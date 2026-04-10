@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,12 +22,28 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private List<GameObject> playerInfoHUDs;
 
+    private GeneralInput genInput;
+    public bool isPaused = false;
+
     private void Awake()
     {
         if(Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        genInput = new GeneralInput();
+        genInput.General.Pause.performed += OnPause;
     }
 
+    private void OnEnable()
+    {
+        genInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+        genInput.Disable();
+        genInput.General.Pause.performed -= OnPause;
+    }
 
     public void OpenScreen(string screen)
     {
@@ -146,6 +164,23 @@ public class UIManager : MonoBehaviour
     public void HideObjectiveArrow()
     {
         objectiveArrow.ToggleShowArrow(false);
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if(!isPaused)
+        {
+            isPaused = true;
+            OpenScreen("Pause");
+            ShowAllHUDs();
+        }
+        else
+        {
+            isPaused = false;
+            CloseScreen("Pause");
+        }
+        
+       // Debug.Log()
     }
 
 }

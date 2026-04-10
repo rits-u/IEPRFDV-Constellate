@@ -103,6 +103,8 @@ public class AI_FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(UIManager.Instance.isPaused) return;
+
         if (target == null) return;
         //SetRotation();
 
@@ -373,6 +375,14 @@ public class AI_FollowPlayer : MonoBehaviour
     {
         navAgent.speed = moveSpeed;
         navAgent.acceleration = acceleration;
+    }
+
+    public void SetPaused(bool paused)
+    {
+      //  isPaused = paused;
+
+        if (navAgent != null)
+            navAgent.isStopped = paused;
     }
 }
 

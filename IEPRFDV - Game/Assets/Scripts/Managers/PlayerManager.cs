@@ -142,7 +142,8 @@ public class PlayerManager : MonoBehaviour
         foreach (var player in playerList)
         {
             if (player == null) continue;
-            player.GetComponent<PlayerMovement>().EnableMovement();
+            if(!player.GetComponent<Stats>().isDown)
+                player.GetComponent<PlayerMovement>().EnableMovement();
         }
     }
 

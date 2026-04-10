@@ -35,6 +35,8 @@ public class BasicMeleeBehavior : MonoBehaviour
 
     private void Update()
     {
+        if (UIManager.Instance.isPaused) return;
+
         //   melee = (Melee)GetComponentInParent<PlayerInventory>().GetPlayerWeapon(); //(??)
         melee = (Melee)GetComponent<WeaponObject>().weapon;
         if(isEnabled)
